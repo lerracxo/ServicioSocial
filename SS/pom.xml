@@ -1,15 +1,15 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
-	<groupId>nielsen</groupId>
-	<artifactId>rc-reporter</artifactId>
+	<groupId>ipn</groupId>
+	<artifactId>servicio-social</artifactId>
 	<version>1.0</version>
 	<packaging>war</packaging>
-	<name>RCreporter</name>
-	<description>Event reporter system</description>
+	<name>ServicioSocial</name>
+	<description>Sistema de calificacion de profesores</description>
 	<build>
-		<finalName>RC-Reporter</finalName>
-		<sourceDirectory>src</sourceDirectory>
+		<finalName>servicioSocial</finalName>
+		<!-- <sourceDirectory>src</sourceDirectory> -->
 		<resources>
 			<resource>
 				<directory>src</directory>

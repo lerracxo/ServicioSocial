@@ -11,8 +11,8 @@ import javax.faces.bean.ViewScoped;
 
 import org.apache.log4j.Logger;
 
-import com.nielsen.monitor.bs.ReportIService;
-import com.nielsen.monitor.bs.ValidationIService;
+import com.ipn2.esca.bs.ReportIService;
+import com.ipn2.esca.bs.ValidationIService;
 import com.nielsen.monitor.dto.FileValidationResultDTO;
 import com.nielsen.monitor.dto.SystemSDTO;
 

@@ -9,7 +9,7 @@ import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 
-import com.nielsen.monitor.bs.ReportIService;
+import com.ipn2.esca.bs.ReportIService;
 import com.nielsen.monitor.common.Constant;
 import com.nielsen.monitor.dto.EventlogDTO;
 import com.nielsen.monitor.dto.ProcessSDTO;

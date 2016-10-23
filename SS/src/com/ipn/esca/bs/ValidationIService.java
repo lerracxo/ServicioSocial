@@ -1,4 +1,4 @@
-package com.nielsen.monitor.bs;
+package com.ipn.esca.bs;
 
 import java.util.List;
 

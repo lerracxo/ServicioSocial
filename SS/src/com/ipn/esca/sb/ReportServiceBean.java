@@ -5,8 +5,8 @@ import java.util.List;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 
-import com.nielsen.monitor.bs.ReportServiceLocal;
-import com.nielsen.monitor.bs.ReportServiceRemote;
+import com.ipn2.esca.bs.ReportServiceLocal;
+import com.ipn2.esca.bs.ReportServiceRemote;
 import com.nielsen.monitor.dao.ReportDAO;
 import com.nielsen.monitor.dto.EventlogDTO;
 import com.nielsen.monitor.dto.ProcessSDTO;

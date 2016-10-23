@@ -5,8 +5,8 @@ import java.util.List;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 
-import com.nielsen.monitor.bs.ValidationServiceLocal;
-import com.nielsen.monitor.bs.ValidationServiceRemote;
+import com.ipn2.esca.bs.ValidationServiceLocal;
+import com.ipn2.esca.bs.ValidationServiceRemote;
 import com.nielsen.monitor.dao.ValidationDAO;
 import com.nielsen.monitor.dto.FileValidationResultDTO;
 import com.nielsen.monitor.dto.SystemSDTO;
