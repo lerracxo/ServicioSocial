@@ -20,3 +20,4 @@ SS/.recommenders/
 SS/.settings
 #Build
 SS/build/
+*.zargo~
