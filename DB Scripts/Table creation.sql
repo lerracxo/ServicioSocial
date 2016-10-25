@@ -140,12 +140,18 @@ CREATE TABLE cursos(
 id_curso serial,
 nombre varchar(70),
 descripcion varchar(300),
-fec_inicio varchar(10),
-fec_fin varchar(10),
+id_periodo int,
 id_eje int,
 primary key (id_curso)
 );
 
+DROP TABLE IF EXISTS periodo CASCADE;
+CREATE TABLE periodo(
+id_periodo serial,
+fec_inicio varchar(10),
+fec_fin varchar(10),
+primary key (id_periodo)
+);
 
 DROP TABLE IF EXISTS cat_eje CASCADE;
 CREATE TABLE cat_eje(
@@ -258,3 +264,7 @@ ALTER TABLE profesores
 ALTER TABLE calificaciones 
   ADD CONSTRAINT fk_calificaciones_cat_tipoevaluaciones FOREIGN KEY (id_tipoevaluacion)
   REFERENCES cat_tipoevaluaciones (id_tipoevaluacion);
+
+ALTER TABLE cursos
+  ADD CONSTRAINT fk_cursos_periodo FOREIGN KEY (id_periodo)
+  REFERENCES periodo (id_periodo);
