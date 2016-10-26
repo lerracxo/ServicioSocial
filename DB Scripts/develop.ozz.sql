@@ -5,6 +5,8 @@ fila TEXT
 
 DROP TABLE pers_tempo;
 
+SELECT * FROM pers_tempo;
+
 INSERT INTO pers_tempo (fila) VALUES
 ('ABREGO CAMARILLO FERNANDO										'),
 ('	PERIODO                	ASIGNATURA	DOMINIO DE GRUPO	PUNTUALIDAD	CONTENIDOS	DIDÁCTICA	PLANEACIÓN	EVALUACIÓN	ACTITUD	PROMEDIO		'),
@@ -32757,6 +32759,17 @@ INSERT INTO pers_tempo (fila) VALUES
 SELECT * FROM pers_tempo
 WHERE trim(replace(fila,'||',' '))  IN (SELECT trim(nombre) from personas)
 ;
+-- Personas
+--INSERT INTO personas (nombre)  
+--  SELECT TRIM(REPLACE(fila,'||','')) FROM pers_tempo 
+--  WHERE fila LIKE '||%||||||||||||||||||||%'
+--  AND fila NOT LIKE '%NO HAY REGISTRO%'
+--  ORDER BY id_fila;
+;
+-- Profesores
+--INSERT INTO profesores (id_profesor) 
+--SELECT id_persona FROM personas;
+
 
 SELECT * FROM pers_tempo ORDER BY 1;
 
@@ -32773,16 +32786,72 @@ UPDATE pers_tempo SET fila=trim(replace(fila,'	','||'));
 SELECT trim(replace(fila,'	','')) FROM pers_tempo);
 
 SELECT * FROM pers_tempo ORDER BY 1;
+
+
 -- GET ALL PERIODS
+--INSERT INTO periodo (fec_inicio)
+--WITH with_table AS (
+--SELECT DISTINCT TRIM(split_part(fila,'||',1)) periodo FROM pers_tempo
+--),
+--table_result AS (
+--  SELECT DISTINCT UPPER(periodo) FROM with_table
+--  WHERE periodo NOT IN ('')
+--  AND periodo LIKE '%-%20%'
+--  AND periodo NOT LIKE '%IMPUES%'
+--)
+--SELECT * FROM table_result;
 
-WITH with_table AS (
-SELECT DISTINCT split_part(fila,'||',1) periodo FROM pers_tempo
+--GET ALL Subjects
+SELECT * FROM cat_materias;
+
+INSERT INTO cat_materias (materia)
+WITH whit_table AS 
+(
+SELECT DISTINCT TRIM(split_part(fila,'||',2)) AS fila FROM pers_tempo 
+ORDER BY 1
 )
-SELECT DISTINCT UPPER(periodo) FROM with_table
-WHERE periodo NOT IN ('')
-AND TRIM(periodo) LIKE '%-%20%';
+SELECT * FROM whit_table
+WHERE fila != ''
+AND FILA NOT IN (SELECT nombre FROM personas)
+AND fila NOT LIKE '007%'
+AND fila NOT LIKE '05%'
+AND fila NOT LIKE '1%'
+AND fila NOT LIKE '2%'
+AND fila NOT LIKE '3%'
+AND fila NOT LIKE '4%'
+AND fila NOT LIKE '5%'
+AND fila NOT LIKE '6%'
+AND fila NOT LIKE '7%'
+AND fila NOT LIKE '8%'
+AND fila NOT LIKE '9%'
+AND fila NOT LIKE '10%'
+AND fila NOT LIKE '11%'
+AND fila NOT LIKE '12%'
+AND fila NOT LIKE '13%'
+AND fila NOT LIKE '14%'
+AND fila NOT LIKE '15%'
+AND fila NOT LIKE '16%'
+AND fila NOT LIKE '17%'
+AND fila NOT LIKE '18%'
+AND fila NOT LIKE '19%'
+AND fila NOT LIKE '20%'
+AND fila NOT LIKE '21%'
+AND fila NOT LIKE '22%'
+AND fila NOT LIKE '23%'
+AND fila NOT LIKE '24%'
+AND fila NOT LIKE '25%'
+AND fila NOT LIKE '26%'
+AND fila NOT LIKE '27%'
+AND fila NOT LIKE '28%'
+LIMIT 1000
+;
 
+
+SELECT * FROM cursos;de 
+
+SELECT * FROM periodos;
 --AND regexp_matches(periodo,'^.+?\\d$');
 
 --UPDATE personas SET nombre = trim(nombre);
 
+SELECT * FROM personas;

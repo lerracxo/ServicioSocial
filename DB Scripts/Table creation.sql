@@ -148,7 +148,7 @@ primary key (id_curso)
 DROP TABLE IF EXISTS periodo CASCADE;
 CREATE TABLE periodo(
 id_periodo serial,
-fec_inicio varchar(10),
+fec_inicio TEXT,
 fec_fin varchar(10),
 primary key (id_periodo)
 );

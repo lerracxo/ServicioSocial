@@ -18,6 +18,8 @@ hs_err_pid*
 SS/.metadata/
 SS/.recommenders/
 SS/.settings
+SS/target
+
 #Build
 SS/build/
 *.zargo~
