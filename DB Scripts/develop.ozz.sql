@@ -22163,6 +22163,7 @@ id_tempo serial,
 periodo text
 );
 
+DELETE FROM permat_tempo;
 INSERT INTO permat_tempo (periodo)
 WITH  with_table AS (
   SELECT id_fila, TRIM(SPLIT_PART(fila,'||',2)) fila FROM pers_tempo
@@ -22215,20 +22216,43 @@ SELECT * FROM grupo;
 SELECT * FROM pers_tempo ORDER BY id_fila;
 SELECT * FROM permat_tempo ORDER BY periodo;
 
-UPDATE pers_tempo SET fila = REPLACE(fila,'MAR-JUN  2015','MARZO - JUNIO 2015');
+SELECT * FROM pers_tempo WHERE TRIM(SPLIT_PART(fila,'||',2)) LIKE '%s%';
+
+SELECT * FROM pers_tempo WHERE id_fila = '15535';
+
+--UPDATE pers_tempo 
+SET fila = 'PALACIOS LAZCANO ROSALBA CECILIA||AGOSTO - DICIEMBRE 2012||ESTUDIOS REGIONALES DE EUROPA||3NV2||6.89||6.00||5.77||5.11||5.82||6.48||6.01||||' 
+WHERE id_fila = '15535';
+
+SELECT * FROM pers_tempo ORDER BY 1;
+
+-- Periods from Abrego that does not have Rosalba
+SELECT trim(split_part(fila,'||',2)) FROM pers_tempo 
+  WHERE trim(split_part(fila,'||',1)) LIKE '%ABREGO CAMARILLO FERNANDO%'
+  AND trim(split_part(fila,'||',2)) NOT IN (
+    SELECT trim(split_part(fila,'||',2)) FROM pers_tempo 
+      WHERE trim(split_part(fila,'||',1)) LIKE '%PALACIOS LAZCANO ROSALBA CECILIA%'
+  );
+  
+-- Materias from file not registred yet
+SELECT trim(split_part(fila,'||',3)) FROM pers_tempo 
+  AND trim(split_part(fila,'||',3)) NOT IN (
+  SELECT materia FROM cat_materia
+  
+
+
+
+--DELETE FROM pers_tempo WHERE id_fila = '3971';
+
+--UPDATE pers_tempo SET fila = REPLACE(fila,'AGOSTO-DICIEMBRE-2008','AGOSTO - DICIEMBRE 2008');
 
 --Ene-Jun 2007  DESARROLLO EJECUTIVO     34	INTERNACIONA
 
+
+
+
 ------------> MATERIAS
 
-INSERT INTO cat_materia (materia, fec_inicio, fec_fin)
-WITH  with_table AS (
-  SELECT id_fila, TRIM(SPLIT_PART(fila,'||',3)) fila FROM pers_tempo
-  ORDER BY id_fila
-  SELECT id_fila, TRIM(SPLIT_PART(fila,'||',2)) fila FROM pers_tempo
-  ORDER BY id_fila
-SELECT DISTINCT fila FROM with_table 
-WHERE fila != '' 
-ORDER BY fila;
+
 
 SELECT * FROM cat_materia;
