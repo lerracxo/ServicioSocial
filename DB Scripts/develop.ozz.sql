@@ -22237,22 +22237,40 @@ SELECT trim(split_part(fila,'||',2)) FROM pers_tempo
 -- Materias from file not registred yet
 SELECT trim(split_part(fila,'||',3)) FROM pers_tempo 
   AND trim(split_part(fila,'||',3)) NOT IN (
-  SELECT materia FROM cat_materia
+  SELECT materia FROM cat_materia;
   
-
-
-
 --DELETE FROM pers_tempo WHERE id_fila = '3971';
 
 --UPDATE pers_tempo SET fila = REPLACE(fila,'AGOSTO-DICIEMBRE-2008','AGOSTO - DICIEMBRE 2008');
 
 --Ene-Jun 2007  DESARROLLO EJECUTIVO     34	INTERNACIONA
 
-
-
-
 ------------> MATERIAS
 
+INSERT INTO at_materia (materia, id_periodo, id_grupo)
+values(
+WITH  with_table AS (
+  SELECT id_fila, TRIM(SPLIT_PART(fila,'||',3)) fila FROM pers_tempo
+  ORDER BY id_fila
+),
+();
 
+WITH with_table AS (
+  SELECT ID_FILA, FILA, FEC_DESC FROM PERS_TEMPO PT FULL JOIN PERIODO_MATERIA PM ON (TRIM(SPLIT_PART(PT.fila,'||',2))=PM.FEC_DESC)
+) SELECT * FROM with_table WHERE fec_desc IS NULL ;
 
+DELETE FROM pers_tempo WHERE id_fila = '';
 SELECT * FROM cat_materia;
+SELECT * FROM GRUPO;
+
+--ALTER TABLE periodo_materia ADD COLUMN fec_desc TEXT;
+SELECT * FROM periodo_materia ORDER BY 1;
+
+--UPDATE periodo_materia set fec_desc = 'AGOSTO - MARZO 2015' WHERE id_periodo = 17;
+
+SELECT DISTINCT periodo FROM permat_tempo ORDER BY 1;
+
+SELECT * FROM PERSONA;
+SELECT * FROM PROFESOR;
+
+INSERT INTO PROFESOR (ID_PROFESOR) SELECT ID_PERSONA FROM PERSONA;
