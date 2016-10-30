@@ -22216,13 +22216,14 @@ SELECT * FROM grupo;
 SELECT * FROM pers_tempo ORDER BY id_fila;
 SELECT * FROM permat_tempo ORDER BY periodo;
 
-SELECT * FROM pers_tempo WHERE TRIM(SPLIT_PART(fila,'||',2)) LIKE '%s%';
+SELECT * FROM pers_tempo WHERE TRIM(SPLIT_PART(fila,'||',1)) LIKE '%SEGURA SEGURA ELIA MARLENE%';
 
-SELECT * FROM pers_tempo WHERE id_fila = '15535';
+SELECT * FROM pers_tempo WHERE id_fila = '19430';
 
---UPDATE pers_tempo 
-SET fila = 'PALACIOS LAZCANO ROSALBA CECILIA||AGOSTO - DICIEMBRE 2012||ESTUDIOS REGIONALES DE EUROPA||3NV2||6.89||6.00||5.77||5.11||5.82||6.48||6.01||||' 
-WHERE id_fila = '15535';
+UPDATE pers_tempo 
+SET fila = 'SEGURA SEGURA ELIA MARLENE||||ESTRATEGIA DE MERCADOTECNIA DIGITAL||4RM43||9.43||8.98||9.13||9.02||9.14||9.15||9.14||||	' 
+WHERE id_fila = '19430';
+
 
 SELECT * FROM pers_tempo ORDER BY 1;
 
@@ -22231,7 +22232,7 @@ SELECT trim(split_part(fila,'||',2)) FROM pers_tempo
   WHERE trim(split_part(fila,'||',1)) LIKE '%ABREGO CAMARILLO FERNANDO%'
   AND trim(split_part(fila,'||',2)) NOT IN (
     SELECT trim(split_part(fila,'||',2)) FROM pers_tempo 
-      WHERE trim(split_part(fila,'||',1)) LIKE '%PALACIOS LAZCANO ROSALBA CECILIA%'
+      WHERE trim(split_part(fila,'||',1)) LIKE '%SEGURA SEGURA ELIA MARLENE%'
   );
   
 -- Materias from file not registred yet
@@ -22246,7 +22247,6 @@ SELECT trim(split_part(fila,'||',3)) FROM pers_tempo
 --Ene-Jun 2007  DESARROLLO EJECUTIVO     34	INTERNACIONA
 
 ------------> MATERIAS
-
 INSERT INTO at_materia (materia, id_periodo, id_grupo)
 values(
 WITH  with_table AS (
@@ -22255,13 +22255,39 @@ WITH  with_table AS (
 ),
 ();
 
+--------> Validation of periodo not null
 WITH with_table AS (
   SELECT ID_FILA, FILA, FEC_DESC FROM PERS_TEMPO PT FULL JOIN PERIODO_MATERIA PM ON (TRIM(SPLIT_PART(PT.fila,'||',2))=PM.FEC_DESC)
-) SELECT * FROM with_table WHERE fec_desc IS NULL ;
+) SELECT * FROM with_table WHERE fec_desc IS NULL OR fec_desc = '' ;
 
-DELETE FROM pers_tempo WHERE id_fila = '';
+---------> Validation of grupo not null
+  WITH with_table AS (
+    SELECT * FROM pers_tempo pt FULL JOIN grupo gr ON (TRIM(SPLIT_PART(pt.fila,'||',4))=gr.grupo)  
+  ) SELECT id_fila FROM with_table WHERE grupo IS NULL OR grupo= ''
+  
+;
+
+
+-------> Insert to cat_materia
+INSERT INTO cat_materia (materia,escuela,id_periodo,id_grupo)
+  WITH whit_table AS (
+    SELECT DISTINCT TRIM(SPLIT_PART(PT.fila,'||',3)) materia, 
+        TRIM(SPLIT_PART(PT.fila,'||',2)) fec_desc,
+        TRIM(SPLIT_PART(PT.fila,'||',4)) grupo
+      FROM pers_tempo PT
+  )
+  SELECT materia, 'ESCA' escuela, id_periodo, gr.id_grupo
+    FROM whit_table wt 
+    FULL JOIN PERIODO_MATERIA PM ON wt.fec_desc=PM.FEC_DESC 
+    FULL JOIN grupo gr ON wt.grupo = gr.grupo
+    ORDER BY 1,3;
+  
+--ALTER TABLE cat_materia DROP CONSTRAINT cat_materia_id_periodo_key;
+--ALTER TABLE cat_materia DROP CONSTRAINT cat_materia_id_grupo_key;
+--DELETE FROM pers_tempo WHERE id_fila = '22120';
 SELECT * FROM cat_materia;
-SELECT * FROM GRUPO;
+SELECT * FROM GRUPO WHERE grupo = '8CV6';
+SELECT * FROM periodo_materia;
 
 --ALTER TABLE periodo_materia ADD COLUMN fec_desc TEXT;
 SELECT * FROM periodo_materia ORDER BY 1;
