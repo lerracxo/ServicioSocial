@@ -1,5 +1,11 @@
 SELECT * FROM pers_tempo;
 
+--DROP TABLE pers_tempo;
+
+CREATE TABLE pers_tempo (
+id_fila serial,
+fila text);
+
 TRUNCATE TABLE pers_tempo ;
 TRUNCATE TABLE personas CASCADE;
 TRUNCATE TABLE profesores CASCADE;
@@ -22131,31 +22137,98 @@ INSERT INTO pers_tempo (fila) VALUES
 ('ZUÑIGA VENTURA ARTURO ARMANDO	ENERO-JUNIO 2009	ESTUDIO DE LOS IMPUESTOS V	8CMA	9.40	9.31	9.16	9.36	9.32	9.43	9.33		'),
 ('ZUÑIGA VENTURA ARTURO ARMANDO	AGOSTO-DICIEMBRE 2008	AUDITORIA III	7CM6	9.80	9.50	9.50	9.10	9.40	9.90	9.53		');
 
+
+SELECT * FROM pers_tempo ORDER BY id_fila;
+
 SELECT REPLACE(fila,'	','||') FROM pers_tempo;
 UPDATE pers_tempo SET fila =  REPLACE(fila,'	','||');
 
 SELECT * FROM pers_tempo order by 1;
 
 -------------> PROFESORES
-INSERT INTO personas (nombre) 
+INSERT INTO persona (nombres) 
 WITH  with_table AS (
   SELECT id_fila, TRIM(SPLIT_PART(fila,'||',1)) fila FROM pers_tempo
   ORDER BY id_fila
 )
 SELECT DISTINCT fila FROM with_table 
 WHERE fila != '' 
-ORDER BY fila ;
+ORDER BY fila;
 
+SELECT * FROM persona;
 
+------------> Periodo materia
+/*CREATE tABLE permat_tempo(
+id_tempo serial,
+periodo text
+);
 
-------------> MATERIAS
-INSERT INTO cat_materias
+INSERT INTO permat_tempo (periodo)
 WITH  with_table AS (
-  SELECT id_fila, TRIM(SPLIT_PART(fila,'||',3)) fila FROM pers_tempo
+  SELECT id_fila, TRIM(SPLIT_PART(fila,'||',2)) fila FROM pers_tempo
   ORDER BY id_fila
 )
 SELECT DISTINCT fila FROM with_table 
 WHERE fila != '' 
-ORDER BY fila ;
+ORDER BY fila;
 
+SELECT * FROM permat_tempo ORDER BY periodo;
 
+DROP TABLE permat_tempo;*/
+
+INSERT INTO periodo_materia (fec_inicio, fec_fin) VALUES 
+('01/01/2007', '01/06/2007'),
+('01/08/2007', '01/12/2007'),
+('01/01/2008', '01/06/2008'),
+('01/08/2008', '01/12/2008'),
+('01/01/2009', '01/06/2009'),
+('01/08/2009', '01/12/2009'),
+('01/01/2010', '01/06/2010'),
+('01/08/2010', '01/12/2010'),
+('01/01/2011', '01/06/2011'),
+('01/08/2011', '01/12/2011'),
+('01/01/2012', '01/06/2012'),
+('01/08/2012', '01/12/2012'),
+('01/01/2013', '01/06/2013'),
+('01/08/2013', '01/12/2013'),
+('01/01/2014', '01/06/2014'),
+('01/08/2014', '01/03/2015'),
+('01/03/2015', '01/06/2015'),
+('01/08/2015', '01/12/2015')
+;
+ 
+SELECT * FROM periodo_materia;
+
+------------> Grupo
+INSERT INTO grupo (grupo)
+WITH  with_table AS (
+  SELECT id_fila, TRIM(SPLIT_PART(fila,'||',4)) fila FROM pers_tempo
+  ORDER BY id_fila
+)
+SELECT DISTINCT fila FROM with_table 
+WHERE fila != '' 
+ORDER BY fila;
+
+SELECT * FROM grupo;
+
+------------> Homologacion periodos en pers_tempo
+SELECT * FROM pers_tempo ORDER BY id_fila;
+SELECT * FROM permat_tempo ORDER BY periodo;
+
+UPDATE pers_tempo SET fila = REPLACE(fila,'MAR-JUN  2015','MARZO - JUNIO 2015');
+
+--Ene-Jun 2007  DESARROLLO EJECUTIVO     34	INTERNACIONA
+
+------------> MATERIAS
+
+INSERT INTO cat_materia (materia, fec_inicio, fec_fin)
+WITH  with_table AS (
+  SELECT id_fila, TRIM(SPLIT_PART(fila,'||',3)) fila FROM pers_tempo
+  ORDER BY id_fila
+  SELECT id_fila, TRIM(SPLIT_PART(fila,'||',2)) fila FROM pers_tempo
+  ORDER BY id_fila
+SELECT DISTINCT fila FROM with_table 
+WHERE fila != '' 
+ORDER BY fila;
+
+SELECT * FROM cat_materia;
