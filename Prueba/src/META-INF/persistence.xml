@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence version="2.1"
+	xmlns="http://xmlns.jcp.org/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd">
+	<persistence-unit name="hbl_ds">
+		<jta-data-source>java:/comp/env/jdbc/serviciosocial_ds</jta-data-source>
+		<class>com.ipn.esca.serviciosocial.entities.Calificacion</class>
+		<class>com.ipn.esca.serviciosocial.entities.CatEje</class>
+		<class>com.ipn.esca.serviciosocial.entities.CatEspecialidad</class>
+		<class>com.ipn.esca.serviciosocial.entities.CatMateria</class>
+		<class>com.ipn.esca.serviciosocial.entities.CatPerfil</class>
+		<class>com.ipn.esca.serviciosocial.entities.CatTipocurso</class>
+		<class>com.ipn.esca.serviciosocial.entities.CatTipoevaluacion</class>
+		<class>com.ipn.esca.serviciosocial.entities.CatTipogrado</class>
+		<class>com.ipn.esca.serviciosocial.entities.CatUsuario</class>
+		<class>com.ipn.esca.serviciosocial.entities.Contacto</class>
+		<class>com.ipn.esca.serviciosocial.entities.Curso</class>
+		<class>com.ipn.esca.serviciosocial.entities.ExOposicion</class>
+		<class>com.ipn.esca.serviciosocial.entities.Experiencia</class>
+		<class>com.ipn.esca.serviciosocial.entities.Grupo</class>
+		<class>com.ipn.esca.serviciosocial.entities.PeriodoCurso</class>
+		<class>com.ipn.esca.serviciosocial.entities.PeriodoMateria</class>
+		<class>com.ipn.esca.serviciosocial.entities.Persona</class>
+		<class>com.ipn.esca.serviciosocial.entities.Profesor</class>
+		<class>com.ipn.esca.serviciosocial.entities.RCalifTipoeval</class>
+		<class>com.ipn.esca.serviciosocial.entities.REspTipogrado</class>
+		<class>com.ipn.esca.serviciosocial.entities.RProfCalif</class>
+		<class>com.ipn.esca.serviciosocial.entities.RProfCurso</class>
+		<class>com.ipn.esca.serviciosocial.entities.RProfEspecialidad</class>
+		<class>com.ipn.esca.serviciosocial.entities.RProfMateria</class>
+		<properties>
+			<property name="hibernate.show_sql" value="true" />
+			<property name="hibernate.format_sql" value="true" />
+		</properties>
+	</persistence-unit>
+
+</persistence>
