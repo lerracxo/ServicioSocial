@@ -15,11 +15,11 @@ hs_err_pid*
 
 
 #Eclipse config
-SS/.metadata/
-SS/.recommenders/
-SS/.settings
-SS/target
+*/.metadata/
+*/.recommenders/
+*/.settings
+*/target
 
 #Build
-SS/build/
+*/build/
 *.zargo~
