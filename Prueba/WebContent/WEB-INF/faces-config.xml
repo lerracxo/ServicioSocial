@@ -20,28 +20,13 @@
 			<to-view-id>/pages/welcome.xhtml</to-view-id>
 		</navigation-case>
 	</navigation-rule>
+	
 	<navigation-rule>
 		<from-view-id>*</from-view-id>
 		<navigation-case>
-			<from-outcome>filterSelection</from-outcome>
-			<to-view-id>/pages/extractionReports.xhtml</to-view-id>
-		</navigation-case>
-	</navigation-rule>
-	<navigation-rule>
-		<from-view-id>*</from-view-id>
-		<navigation-case>
-			<from-outcome>information</from-outcome>
-			<to-view-id>/pages/information.xhtml</to-view-id>
-		</navigation-case>
-	</navigation-rule>
-		<navigation-rule>
-		<from-view-id>*</from-view-id>
-		<navigation-case>
-			<from-outcome>validationReports</from-outcome>
-			<to-view-id>/pages/validationReports.xhtml</to-view-id>
+			<from-outcome>mainPage</from-outcome>
+			<to-view-id>/pages/mainPage.xhtml</to-view-id>
 		</navigation-case>
 	</navigation-rule>
 	
-
-
 </faces-config>

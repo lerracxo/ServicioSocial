@@ -9,4 +9,6 @@ public interface ProfesorDAO extends GenericDAO<Profesor, Long> {
 	
 	List<Profesor> getAllProfesores();
 	
+	List<Profesor> getProfesoresByFilter(String Filter);
+	
 }

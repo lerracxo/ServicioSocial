@@ -6,7 +6,9 @@ import com.ipn.esca.serviciosocial.entities.Profesor;
 
 public interface ProfesorIService {
 	
-	List<Profesor> getEvents(Profesor filter);
+	List<Profesor> getProfesoresByFilter(Profesor filter);
+
+	List<Profesor> getProfesoresByFilter(String filterProfessor);
 
 //	List<SystemSDTO> getSystems(SystemSDTO filter);
 //

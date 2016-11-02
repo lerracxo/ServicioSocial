@@ -14,6 +14,7 @@ import com.ipn.esca.serviciosocial.entities.Profesor;
 @Stateless
 public class ProfesorDAOBean extends GenericDAOBean<Profesor, Long> implements ProfesorDAO {
 	public static Logger LOG = Logger.getLogger(ProfesorDAOBean.class);
+	
 	@PersistenceContext(name = "serviciosocial_ds")
 	private EntityManager em;
 
@@ -22,6 +23,26 @@ public class ProfesorDAOBean extends GenericDAOBean<Profesor, Long> implements P
 	public List<Profesor> getAllProfesores() {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+
+	@Override
+	public List<Profesor> getProfesoresByFilter(String filter) {
+		StringBuilder bs = new StringBuilder();
+		bs.append(" SELECT e FROM ").append(Profesor.class.getSimpleName());
+		bs.append(" WHERE 1=1 ");
+		if(filter != null){
+			String likeStmt = "LIKE '%".concat(filter.trim()).concat("%'");
+			bs.append(" AND ( ")
+			.append(" e.persona.nombres ").append(likeStmt)
+			.append(" OR ")
+			.append(" e.persona.aMaterno ").append(likeStmt)
+			.append(" OR ")
+			.append(" e.persona.aPaterno ").append(likeStmt)
+			.append("OR")
+			.append(" e.persona.nacionalidad ").append(likeStmt);
+		}
+		return  em.createQuery(bs.toString(),Profesor.class).getResultList();
 	}
 
 //	private List<EventlogDTO> toDTOListEventlogDTO(List<Eventlog> list) {

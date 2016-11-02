@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html lang="es" xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:p="http://primefaces.org/ui">
+
+<ui:composition template="/templates/template.xhtml">
+	<ui:define name="content">
+		<h:panelGroup id="form">
+			<h3>
+				<h:outputLabel value="#{msg.description}" />
+				<br />
+			</h3>
+			<h2>
+				<h:outputLabel value="#{msg.school}" />
+			</h2>
+			<div>
+				<div class="row">
+					<div class="col-md-4 form-group">
+						<h:inputText value="#{profesorMB.filterProfessor}" />
+					</div>
+					<div class="col-md-4 form-group">
+						<h:commandButton value="#{msg.searchProfessors}" type="submit"
+							styleClass="btn btn-default"
+							action="#{profesorMB.searchProfessorByFilter}" />
+					</div>
+				</div>
+				<div class="row">
+					<c:if test="#{empty profesorMB.listProfesores}">
+						<h:outputLabel value="#{msg.noRecordsFound}" />
+					</c:if>
+
+					<p:accordionPanel multiple="true" dynamic="true" cache="true"
+						activeIndex="-1">
+						<c:forEach items="#{validationMB.listValidationResult}" var="val">
+							<p:tab
+								title="#{val.persona.aPaterno} #{val.persona.aMaterno} #{val.persona.nombres}">
+							</p:tab>
+						</c:forEach>
+					</p:accordionPanel>
+				</div>
+			</div>
+
+
+			<h:form id="form1">
+				<div class="row">
+					<div class="modal-footer pull-right">
+						<h:commandButton id="btnRegresar" styleClass="btn btn-default"
+							type="submit" action="#{systemMB.navToQueryProfessor}"
+							value="#{msg.toQueryProfessor}" immediate="true" />
+					</div>
+				</div>
+			</h:form>
+		</h:panelGroup>
+	</ui:define>
+</ui:composition>
+
+</html>
