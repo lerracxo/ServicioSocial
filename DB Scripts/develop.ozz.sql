@@ -22300,3 +22300,32 @@ SELECT * FROM PERSONA;
 SELECT * FROM PROFESOR;
 
 INSERT INTO PROFESOR (ID_PROFESOR) SELECT ID_PERSONA FROM PERSONA;
+
+----------> Alta de tipo de evaluaciones
+INSERT INTO cat_tipoevaluacion (tipo_evaluacion) 
+  values ('Puntualidad'), 
+  ('Dominio de la asignatura'),
+  ('Habilidad didáctica'),
+  ('Programa'),
+  ('Evaluacion'),
+  ('Actitud');
+
+SELECT * FROM cat_tipoevaluacion;
+
+----------> Relacion calificaciones - tipoevaluacion
+SELECT * FROM r_calif_tipoeval;
+
+----------> Alta calificaciones
+
+SELECT * FROM calificacion;
+
+CREATE TABLE calif_tempo (
+id serial,
+calif text
+);
+
+SELECT DISTINCT calif FROM calif_tempo ORDER BY calif;
+
+INSERT INTO calificacion (calificacion)
+  SELECT DISTINCT calif FROM calif_tempo
+  ORDER BY calif;
