@@ -12,19 +12,19 @@
 		<h:panelGroup id="form">
 			<h3>
 				<h:outputLabel value="#{msg.description}" />
-				<br />
 			</h3>
-			<h2>
+			<h4>
 				<h:outputLabel value="#{msg.school}" />
-			</h2>
+			</h4>
 			<div>
 				<div class="row">
 					<div class="col-md-4 form-group">
+						<h:outputLabel value="#{msg.criteria}" />
 						<h:inputText value="#{profesorMB.filterProfessor}" />
 					</div>
 					<div class="col-md-4 form-group">
 						<h:commandButton value="#{msg.searchProfessors}" type="submit"
-							styleClass="btn btn-default"
+							styleClass="btn  btn-primary"
 							action="#{profesorMB.searchProfessorByFilter}" />
 					</div>
 				</div>
@@ -47,7 +47,7 @@
 
 			<h:form id="form1">
 				<div class="row">
-					<div class="modal-footer pull-right">
+					<div class="modal-footer pull-left">
 						<h:commandButton id="btnRegresar" styleClass="btn btn-default"
 							type="submit" action="#{systemMB.navToQueryProfessor}"
 							value="#{msg.toQueryProfessor}" immediate="true" />

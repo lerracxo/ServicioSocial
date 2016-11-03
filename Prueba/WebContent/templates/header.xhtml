@@ -13,14 +13,17 @@
 						class="icon-bar"></span> <span class="icon-bar"></span> <span
 						class="icon-bar"></span>
 				</button>
-				<h:link value="#{msg.projectBuzz}" outcome="filterSelection" class="navbar-brand" />
+				<h:link value="#{msg.project}" outcome="filterSelection"
+					class="navbar-brand" />
 			</div>
 			<div class="navbar-collapse collapse">
 				<ul class="nav navbar-nav navbar-right">
 					<li><a href="#">Dashboard</a></li>
 					<li><a href="#">Settings</a></li>
 					<li><a href="#">Profile</a></li>
-					<li><h:link value="#{msg.information}" outcome="information"/></li>
+					<li><h:commandButton type="submit" styleClass="btn btn-link "
+							action="#{systemMB.getNavToInformation}" value="#{msg.information}"
+							immediate="true" /></li>
 				</ul>
 				<form class="navbar-form navbar-right">
 					<input type="text" class="form-control" placeholder="Search..." />
