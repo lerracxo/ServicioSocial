@@ -22329,3 +22329,6 @@ SELECT DISTINCT calif FROM calif_tempo ORDER BY calif;
 INSERT INTO calificacion (calificacion)
   SELECT DISTINCT calif FROM calif_tempo
   ORDER BY calif;
+
+------------> Acomodo de nombres en tabla persona
+SELECT * FROM persona;
