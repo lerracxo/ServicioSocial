@@ -22332,3 +22332,18 @@ INSERT INTO calificacion (calificacion)
 
 ------------> Acomodo de nombres en tabla persona
 SELECT * FROM persona;
+
+------------> Ingreso de ejes
+INSERT INTO cat_eje (eje) 
+values('Pedagogica'),
+('Disciplinar'),
+('Desarrollo personal'),
+('Tics');
+
+SELECT * FROM cat_eje;
+
+-------------> Ingreso de tipo de cursos
+SELECT * FROM cat_tipocurso;
+
+
+
