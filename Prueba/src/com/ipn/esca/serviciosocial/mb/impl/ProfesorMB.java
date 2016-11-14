@@ -20,7 +20,7 @@ public class ProfesorMB extends GenericMB implements Serializable {
 	@EJB(lookup="java:module/ProfesorServiceBean!com.ipn.esca.serviciosocial.bs.ProfesorServiceLocal")
 	private ProfesorIService service;
 	
-	private String filterProfessor;
+	private String filterProfessor; 
 	private List<Profesor> listProfesores;
 	
 	@PostConstruct
@@ -34,7 +34,6 @@ public class ProfesorMB extends GenericMB implements Serializable {
 	
 	public void searchProfessorByFilter(){
 		this.setListProfesores(service.getProfesoresByFilter(filterProfessor));
-		
 	}
 	
 	public String navToFilter(){
@@ -45,17 +44,9 @@ public class ProfesorMB extends GenericMB implements Serializable {
 	public String getProjectVersion(){
 		return Constant.PROJECT_VERSION;
 	}
-	private void populatelEventlog(){
-		
-	}
-
 	
 	
-	public void findEvents(){
-		populatelEventlog();
-	}
-	
-	public String function(){
+	public String function(){	
 		System.out.println("Prueba");
 		return "prueba";
 	}

@@ -43,10 +43,10 @@
 					<username>deploy</username> <password>deploy</password> </configuration> -->
 				<!-- localhost -->
 				<configuration>
-					<hostname>dayrhebuzd01</hostname>
-					<port>10990</port>
-					<username>deploy</username>
-					<password>deploy</password>
+					<hostname>localhost</hostname>
+					<port>9991</port>
+					<username>serviciosocial</username>
+					<password>serviciosocial</password>
 				</configuration>
 			</plugin>
 			<plugin>

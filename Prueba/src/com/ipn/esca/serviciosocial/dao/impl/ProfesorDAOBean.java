@@ -29,8 +29,9 @@ public class ProfesorDAOBean extends GenericDAOBean<Profesor, Long> implements P
 	@Override
 	public List<Profesor> getProfesoresByFilter(String filter) {
 		StringBuilder bs = new StringBuilder();
-		bs.append(" SELECT e FROM ").append(Profesor.class.getSimpleName());
-		bs.append(" WHERE 1=1 ");
+		bs.append(" SELECT e FROM ").append(Profesor.class.getSimpleName())
+		.append(" e ")
+		.append(" WHERE 1=1 ");
 		if(filter != null){
 			String likeStmt = "LIKE '%".concat(filter.trim()).concat("%'");
 			bs.append(" AND ( ")

@@ -50,19 +50,19 @@ public class Persona implements Serializable {
 		this.idPersona = idPersona;
 	}
 
-	public String getAMaterno() {
+	public String getaMaterno() {
 		return this.aMaterno;
 	}
 
-	public void setAMaterno(String aMaterno) {
+	public void setaMaterno(String aMaterno) {
 		this.aMaterno = aMaterno;
 	}
 
-	public String getAPaterno() {
+	public String getaPaterno() {
 		return this.aPaterno;
 	}
 
-	public void setAPaterno(String aPaterno) {
+	public void setaPaterno(String aPaterno) {
 		this.aPaterno = aPaterno;
 	}
 

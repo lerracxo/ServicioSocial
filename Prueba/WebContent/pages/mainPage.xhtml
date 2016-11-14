@@ -16,41 +16,48 @@
 			<h4>
 				<h:outputLabel value="#{msg.school}" />
 			</h4>
-			<div>
-				<div class="row">
-					<div class="col-md-4 form-group">
-						<h:outputLabel value="#{msg.criteria}" />
-						<h:inputText value="#{profesorMB.filterProfessor}" />
+			<h:form id="formMain">
+				<div>
+					<div class="row">
+						<h:messages globalOnly="true" showDetail="true"></h:messages>
 					</div>
-					<div class="col-md-4 form-group">
-						<h:commandButton value="#{msg.searchProfessors}" type="submit"
-							styleClass="btn  btn-primary"
-							action="#{profesorMB.searchProfessorByFilter}" />
+					<div class="row">
+						<div class="col-md-4 form-group">
+							<h:outputLabel value="#{msg.criteria}" />
+							<h:inputText value="#{profesorMB.filterProfessor}" />
+						</div>
+						<div class="col-md-4 form-group">
+							<h:commandButton value="#{msg.searchProfessors}"
+								styleClass="btn  btn-primary">
+								<f:ajax listener="#{profesorMB.searchProfessorByFilter}"
+									render="professorList"></f:ajax>
+							</h:commandButton>
+						</div>
 					</div>
-				</div>
-				<div class="row">
-					<c:if test="#{empty profesorMB.listProfesores}">
-						<h:outputLabel value="#{msg.noRecordsFound}" />
-					</c:if>
+					<h:panelGroup class="row" id="professorList">
+						<c:if test="#{empty profesorMB.listProfesores}">
+							<h:outputLabel value="#{msg.noRecordsFound}" />
+						</c:if>
 
-					<p:accordionPanel multiple="true" dynamic="true" cache="true"
-						activeIndex="-1">
-						<c:forEach items="#{validationMB.listValidationResult}" var="val">
-							<p:tab
-								title="#{val.persona.aPaterno} #{val.persona.aMaterno} #{val.persona.nombres}">
-							</p:tab>
-						</c:forEach>
-					</p:accordionPanel>
-				</div>
-			</div>
+						<p:accordionPanel multiple="true" dynamic="true" cache="true"
+							activeIndex="-1" >
+							<c:forEach items="#{profesorMB.listProfesores}" var="val">
+								<p:tab
+									title="#{val.persona.aPaterno} #{val.persona.aMaterno} #{val.persona.nombres}">
+								</p:tab>
+							</c:forEach>
+						</p:accordionPanel>
 
+					</h:panelGroup>
+				</div>
+			</h:form>
 
 			<h:form id="form1">
 				<div class="row">
 					<div class="modal-footer pull-left">
 						<h:commandButton id="btnRegresar" styleClass="btn btn-default"
-							type="submit" action="#{systemMB.navToQueryProfessor}"
-							value="#{msg.toQueryProfessor}" immediate="true" />
+							type="submit" action="#{systemMB.getNavToWelcome}"
+							value="#{msg.desc_welcome}" immediate="true" />
 					</div>
 				</div>
 			</h:form>
