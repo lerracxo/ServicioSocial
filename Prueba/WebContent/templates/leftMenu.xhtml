@@ -9,20 +9,44 @@
 		<li
 			class="#{ systemMB.actualPage == systemMB.navToWelcome ? 'active' : '' }">
 			<h:commandButton type="submit" styleClass=".a btn btn-link"
-				action="#{systemMB.getNavToWelcome}" value="#{msg.desc_welcome}"
+				action="#{systemMB.getNavToWelcome}" value="#{msg.bienvenida}"
 				immediate="true" />
 		</li>
 		<li
 			class="#{ systemMB.actualPage == systemMB.navToMainPage ? 'active' : '' }">
 			<h:link  />
 			<h:commandButton type="submit" styleClass=".a btn btn-link "
-				action="#{systemMB.getNavToMainPage}" value="#{msg.desc_mainPage}"
+				action="#{systemMB.getNavToMainPage}" value="#{msg.personal}"
+				immediate="true"/>
+		</li>
+		<li
+			class="#{ systemMB.actualPage == systemMB.navToMainPage ? 'active' : '' }">
+			<h:link  />
+			<h:commandButton type="submit" styleClass=".a btn btn-link "
+				action="#{systemMB.getNavToMainPage}" value="#{msg.profesor}"
 				immediate="true" />
 		</li>
-		<li ><a href="#">Overview</a></li>
-		<li><a href="#">Reports</a></li>
-		<li><a href="#">Analytics</a></li>
-		<li><a href="#">Export</a></li>
+		<li 
+			class="#{ systemMB.actualPage == systemMB.navToMainPage ? 'active' : '' }">
+			<h:link  />
+			<h:commandButton type="submit" styleClass=".a btn btn-link "
+				action="#{systemMB.getNavToMainPage}" value="#{msg.materia}"
+				immediate="true"/>
+		</li>
+		<li
+			class="#{ systemMB.actualPage == systemMB.navToMainPage ? 'active' : '' }">
+			<h:link  />
+			<h:commandButton type="submit" styleClass=".a btn btn-link "
+				action="#{systemMB.getNavToMainPage}" value="#{msg.calificacion}"
+				immediate="true"/>
+		</li>
+		<li
+			class="#{ systemMB.actualPage == systemMB.navToMainPage ? 'active' : '' }">
+			<h:link  />
+			<h:commandButton type="submit" styleClass=".a btn btn-link "
+				action="#{systemMB.getNavToMainPage}" value="#{msg.periodo}"
+				immediate="true"/>
+				</li>
 	</ul>
 
 	<!-- <ul class="nav nav-sidebar">

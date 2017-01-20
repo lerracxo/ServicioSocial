@@ -44,7 +44,7 @@
 				<!-- localhost -->
 				<configuration>
 					<hostname>localhost</hostname>
-					<port>9991</port>
+					<port>9990</port>
 					<username>serviciosocial</username>
 					<password>serviciosocial</password>
 				</configuration>

@@ -7,12 +7,14 @@
 <ui:composition template="/templates/template.xhtml">
 	<ui:define name="content">
 		<h:panelGroup id="form">
+			<h1>
+				<h:outputLabel value="#{msg.school_complete}" styleClass="nombre"/>
+				<br />
+				<h:outputLabel value="#{msg.sede}" />
+				<br />
+			</h1>
 			<h3>
 				<h:outputLabel value="#{msg.project}" />
-				<br />
-				<h:outputLabel value="#{msg.description}" />
-				<br />
-				<h:outputLabel value="#{msg.school}" />
 			</h3>
 
 			<h:form id="form1">
@@ -20,7 +22,7 @@
 					<div class="modal-footer pull-left">
 						<h:commandButton id="btnRegresar" styleClass="btn btn-default"
 							type="submit" action="#{systemMB.getNavToMainPage}"
-							value="#{msg.desc_mainPage}" immediate="true" />
+							value="#{msg.profesor}" immediate="true" />
 					</div>
 				</div>
 			</h:form>
