@@ -13,7 +13,7 @@ import javax.xml.bind.Unmarshaller;
 import com.nielsen.buzz.outputchecks.visualizer.entity.Database;
 
 public class ReportManager {
-	private static final String dir = "C:/Users/saos6001/Repository/OutputChecks/OutputCheck/OutputChecks/";
+	private static final String dir = "C:/";
 	
 	private static ReportManager reportManager = null;
 	
