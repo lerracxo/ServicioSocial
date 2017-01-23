@@ -1,0 +1,128 @@
+
+<div class="container main-content" ng-controller="databaseDetails">
+	<div class="row">
+		<div class="col-md-12 h5">
+			<form class="form-inline well well-sm">
+				<div class="form-group">Database detail |</div>
+				<div class="form-group">Name:</div>
+				<div class="form-group">{{selectedDatabase.name}} |</div>
+				<div class="form-group">Status:</div>
+				<div class="form-group">{{selectedDatabase.status}}</div>
+			</form>
+		</div>
+	</div>
+
+	<div class="row">
+		<div class="col-md-8">
+			<div ng-repeat="dimension in selectedDatabase.dimensions ">
+				<div class="card card-default">
+					<div class="card-header h6"
+						ng-style="
+							'border':  dimension.status === errorType  ? 'solid red' '': ,
+							 'background-color': dimension.status === errorType ? '#FEAEAE' : '',">
+						Dimensi on: {{dimension.name}} || Status: {{dimension.status}}</div>
+					<div class="card-block">
+						<table class="table table-bordered">
+							<thead class="thead-inverse">
+								<tr>
+									<th class="text-center"
+										colspan="{{dimension.cip.columns.length}}">{{dimension.cip.name}}</th>
+									<th class="text-center"
+										colspan="{{dimension.legacy.columns.length}}">{{dimension.legacy.name}}</th>
+								</tr>
+							</thead>
+							<tr>
+								<th ng-repeat="column in dimension.cip.columns ">{{column}}</th>
+								<th ng-repeat="column in dimension.legacy.columns ">{{column}}</th>
+							</tr>
+							<tr ng-repeat="data in dimension.cip.dataTable ">
+
+								<th ng-repeat="dataRow in data track by $index">{{dataRow}}</th>
+								<th class="text-center"
+									colspan="{{dimension.legacy.columns.length}}" bgcolor='#FEAEAE'>Does
+									not exists</th>
+							</tr>
+							<tr ng-repeat="data in dimension.legacy.dataTable ">
+
+								<th class="text-center"
+									colspan="{{dimension.cip.columns.length}}" bgcolor='#FEAEAE'>Does
+									not exists</th>
+								<th ng-repeat="dataRow in data track by $index">{{dataRow}}</th>
+							</tr>
+						</table>
+					</div>
+				</div>
+			</div>
+
+
+			<!--                                 -->
+
+			<div ng-repeat="outlier in selectedDatabase.outliers">
+				<div class="card card-default">
+					<div class="card-header h6"
+						ng-style="
+							'border':  dimension.status === errorType  ? 'solid red' '': ,
+							 'background-color': dimension.status === errorType ? '#FEAEAE' : '',">
+						Outliers</div>
+					<div class="card-block">
+						<table class="table table-bordered">
+							<thead class="thead-inverse">
+								<tr>
+									<th class="text-center"
+										ng-repeat="column in outlier.header.columns">{{column}}</th>
+								</tr>
+							</thead>
+							<tr>
+								<th class="text-center"
+									ng-repeat="field in outlier.header.fields">{{field}}</th>
+							</tr>
+						</table>
+					</div>
+					<div class="card-block">
+						<table class="table table-bordered">
+							<thead class="thead-inverse">
+								<tr>
+									<th class="text-center"
+										colspan="{{outlier.cip.dataTable.length}}">{{outlier.cip.name}}</th>
+									<th class="text-center"
+										colspan="{{outlier.legacy.dataTable.length}}">{{outlier.legacy.name}}</th>
+								</tr>
+							</thead>
+							<tr>
+								<th ng-repeat="field in outlier.cip.dataTable ">{{field }}</th>
+								<th ng-repeat="field in outlier.legacy.dataTable ">{{field }}</th>
+							</tr>
+							<tr ng-repeat="data in field ">
+								<th ng-repeat="dataRow in data track by $index">{{dataRow}}</th>
+							</tr>
+							<tr ng-repeat="data in dimension.legacy.dataTable ">
+								<th ng-repeat="dataRow in data track by $index">{{dataRow}}</th>
+							</tr>
+						</table>
+					</div>
+				</div>
+			</div>
+
+
+
+
+			<div class="col-md-4">
+				<div class="card ">
+					<div class="card-header h6">Details</div>
+					<div class="card-block">
+						<div ng-show="selectedDatabase != null">
+							<dl>
+								<dt>Name</dt>
+								<dd>{{selectedDatabase.name}}</dd>
+								<dt>Status</dt>
+								<dd>{{selectedDatabase.status}}</dd>
+								<dt>Date</dt>
+								<dd>{{selectedDatabase.date | date:"longDate"}}</dd>
+							</dl>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
