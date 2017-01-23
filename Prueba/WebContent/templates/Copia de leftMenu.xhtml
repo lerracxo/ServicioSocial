@@ -1,0 +1,68 @@
+<html lang="es" xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+
+<composition>
+	<ul class="nav nav-sidebar">
+
+		<li
+			class="#{ systemMB.actualPage == systemMB.navToMainPage ? 'active' : '' }">
+			<link  />
+			<commandButton type="submit" styleClass=".a btn btn-link "
+				action="#{systemMB.getNavToMainPage}" value="#{msg.personal}"
+				immediate="true"/>
+		</li>
+		<li
+			class="#{ systemMB.actualPage == systemMB.navToMainPage ? 'active' : '' }">
+			<link  />
+			<commandButton type="submit" styleClass=".a btn btn-link "
+				action="#{systemMB.getNavToMainPage}" value="#{msg.profesor}"
+				immediate="true" />
+		</li>
+		<li 
+			class="#{ systemMB.actualPage == systemMB.navToMainPage ? 'active' : '' }">
+			<link  />
+			<commandButton type="submit" styleClass=".a btn btn-link "
+				action="#{systemMB.getNavToMainPage}" value="#{msg.materia}"
+				immediate="true"/>
+		</li>
+		<li
+			class="#{ systemMB.actualPage == systemMB.navToMainPage ? 'active' : '' }">
+			<link  />
+			<commandButton type="submit" styleClass=".a btn btn-link "
+				action="#{systemMB.getNavToMainPage}" value="#{msg.calificacion}"
+				immediate="true"/>
+		</li>
+		<li
+			class="#{ systemMB.actualPage == systemMB.navToMainPage ? 'active' : '' }">
+			<link  />
+			<commandButton type="submit" styleClass=".a btn btn-link "
+				action="#{systemMB.getNavToMainPage}" value="#{msg.periodo}"
+				immediate="true"/>
+		</li>
+		<li
+			class="#{ systemMB.actualPage == systemMB.navToMainPage ? 'active' : '' }">
+			<link  />
+			<commandButton type="submit" styleClass=".a btn btn-link "
+				action="#{systemMB.getNavToMainPage}" value="#{msg.cerrar}"
+				immediate="true"/>
+		</li>
+	</ul>
+
+	<!-- <ul class="nav nav-sidebar">
+		<li><a href="#">nav 1</a></li>
+		<li><a href="#">nav 2</a></li>
+		<li><a href="#">nav 3</a></li>
+		<li><a href="#">nav 4</a></li>
+	</ul>
+	<ul class="nav nav-sidebar">
+		<li><a href="#">nav 1</a></li>
+		<li><a href="#">nav 2</a></li>
+		<li><a href="#">nav 3</a></li>
+		<li><a href="#">nav 4</a></li>
+	</ul>
+	 -->
+
+</composition>
+</html>
