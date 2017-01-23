@@ -2,8 +2,8 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 
-	<groupId>com.nielsen.buzz.outputchecks</groupId>
-	<artifactId>com.nielsen.buzz.outputchecks.visualizer</artifactId>
+	<groupId>esca</groupId>
+	<artifactId>com.esca.administracion</artifactId>
 	<version>1.0</version>
 	<packaging>jar</packaging>
 
@@ -14,8 +14,16 @@
 
 	<developers>
 		<developer>
-			<id>saos6001</id>
+			<id>lerracxo</id>
 			<name>Oscar Santoyo</name>
+			<roles>
+				<role>Architect</role>
+				<role>Developer</role>
+			</roles>
+		</developer>
+		<developer>
+			<id>estela.acostap</id>
+			<name>Estela Acosta</name>
 			<roles>
 				<role>Architect</role>
 				<role>Developer</role>
@@ -42,11 +50,7 @@
 			<artifactId>gson</artifactId>
 			<version>2.8.0</version>
 		</dependency>
-
-
 	</dependencies>
-
-
 	<build>
 		<plugins>
 			<plugin>
