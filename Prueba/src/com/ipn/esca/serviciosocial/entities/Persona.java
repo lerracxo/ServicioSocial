@@ -27,17 +27,6 @@ public class Persona implements Serializable {
 
 	private String nombres;
 
-	//bi-directional one-to-one association to CatUsuario
-	@OneToOne(mappedBy="persona")
-	private CatUsuario catUsuario;
-
-	//bi-directional one-to-one association to Contacto
-	@OneToOne(mappedBy="persona")
-	private Contacto contacto;
-
-	//bi-directional one-to-one association to Profesor
-	@OneToOne(mappedBy="persona")
-	private Profesor profesor;
 
 	public Persona() {
 	}
@@ -80,30 +69,6 @@ public class Persona implements Serializable {
 
 	public void setNombres(String nombres) {
 		this.nombres = nombres;
-	}
-
-	public CatUsuario getCatUsuario() {
-		return this.catUsuario;
-	}
-
-	public void setCatUsuario(CatUsuario catUsuario) {
-		this.catUsuario = catUsuario;
-	}
-
-	public Contacto getContacto() {
-		return this.contacto;
-	}
-
-	public void setContacto(Contacto contacto) {
-		this.contacto = contacto;
-	}
-
-	public Profesor getProfesor() {
-		return this.profesor;
-	}
-
-	public void setProfesor(Profesor profesor) {
-		this.profesor = profesor;
 	}
 
 }

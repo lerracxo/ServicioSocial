@@ -16,7 +16,9 @@ public class ProfesorServiceBean implements ProfesorServiceLocal, ProfesorServic
 	@EJB(lookup="java:module/ProfesorDAOBean!com.ipn.esca.serviciosocial.dao.ProfesorDAO")
 	private ProfesorDAO service;
 	
-
+	
+	
+	
 	@Override
 	public List<Profesor> getProfesoresByFilter(Profesor filter) {
 		// TODO Auto-generated method stub

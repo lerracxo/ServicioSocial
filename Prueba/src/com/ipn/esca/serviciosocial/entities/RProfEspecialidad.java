@@ -23,10 +23,6 @@ public class RProfEspecialidad implements Serializable {
 	@JoinColumn(name="id_especialidad")
 	private CatEspecialidad catEspecialidad;
 
-	//bi-directional many-to-one association to Profesor
-	@ManyToOne
-	@JoinColumn(name="id_profesor")
-	private Profesor profesor;
 
 	public RProfEspecialidad() {
 	}
@@ -47,12 +43,6 @@ public class RProfEspecialidad implements Serializable {
 		this.catEspecialidad = catEspecialidad;
 	}
 
-	public Profesor getProfesor() {
-		return this.profesor;
-	}
 
-	public void setProfesor(Profesor profesor) {
-		this.profesor = profesor;
-	}
 
 }

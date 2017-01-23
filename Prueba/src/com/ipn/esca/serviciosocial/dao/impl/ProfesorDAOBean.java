@@ -41,7 +41,8 @@ public class ProfesorDAOBean extends GenericDAOBean<Profesor, Long> implements P
 			.append(" OR ")
 			.append(" e.persona.aPaterno ").append(likeStmt)
 			.append("OR")
-			.append(" e.persona.nacionalidad ").append(likeStmt);
+			.append(" e.persona.nacionalidad ").append(likeStmt)
+			.append(" ) ");
 		}
 		return  em.createQuery(bs.toString(),Profesor.class).getResultList();
 	}
