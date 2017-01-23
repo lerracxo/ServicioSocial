@@ -8,7 +8,6 @@ import spark.Spark;
 
 public class Main {
 	public static void main(String[] args) {
-		ServiceBean service = ServiceBean.getInstance();
 		JsonTransformer jsonTrans = new JsonTransformer();
 		Spark.staticFileLocation("/public");
 
@@ -19,12 +18,12 @@ public class Main {
 
 		get("/database", (req, res) -> {
 			res.raw().setContentType("application/json");
-			return service.getDatabases();
+			return "";
 		},jsonTrans);
 
 		get("/database/:database", (req, res) -> {
 			res.raw().setContentType("application/json");
-			return service.getDatabase(Integer.parseInt(req.params(":database")));
+			return "";
 		},jsonTrans);
 
 	}
