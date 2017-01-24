@@ -7,11 +7,39 @@ app.config([ '$routeProvider', '$locationProvider',
     function($routeProvider, $locationProvider) {
         $routeProvider.when('/', {
             templateUrl : '/app/welcome.html',
-            controller : 'profesorController'
+            controller : 'welcomeController'
         })
         $routeProvider.when('/profesor', {
             templateUrl : '/app/profesor.html',
             controller : 'profesorController'
+        })
+        $routeProvider.when('/curso', {
+            templateUrl : '/app/curso.html',
+            controller : 'cursoController'
+        })
+        $routeProvider.when('/periodo', {
+            templateUrl : '/app/periodo.html',
+            controller : 'periodoController'
+        })
+        $routeProvider.when('/calificacion', {
+            templateUrl : '/app/calificacion.html',
+            controller : 'calificacionController'
+        })
+        $routeProvider.when('/cambioContra', {
+            templateUrl : '/app/cambioContra.html',
+            controller : 'cambioContraController'
+        })
+        $routeProvider.when('/oposicion', {
+            templateUrl : '/app/oposicion.html',
+            controller : 'oposicionController'
+        })
+        $routeProvider.when('/archivo', {
+            templateUrl : '/app/archivo.html',
+            controller : 'arvhivoController'
+        })
+        $routeProvider.when('/perfil', {
+            templateUrl : '/app/perfil.html',
+            controller : 'perfilController'
         })
 // .otherwise({
 // redirectTo : 'databases.html'
