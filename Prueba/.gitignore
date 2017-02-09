@@ -2,3 +2,6 @@ target/*
 /target/
 /.metadata/
 .settings/
+/esca.iml
+/esca.ipr
+/esca.iws

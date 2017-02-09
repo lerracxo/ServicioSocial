@@ -1,6 +1,7 @@
 package com.ipn.esca.serviciosocial.sb;
 
-import java.io.IOException;
+import com.google.gson.Gson;
+import com.ipn.esca.serviciosocial.bs.ProfesorIService;
 
 import javax.ejb.EJB;
 import javax.servlet.ServletException;
@@ -8,10 +9,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
-import com.google.gson.Gson;
-import com.ipn.esca.serviciosocial.bs.ProfesorIService;
-import com.ipn.esca.serviciosocial.entities.Profesor;
+import java.io.IOException;
 
 /**
  * Servlet implementation class ProfesorServlet
