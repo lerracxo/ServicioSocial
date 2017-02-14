@@ -4,6 +4,7 @@ import com.google.gson.Gson;
 import com.ipn.esca.serviciosocial.bs.ProfesorIService;
 
 import javax.ejb.EJB;
+import javax.inject.Inject;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -15,12 +16,14 @@ import java.io.IOException;
  * Servlet implementation class ProfesorServlet
  */
 @WebServlet(name="profesor", urlPatterns={"/profesor","/profesor/*"})
+@Deprecated
 public class ProfesorServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	
 	private final Gson gson = new Gson();
 	
-	@EJB(lookup="java:module/ProfesorServiceBean!com.ipn.esca.serviciosocial.bs.ProfesorServiceLocal")
+	@EJB(lookup="java:module/ProfesorServiceBean!com.ipn.esca.serviciosocial.bs.ProfesorIService")
+	@Inject
 	private ProfesorIService service;
        
     /**
@@ -28,7 +31,6 @@ public class ProfesorServlet extends HttpServlet {
      */
     public ProfesorServlet() {
         super();
-        // TODO Auto-generated constructor stub
     }
 
 	/**

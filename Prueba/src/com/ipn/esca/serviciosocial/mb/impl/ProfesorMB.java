@@ -17,7 +17,7 @@ import com.ipn.esca.serviciosocial.entities.Profesor;
 public class ProfesorMB extends GenericMB implements Serializable {
 	private static final long serialVersionUID = 7930745241666648980L;
 	
-	@EJB(lookup="java:module/ProfesorServiceBean!com.ipn.esca.serviciosocial.bs.ProfesorServiceLocal")
+	@EJB(lookup="java:module/ProfesorServiceBean!com.ipn.esca.serviciosocial.bs.ProfesorIService")
 	private ProfesorIService service;
 	
 	private String filterProfessor; 

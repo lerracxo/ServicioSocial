@@ -1,14 +1,17 @@
 package com.ipn.esca.serviciosocial.bs;
 
-import java.util.List;
-
 import com.ipn.esca.serviciosocial.entities.Profesor;
 
-public interface ProfesorIService {
-	
-	List<Profesor> getProfesoresByFilter(Profesor filter);
+import java.util.List;
 
-	List<Profesor> getProfesoresByFilter(String filterProfessor);
+public interface ProfesorIService {
+
+    List<Profesor> getProfesoresByFilter(Profesor filter);
+
+    List<Profesor> getProfesoresByFilter(String filterProfessor);
+
+    List<Profesor> getProfesorById(String id);
+
 
 //	List<SystemSDTO> getSystems(SystemSDTO filter);
 //

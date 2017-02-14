@@ -25,6 +25,14 @@ public class ProfesorDAOBean extends GenericDAOBean<Profesor, Long> implements P
 		return null;
 	}
 
+	@Override
+	public List<Profesor> getProfessorById(String id){
+		String sql = new StringBuilder().append(" SELECT e FROM ").append(Profesor.class.getSimpleName())
+				.append(" e ").append(" WHERE e.persona.id = '").append(id).append("'").toString();
+		System.out.println("SQL by ID "+sql);
+		return em.createQuery(sql,Profesor.class).getResultList();
+	}
+
 
 	@Override
 	public List<Profesor> getProfesoresByFilter(String filter) {
