@@ -9,7 +9,7 @@ import spark.Spark;
 public class Main {
 	public static void main(String[] args) {
 		JsonTransformer jsonTrans = new JsonTransformer();
-		Spark.staticFileLocation("/public");
+		Spark.staticFileLocation("/public/");
 
 		get("/hello/:name", (req, res) -> {
 			String respuesta = "{\"name\":\"Hello World" + req.params(":name") + "\"}";
