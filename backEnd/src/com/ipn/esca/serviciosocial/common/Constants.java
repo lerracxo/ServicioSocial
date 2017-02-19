@@ -1,6 +1,6 @@
 package com.ipn.esca.serviciosocial.common;
 
-public class Constant {
+public class Constants {
 	
 	public static final String PROJECT_VERSION = "1.0.0";
 	
