@@ -1,16 +1,15 @@
 package com.ipn.esca.serviciosocial.mb.impl;
 
-import java.io.Serializable;
-import java.util.List;
+import com.ipn.esca.serviciosocial.bs.ProfesorIService;
+import com.ipn.esca.serviciosocial.common.Constants;
+import com.ipn.esca.serviciosocial.entities.Profesor;
 
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
-
-import com.ipn.esca.serviciosocial.bs.ProfesorIService;
-import com.ipn.esca.serviciosocial.common.Constant;
-import com.ipn.esca.serviciosocial.entities.Profesor;
+import java.io.Serializable;
+import java.util.List;
 
 @ManagedBean(name = "profesorMB")
 @ViewScoped
@@ -37,12 +36,12 @@ public class ProfesorMB extends GenericMB implements Serializable {
 	}
 	
 	public String navToFilter(){
-		return Constant.FilterScreen;
+		return Constants.FilterScreen;
 	}
 
 
 	public String getProjectVersion(){
-		return Constant.PROJECT_VERSION;
+		return Constants.PROJECT_VERSION;
 	}
 	
 	

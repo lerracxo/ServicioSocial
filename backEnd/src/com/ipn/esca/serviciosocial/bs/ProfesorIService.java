@@ -3,11 +3,9 @@ package com.ipn.esca.serviciosocial.bs;
 import com.ipn.esca.serviciosocial.entities.Profesor;
 
 import javax.ejb.Local;
-import javax.ejb.Remote;
 import java.util.List;
 
 @Local
-@Remote
 public interface ProfesorIService {
 
     List<Profesor> getProfesoresByFilter(Profesor filter);

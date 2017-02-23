@@ -18,13 +18,6 @@ public class ProfesorDAOBean extends GenericDAOBean<Profesor, Long> implements P
 	@PersistenceContext(name = "serviciosocial_ds")
 	private EntityManager em;
 
-
-//	@Override
-//	public List<Profesor> getAllProfesores() {
-//		// TODO Auto-generated method stub
-//		return null;
-//	}
-
 	@Override
 	public List<Profesor> getProfessorById(String id){
 		String sql = new StringBuilder().append(" SELECT e FROM ").append(Profesor.class.getSimpleName())
@@ -32,7 +25,6 @@ public class ProfesorDAOBean extends GenericDAOBean<Profesor, Long> implements P
 		System.out.println("SQL by ID "+sql);
 		return em.createQuery(sql,Profesor.class).getResultList();
 	}
-
 
 	@Override
 	public List<Profesor> getProfesoresByFilter(String filter) {
@@ -55,17 +47,7 @@ public class ProfesorDAOBean extends GenericDAOBean<Profesor, Long> implements P
 		return  em.createQuery(bs.toString(),Profesor.class).getResultList();
 	}
 
-//	private List<EventlogDTO> toDTOListEventlogDTO(List<Eventlog> list) {
-//		if (list == null || list.isEmpty())
-//			return null;
-//
-//		List<EventlogDTO> result = new ArrayList<EventlogDTO>();
-//		for (Eventlog l : list) {
-//			result.add(new EventlogDTO(l));
-//		}
-//		return result;
-//	}
-	
+
 
 	
 }

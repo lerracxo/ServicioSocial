@@ -1,10 +1,27 @@
 var app = angular.module('administracion',  ['ngRoute']);
 
-
 // //'ngResource' , ,$resource
 //
-app.config([ '$routeProvider', '$locationProvider',
-    function($routeProvider, $locationProvider) {
+
+//app.config(['$sceDelegateProvider', function($sceDelegateProvider) {
+//$sceDelegateProvider.resourceUrlWhitelist(['self', 'http://localhost:8081/mansysSS**']);
+//}])
+
+app.config([ '$routeProvider', '$locationProvider','$sceDelegateProvider',
+    function($routeProvider, $locationProvider,$sceDelegateProvider) {
+     $sceDelegateProvider.resourceUrlWhitelist([
+        // Allow same origin resource loads.
+        'self',
+        // Allow loading from our assets domain.  Notice the difference between * and **.
+        'http://localhost:8081/mansysSS/professor/generic/*'
+      ]);
+
+      // The blacklist overrides the whitelist so the open redirect here is blocked.
+      $sceDelegateProvider.resourceUrlBlacklist([
+        'http://myapp.example.com/clickThru**'
+      ]);
+
+
         $routeProvider.when('/', {
             templateUrl : '/app/welcome.html',
             controller : 'welcomeController'
@@ -48,7 +65,25 @@ app.config([ '$routeProvider', '$locationProvider',
     }
 ]);
 
-app.controller('profesor',['$scope','$http','$location','$routeParams', function ($scope,$http,$location,$routeParams) {
+app.controller('profesorController',['$scope','$http','$location','$routeParams', function ($scope,$http,$location,$routeParams) {
+
+//alert("Esto es una llamada desde el contexto");
+    $scope.queryProfessors = function(){
+
+//        alert('Querying to : http://localhost:8081/mansysSS/professor/generic/'+$scope.query)
+//     $http.jsonp()
+        $http.get('http://localhost:8081/mansysSS/professor/generic/'+$scope.query)
+        	.success(
+        		function (data) {
+        			$scope.searchResult = data;
+        		}
+        	).error(
+        		function (error, status) {
+        		    alert("An error ocurs: "+error+" "+status);
+        		  }
+        	);
+    };
+
 	$scope.errorType = "ERROR";
 	$scope.warnType = "WARN";
 	
@@ -61,16 +96,7 @@ app.controller('profesor',['$scope','$http','$location','$routeParams', function
 	$scope.selectedDatabase = null;
 	
 
-	$http.get('/database')
-	.success(
-		function (data) {
-			$scope.databases = data;
-		}
-	).error(
-		function (error, status) {
-		    alert("An error ocurs: "+error+" "+status);
-		  }
-	);
+
 	
 		 
 	

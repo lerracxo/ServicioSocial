@@ -25,7 +25,7 @@ public class ProfessorService {
     private ProfesorIService service;
 
     @GET
-    @Path("{id}")
+    @Path("/{id}")
     @Produces(MediaType.APPLICATION_JSON)
     public List<Profesor> getProfessorById(@PathParam("id") String id ) {
         return service.getProfesorById(id);
