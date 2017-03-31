@@ -13,7 +13,7 @@ app.config([ '$routeProvider', '$locationProvider','$sceDelegateProvider',
         // Allow same origin resource loads.
         'self',
         // Allow loading from our assets domain.  Notice the difference between * and **.
-        'http://localhost:8081/mansysSS/professor/generic/*'
+        'http://localhost:8080/mansysSS/professor/generic/*'
       ]);
 
       // The blacklist overrides the whitelist so the open redirect here is blocked.
@@ -72,7 +72,7 @@ app.controller('profesorController',['$scope','$http','$location','$routeParams'
 
 //        alert('Querying to : http://localhost:8081/mansysSS/professor/generic/'+$scope.query)
 //     $http.jsonp()
-        $http.get('http://localhost:8081/mansysSS/professor/generic/'+$scope.query)
+        $http.get('http://localhost:8080/mansysSS/professor/generic/'+$scope.query)
         	.success(
         		function (data) {
         			$scope.searchResult = data;
@@ -146,7 +146,5 @@ app.controller('databaseDetails',['$scope','$http','$location','$routeParams',
 	 $scope.changeView = function(view){
 	        $location.path(view); // path not hash
 	    }
-	
-
 	
 }]);
