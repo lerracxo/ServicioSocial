@@ -95,11 +95,6 @@ app.controller('profesorController',['$scope','$http','$location','$routeParams'
 	$scope.selectedIndexDatabase = null;
 	$scope.selectedDatabase = null;
 	
-
-
-	
-		 
-	
 	$scope.databaseSensitiveSearch = function(database) {
 		if ($scope.databaseSearch) {
 			return database.name.indexOf($scope.databaseSearch) == 0
