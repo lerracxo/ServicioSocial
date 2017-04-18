@@ -1,23 +1,16 @@
 package com.ipn.esca.serviciosocial.dao.impl;
 
 import java.util.List;
-
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
-
 import org.apache.log4j.Logger;
-
 import com.ipn.esca.serviciosocial.dao.ProfesorDAO;
 import com.ipn.esca.serviciosocial.entities.Profesor;
+import java.util.ArrayList;
 import javax.ejb.Stateless;
 
 @Stateless
-public class ProfesorDAOBean  implements ProfesorDAO {
+public class ProfesorDAOBean extends GenericDAOBean<ProfesorDAOBean, Object> implements ProfesorDAO {
 
     public static Logger LOG = Logger.getLogger(ProfesorDAOBean.class);
-
-    @PersistenceContext(name = "serviciosocial_ds") 
-    private EntityManager em;
 
     @Override
     public List<Profesor> getProfessorById(String id) {
@@ -29,22 +22,30 @@ public class ProfesorDAOBean  implements ProfesorDAO {
 
     @Override
     public List<Profesor> getProfesoresByFilter(String filter) {
+        if (filter == null || filter.length() == 0) {
+            return new ArrayList<>();
+        }
+        String likeStmt = "'";
+        for (String word : filter.trim().toUpperCase().split(" ")) {
+            likeStmt = likeStmt + ".*"+word;
+        }
+        likeStmt = likeStmt + ".*'";
+
         StringBuilder bs = new StringBuilder();
         bs.append(" SELECT e FROM ").append(Profesor.class.getSimpleName())
                 .append(" e ")
-                .append(" WHERE 1=1 ");
-        if (filter != null) {
-            String likeStmt = "LIKE '%".concat(filter.trim()).concat("%'");
-            bs.append(" AND ( ")
-                    .append(" e.persona.nombres ").append(likeStmt)
-                    .append(" OR ")
-                    .append(" e.persona.aMaterno ").append(likeStmt)
-                    .append(" OR ")
-                    .append(" e.persona.aPaterno ").append(likeStmt)
-                    .append("OR")
-                    .append(" e.persona.nacionalidad ").append(likeStmt)
-                    .append(" ) ");
-        }
+                .append(" WHERE ")
+                .append(" CONCAT( ")
+                .append(" COALESCE(UPPER(e.persona.nombres),'') ").append(",")
+                .append(" COALESCE(UPPER(e.persona.aMaterno),'') ").append(",")
+                .append(" COALESCE(UPPER(e.persona.aPaterno),'') ").append(",")
+                .append(" COALESCE(UPPER(e.persona.nacionalidad),'') ")
+                .append(")")
+                .append(" REGEXP ")
+                .append(likeStmt) 
+                ;
+        System.out.println("SQL: " + bs.toString());
+
         return em.createQuery(bs.toString(), Profesor.class).getResultList();
     }
 }

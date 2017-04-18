@@ -23,3 +23,7 @@ hs_err_pid*
 #Build
 */build/
 *.zargo~
+
+*.netbeans_automatic_build
+nb-configuration.xml
+target/

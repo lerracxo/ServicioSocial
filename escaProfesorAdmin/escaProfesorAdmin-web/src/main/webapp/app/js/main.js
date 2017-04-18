@@ -1,26 +1,39 @@
 var app = angular.module('administracion', ['ngRoute']);
 
-app.factory('servicesLocation', function () {
-    return {
-        name: '/'
+app.factory('servicesLoc', function () {
+    return '../webresources/';
+});
+
+app.controller('welcomeController',
+        function () {
+        });
+
+app.directive('myEnter', function () {
+    return function (scope, element, attrs) {
+        element.bind("keydown keypress", function (event) {
+            if (event.which === 13) {
+                scope.$apply(function () {
+                    scope.$eval(attrs.myEnter);
+                });
+                event.preventDefault();
+            }
+        });
     };
 });
 
 app.config(['$routeProvider', '$locationProvider', '$sceDelegateProvider',
     function ($routeProvider, $locationProvider, $sceDelegateProvider) {
-        $sceDelegateProvider.resourceUrlWhitelist([
-            // Allow same origin resource loads.
-            'self',
-            // Allow loading from our assets domain.  Notice the difference between * and **.
-            'http://localhost:8081/mansysSS/professor/generic/*'
-        ]);
-
-        // The blacklist overrides the whitelist so the open redirect here is blocked.
-        $sceDelegateProvider.resourceUrlBlacklist([
-            'http://myapp.example.com/clickThru**'
-        ]);
-
-
+//        $sceDelegateProvider.resourceUrlWhitelist([
+//            // Allow same origin resource loads.
+//            'self',
+//            // Allow loading from our assets domain.  Notice the difference between * and **.
+//            'http://localhost:8081/mansysSS/professor/generic/*'
+//        ]);
+//
+//        // The blacklist overrides the whitelist so the open redirect here is blocked.
+//        $sceDelegateProvider.resourceUrlBlacklist([
+//            'http://myapp.example.com/clickThru**'
+//        ]);
         $routeProvider.when('/', {
             templateUrl: 'welcome.html',
             controller: 'welcomeController'
@@ -64,17 +77,28 @@ app.config(['$routeProvider', '$locationProvider', '$sceDelegateProvider',
     }
 ]);
 
-app.controller('profesorController', ['$scope', '$http', '$location', '$routeParams', function ($scope, $http, $location, $routeParams) {
+app.controller('profesorController', ['$scope', '$http', '$location', '$routeParams', 'servicesLoc',
+    function ($scope, $http, $location, $routeParams, servicesLoc) {
 
+        $scope.searchResult = [];
         $scope.queryProfessors = function () {
-            $http.get('http://localhost:8081/mansysSS/professor/generic/' + $scope.query)
-                    .success(function (data) {
-                        $scope.searchResult = data;
-                    })
-                    .error(function (error, status) {
-                        alert("An error ocurs: " + error + " " + status);
-                });
+            if ($scope.query !== undefined && validQuery($scope.query))
+                $http.get(servicesLoc + "professor/generic/" + $scope.query)
+                        .success(function (data) {
+                            $scope.searchResult = data;
+                        })
+                        .error(function (error, status) {
+                            alert("An error ocurs: " + error + " " + status);
+                        });
         };
+
+        validQuery = function (query) {
+            var validChars = /^[a-zA-Z!@#\$%\^\&*\) ]+$/g;
+            if (query === undefined || query.length === 0 || !validChars.test(query))
+                return false;
+            return true;
+        };
+
 
         $scope.errorType = "ERROR";
         $scope.warnType = "WARN";
