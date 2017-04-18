@@ -52,11 +52,15 @@ app.config([ '$routeProvider', '$locationProvider','$sceDelegateProvider',
         })
         $routeProvider.when('/archivo', {
             templateUrl : '/app/archivo.html',
-            controller : 'arvhivoController'
+            controller : 'archivoController'
         })
         $routeProvider.when('/perfil', {
             templateUrl : '/app/perfil.html',
             controller : 'perfilController'
+        })
+        $routeProvider.when('/detallesProfesor', {
+            templateUrl : '/app/detalles.html',
+            controller : 'detallesController'
         })
 // .otherwise({
 // redirectTo : 'databases.html'
@@ -83,6 +87,19 @@ app.controller('profesorController',['$scope','$http','$location','$routeParams'
         		  }
         	);
     };
+    $scope.details = function(){
+
+      $http.get(searchResult)
+      	.success(
+      		function (idProfesor) {
+      			$scope.searchResult = idProfesor;
+      		}
+      	).error(
+      		function (error, status) {
+      		    alert("An error ocurs: "+error+" "+status);
+      		  }
+      	);
+  };
 
 	$scope.errorType = "ERROR";
 	$scope.warnType = "WARN";
