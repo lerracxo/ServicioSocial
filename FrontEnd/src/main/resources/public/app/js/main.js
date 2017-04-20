@@ -59,8 +59,16 @@ app.config([ '$routeProvider', '$locationProvider','$sceDelegateProvider',
             controller : 'perfilController'
         })
         $routeProvider.when('/detallesProfesor', {
-            templateUrl : '/app/detalles.html',
+            templateUrl : '/app/detallesProfesor.html',
             controller : 'detallesController'
+        })
+        $routeProvider.when('/graficas', {
+            templateUrl : '/app/graficas.html',
+            controller : 'graficasController'
+        })
+        $routeProvider.when('/detallesOposicion', {
+            templateUrl : '/app/detallesOposicion.html',
+            controller : 'oposicionController'
         })
 // .otherwise({
 // redirectTo : 'databases.html'
