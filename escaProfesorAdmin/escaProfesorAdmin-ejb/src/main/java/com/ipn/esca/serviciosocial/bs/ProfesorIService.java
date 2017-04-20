@@ -5,7 +5,6 @@ import com.ipn.esca.serviciosocial.entities.Profesor;
 import java.util.List;
 import javax.ejb.Local;
 import javax.ejb.Remote;
-import javax.enterprise.inject.Default;
 
 @Local
 @Remote
@@ -23,4 +22,6 @@ public interface ProfesorIService {
 //	List<ProcessSDTO> getProcess(ProcessSDTO processFilter);
 //
 //	List<ProcessStepsDTO> getProcessSteps(ProcessStepsDTO processStepFilter);
+
+    public Profesor getProfessorDetail(Integer idPersona);
 }

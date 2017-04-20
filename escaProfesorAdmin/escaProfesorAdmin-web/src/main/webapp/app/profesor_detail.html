@@ -1,0 +1,78 @@
+<div ng-controller="profDetailsController">
+
+    <h2 align="center">Nombre de profesor</h2>
+    <br>
+    <br>
+    <table class="table table-hover">
+        <tr>
+            <td>Teléfono fijo: </td>
+            <td>Cédula: </td>
+        </tr>
+        <tr>
+            <td>Teléfono móvil: </td>
+            <td>RFC: </td>
+        </tr>
+        <tr>
+            <td>Teléfono trabajo: </td>
+            <td>Fecha de ingreso: </td>
+        </tr>
+        <tr>
+            <td>Ext. </td>
+            <td>Exámen de oposición:</td>
+        </tr>
+        <tr>
+            <td>Correo eléctronico: </td>
+            <td>Grado:</td>
+        </tr>
+    </table>
+
+
+    <div id="detallesProfesor" class="carousel slide">
+
+        <!-- Wrapper for slides -->
+        <div class="carousel-inner" role="listbox">
+            <div class="item active">
+                <h2 align="center">Cursos</h2>
+                <table class="table table-hover">
+                    <tr>
+                        <th>Curso</th>
+                        <th>Descripción</th>
+                        <th>Eje</th>
+                        <th>Tipo de curso</th>
+                        <th>Fecha inicio</th>
+                        <th>Fecha fin</th>
+                    </tr>
+                </table>
+            </div>
+
+            <div class="item">
+                <h2 align="center">Calificaciones</h2>
+                <table class="table table-hover">
+                    <tr>
+                        <th>Periodo</th>
+                        <th>Grupo</th>
+                        <th>Asignatura</th>
+                        <th>Dominio del grupo</th>
+                        <th>Puntualidad</th>
+                        <th>Contenido</th>
+                        <th>Didáctica</th>
+                        <th>Planeación</th>
+                        <th>Evaluación</th>
+                        <th>Actitud</th>
+                        <th>Promedio</th>
+                    </tr>
+                </table>
+            </div>
+        </div>
+
+        <!-- Left and right controls -->
+        <a class="left carousel-control"  role="button" data-slide="prev">
+            <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+            <span class="sr-only">Previous</span>
+        </a>
+        <a class="right carousel-control"  role="button" data-slide="next">
+            <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+            <span class="sr-only">Next</span>
+        </a>
+    </div>
+</div>

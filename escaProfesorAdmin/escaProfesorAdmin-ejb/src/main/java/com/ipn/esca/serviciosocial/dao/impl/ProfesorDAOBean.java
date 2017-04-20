@@ -48,4 +48,11 @@ public class ProfesorDAOBean extends GenericDAOBean<ProfesorDAOBean, Object> imp
 
         return em.createQuery(bs.toString(), Profesor.class).getResultList();
     }
+
+    @Override
+    public Profesor getProfessorDetail(Integer idProfesor) {
+        if(idProfesor == null)
+            return null;
+        return em.find(Profesor.class,idProfesor);
+    }
 }

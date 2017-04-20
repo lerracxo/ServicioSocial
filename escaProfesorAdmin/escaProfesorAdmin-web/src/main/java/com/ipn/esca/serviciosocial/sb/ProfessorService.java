@@ -19,8 +19,8 @@ import javax.ws.rs.core.MediaType;
  */
 @Path("/professor")
 @Stateless
-public class ProfessorService { 
- 
+public class ProfessorService {
+
     @EJB //(lookup = "java:module/ProfesorServiceBean!com.ipn.esca.serviciosocial.bs.ProfesorIService")
     @Inject
     private ProfesorIService service;
@@ -37,6 +37,13 @@ public class ProfessorService {
     @Produces(MediaType.APPLICATION_JSON)
     public List<Profesor> getProfessorByGenericFilter(@PathParam("string") String string) {
         return service.getProfesoresByFilter(string);
+    }
+
+    @GET
+    @Path("/detail/{idProfesor}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Profesor getProfessorDetail(@PathParam("idProfesor") Integer idProfesor) {
+        return service.getProfessorDetail(idProfesor);
     }
 
 }

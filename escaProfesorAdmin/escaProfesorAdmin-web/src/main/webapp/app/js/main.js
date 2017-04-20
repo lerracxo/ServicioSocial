@@ -42,6 +42,10 @@ app.config(['$routeProvider', '$locationProvider', '$sceDelegateProvider',
             templateUrl: 'profesor.html',
             controller: 'profesorController'
         });
+        $routeProvider.when('/profesor/detail/:personId', {
+            templateUrl : 'profesor_detail.html',
+            controller : 'profDetailsController'
+        });
         $routeProvider.when('/curso', {
             templateUrl: 'curso.html',
             controller: 'cursoController'
@@ -99,55 +103,25 @@ app.controller('profesorController', ['$scope', '$http', '$location', '$routePar
             return true;
         };
 
-
-        $scope.errorType = "ERROR";
-        $scope.warnType = "WARN";
-
-        $scope.search = "";
-        $scope.databaseSearch = "";
-
-        $scope.order = "status";
-
-        $scope.selectedIndexDatabase = null;
-        $scope.selectedDatabase = null;
-
-        $scope.databaseSensitiveSearch = function (database) {
-            if ($scope.databaseSearch) {
-                return database.name.indexOf($scope.databaseSearch) === 0
-                        ||
-                        database.status.indexOf($scope.databaseSearch) === 0;
-            }
-            return true;
-        };
-
-        $scope.selectDatabase = function (database, index) {
-            $scope.selectedIndexDatabase = index;
-            $scope.selectedDatabase = database;
-        };
-
-        $scope.getDatabaseDetails = function () {
-            $scope.changeView('/detail/' + $scope.selectedDatabase.internalID);
+        $scope.getProfessorDetails = function (profesor) {
+            $scope.changeView('/profesor/detail/' + profesor.idProfesor);
         };
 
         $scope.changeView = function (view) {
             $location.path(view); // path not hash
-        }
-
-
+        };
     }]);
 
 
-app.controller('databaseDetails', ['$scope', '$http', '$location', '$routeParams',
-    function ($scope, $http, $location, $routeParams) {
+app.controller('profDetailsController', ['$scope', '$http', '$location', '$routeParams','servicesLoc',
+    function ($scope, $http, $location, $routeParams,servicesLoc) {
 
-        $scope.errorType = "ERROR";
-        $scope.warnType = "WARN";
-
+//        alert("Get the id: "+$routeParams.personId);
         $http({
             method: 'GET',
-            url: '/database/' + $routeParams.databaseName
+            url: servicesLoc+'professor/detail/' + $routeParams.personId
         }).then(function (response) {
-            $scope.selectedDatabase = response.data;
+            $scope.professorDetail = response.data;
         }, function (response) {
             alert("An error ocurs" + response.data);
         });
