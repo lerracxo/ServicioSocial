@@ -1,0 +1,25 @@
+{
+  "name": "ipn.serviciosocial",
+  "version": "1.0.0",
+  "description": "Proyecto de servicio social en la ESCA IPN",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon server.js"
+  },
+  "keywords": [
+    "serviciosocial",
+    "ss"
+  ],
+  "author": "Oscar Santoyo, Estela Acosta",
+  "license": "ISC",
+  "devDependencies": {
+    "nodemon": "^1.11.0"
+  },
+  "dependencies": {
+    "body-parser": "^1.17.2",
+    "express": "^4.15.3",
+    "mongoose": "^4.10.3",
+    "pg": "^6.2.3"
+  }
+}

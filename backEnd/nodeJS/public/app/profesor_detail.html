@@ -1,0 +1,69 @@
+<div ng-controller="profDetailsController">
+
+    <h2 align="center">{{profDet.nombres}} {{profDet.a_paterno}} {{profDet.a_materno}}</h2>
+    <br>
+    <br>
+    <table class="table table-hover">
+        <tr>
+            <td>Teléfono fijo: {{profDet.f_telefono}} </td>
+            <td>Cédula: {{profDet.cedula}}</td>
+        </tr>
+        <tr>
+            <td>Teléfono móvil: {{profDet.m_telefono}}</td>
+            <td>RFC: {{profDet.rfc}}</td>
+        </tr>
+        <tr>
+            <td>Teléfono trabajo: {{profDet.t_telefono}}</td>
+            <td>Fecha de ingreso: {{profDet.f_ingreso}} </td>
+        </tr>
+        <tr>
+            <td>Ext: {{profDet.ext}} </td>
+            <td>Exámen de oposición: {{profDet.ex_oposicion}}</td>
+        </tr>
+        <tr>
+            <td>Correo eléctronico: {{profDet.mail}}</td>
+            <td>Grado: {{profDet.grado}}</td>
+        </tr>
+    </table>
+
+
+<div class="container">
+  <button type="button" class="btn btn-info" data-toggle="collapse" data-target="#cursos">Cursos</button>
+  <div id="cursos" class="collapse">
+ <h2 align="center">Cursos</h2>
+		<table class="table table-hover">
+			<tr>
+				<th>Curso</th>
+				<th>Descripción</th>
+				<th>Eje</th>
+				<th>Tipo de curso</th>
+				<th>Fecha inicio</th>
+				<th>Fecha fin</th>
+			</tr>
+		</table>
+  </div>
+</div>
+
+<br>
+<div class="container">
+  <button type="button" class="btn btn-info" data-toggle="collapse" data-target="#calificaciones">Calificaciones</button>
+  <div id="calificaciones" class="collapse">
+<h2 align="center">Calificaciones</h2>
+		<table class="table table-hover">
+			<tr>
+				<th>Periodo</th>
+				<th>Grupo</th>
+				<th>Asignatura</th>
+				<th>Dominio del grupo</th>
+				<th>Puntualidad</th>
+				<th>Contenido</th>
+				<th>Didáctica</th>
+				<th>Planeación</th>
+				<th>Evaluación</th>
+				<th>Actitud</th>
+				<th>Promedio</th>
+			</tr>
+		</table>
+  </div>
+</div>
+   

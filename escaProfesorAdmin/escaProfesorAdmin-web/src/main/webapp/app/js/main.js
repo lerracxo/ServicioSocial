@@ -43,8 +43,8 @@ app.config(['$routeProvider', '$locationProvider', '$sceDelegateProvider',
             controller: 'profesorController'
         });
         $routeProvider.when('/profesor/detail/:personId', {
-            templateUrl : 'profesor_detail.html',
-            controller : 'profDetailsController'
+            templateUrl: 'profesor_detail.html',
+            controller: 'profDetailsController'
         });
         $routeProvider.when('/curso', {
             templateUrl: 'curso.html',
@@ -113,13 +113,13 @@ app.controller('profesorController', ['$scope', '$http', '$location', '$routePar
     }]);
 
 
-app.controller('profDetailsController', ['$scope', '$http', '$location', '$routeParams','servicesLoc',
-    function ($scope, $http, $location, $routeParams,servicesLoc) {
+app.controller('profDetailsController', ['$scope', '$http', '$location', '$routeParams', 'servicesLoc',
+    function ($scope, $http, $location, $routeParams, servicesLoc) {
 
 //        alert("Get the id: "+$routeParams.personId);
         $http({
             method: 'GET',
-            url: servicesLoc+'professor/detail/' + $routeParams.personId
+            url: servicesLoc + 'professor/detail/' + $routeParams.personId
         }).then(function (response) {
             $scope.professorDetail = response.data;
         }, function (response) {
