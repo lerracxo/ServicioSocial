@@ -125,7 +125,23 @@ app.controller('profDetailsController', ['$scope', '$http', '$location', '$route
       alert('An error ocurs' + response.data)
     })
 
-    //alert($routeParams.personId)
+    $http({
+      method: 'GET',
+      url: servicesLoc + 'professor/detail/calif/' + $routeParams.personId
+    }).then(function (response) {
+      $scope.profCal = response.data
+    }, function (response) {
+      alert('An error ocurs' + response.data)
+    })
+
+    $http({
+      method: 'GET',
+      url: servicesLoc + 'curso/' + $routeParams.personId
+    }).then(function (response) {
+      $scope.profCursos = response.data
+    }, function (response) {
+      alert('An error ocurs' + response.data)
+    })
 
     $scope.changeView = function (view) {
       $location.path(view) // path not hash

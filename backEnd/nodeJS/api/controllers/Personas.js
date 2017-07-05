@@ -31,3 +31,13 @@ exports.detail = function (req, res) {
     res.json(data.rows[0])
   })
 }
+
+exports.detailCalif = function (req, res) {
+  console.log('params', req.params)
+  let param = req.params.id
+  pool.query(queries.detailProfesorCalif, [param], function (err, data) {
+    if (err)
+      res.send(err)
+    res.json(data.rows)
+  })
+}

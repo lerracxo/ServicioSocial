@@ -5,7 +5,7 @@
     <br>
     <table class="table table-hover">
         <tr>
-            <td>Teléfono fijo: {{profDet.f_telefono}} </td>
+            <td>Teléfono fijo: {{profDet.f_telefono}}</td>
             <td>Cédula: {{profDet.cedula}}</td>
         </tr>
         <tr>
@@ -14,10 +14,10 @@
         </tr>
         <tr>
             <td>Teléfono trabajo: {{profDet.t_telefono}}</td>
-            <td>Fecha de ingreso: {{profDet.f_ingreso}} </td>
+            <td>Fecha de ingreso: {{profDet.f_ingreso}}</td>
         </tr>
         <tr>
-            <td>Ext: {{profDet.ext}} </td>
+            <td>Ext: {{profDet.ext}}</td>
             <td>Exámen de oposición: {{profDet.ex_oposicion}}</td>
         </tr>
         <tr>
@@ -27,43 +27,63 @@
     </table>
 
 
-<div class="container">
-  <button type="button" class="btn btn-info" data-toggle="collapse" data-target="#cursos">Cursos</button>
-  <div id="cursos" class="collapse">
- <h2 align="center">Cursos</h2>
-		<table class="table table-hover">
-			<tr>
-				<th>Curso</th>
-				<th>Descripción</th>
-				<th>Eje</th>
-				<th>Tipo de curso</th>
-				<th>Fecha inicio</th>
-				<th>Fecha fin</th>
-			</tr>
-		</table>
-  </div>
-</div>
+    <div class="container">
+        <button type="button" class="btn btn-info" data-toggle="collapse" data-target="#cursos">Cursos</button>
+        <div id="cursos" class="collapse">
+            <h2 align="center">Cursos</h2>
+            <table class="table table-hover">
+                <tr>
+                    <th>Curso</th>
+                    <!--<th>Descripción</th>-->
+                    <!--<th>Eje</th>-->
+                    <!--<th>Tipo de curso</th>-->
+                    <th>Fecha inicio</th>
+                    <th>Fecha fin</th>
+                    <th>Horas</th>
+                </tr>
+                <tr ng-repeat="curso in profCursos">
+                    <td>{{curso.curso}}</td>
+                    <td>{{curso.inicio}}</td>
+                    <td>{{curso.termino}}</td>
+                    <td>{{curso.horas}}</td>
+                </tr>
+            </table>
+        </div>
+    </div>
 
-<br>
-<div class="container">
-  <button type="button" class="btn btn-info" data-toggle="collapse" data-target="#calificaciones">Calificaciones</button>
-  <div id="calificaciones" class="collapse">
-<h2 align="center">Calificaciones</h2>
-		<table class="table table-hover">
-			<tr>
-				<th>Periodo</th>
-				<th>Grupo</th>
-				<th>Asignatura</th>
-				<th>Dominio del grupo</th>
-				<th>Puntualidad</th>
-				<th>Contenido</th>
-				<th>Didáctica</th>
-				<th>Planeación</th>
-				<th>Evaluación</th>
-				<th>Actitud</th>
-				<th>Promedio</th>
-			</tr>
-		</table>
-  </div>
+    <br>
+    <div class="container">
+        <button type="button" class="btn btn-info" data-toggle="collapse" data-target="#calificaciones">Calificaciones
+        </button>
+        <div id="calificaciones" class="collapse">
+            <h2 align="center">Calificaciones</h2>
+            <table class="table table-hover">
+                <tr>
+                    <th>Periodo</th>
+                    <th>Grupo</th>
+                    <th>Asignatura</th>
+                    <!--<th>Dominio del grupo</th>-->
+                    <th>Puntualidad</th>
+                    <th>Contenido</th>
+                    <th>Didáctica</th>
+                    <th>Planeación</th>
+                    <th>Evaluación</th>
+                    <th>Actitud</th>
+                    <th>Promedio</th>
+                </tr>
+                <tr ng-repeat="cal in profCal">
+                    <td>{{cal.periodo}}</td>
+                    <td>{{cal.grupo}}</td>
+                    <td>{{cal.materia}}</td>
+                    <td>{{cal.puntualidad}}</td>
+                    <td>{{cal.contenido}}</td>
+                    <td>{{cal.didactica}}</td>
+                    <td>{{cal.evaluacion}}</td>
+                    <td>{{cal.planeacion}}</td>
+                    <td>{{cal.actitud}}</td>
+                    <td>{{cal.promedio}}</td>
+                </tr>
+            </table>
+        </div>
+    </div>
 </div>
-   

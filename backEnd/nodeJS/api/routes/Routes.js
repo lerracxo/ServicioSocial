@@ -1,18 +1,10 @@
 'use strict'
 
 module.exports = function (app) {
-  const todoList = require('../controllers/Controller')
   const contPersonas = require('../controllers/Personas')
+  const contPeriod = require('../controllers/Period')
+  const contCurso = require('../controllers/Cursos')
 
-  // todoList Routes
-  app.route('/tasks')
-    .get(todoList.list_all_tasks)
-    .post(todoList.create_a_task)
-
-  app.route('/tasks/:taskId')
-    .get(todoList.read_a_task)
-    .put(todoList.update_a_task)
-    .delete(todoList.delete_a_task)
 
   app.route('/professor')
     .get(contPersonas.listAll)
@@ -22,4 +14,14 @@ module.exports = function (app) {
 
   app.route('/professor/detail/:id')
     .get(contPersonas.detail)
+
+  app.route('/professor/detail/calif/:id')
+    .get(contPersonas.detailCalif)
+
+  app.route('/period/')
+    .get(contPeriod.listAll)
+
+  //Curso
+  app.route('/curso/:id')
+    .get(contCurso.getById)
 }

@@ -63,6 +63,11 @@ SELECT * FROM grupo WHERE grupo = '2CM10';
 
 SELECT id_persona, avg(promedio::decimal) FROM calificacion GROUP BY id_persona;
 
+SELECT p.id_persona, p.nombres, p.a_paterno, p.a_materno, '555555' as f_telefono, '242342342' as m_telefono, '122234' as t_telefono, 
+'333' as ext, 'alguien@ipn.mx' as mail,
+'33d3dsdas2' as cedula, 'ASDAS13DSF22' as rfc, '12-34-01' as f_ingreso, 'si' as ex_oposicion, 'Maestria' as Grado
+FROM persona p;
+
 --SELECT sum(puntualidad::decimal), sum(contenido::decimal), sum(didactica::decimal), sum(planeacion::decimal), sum(evaluacion::decimal), sum(actitud::decimal) 
 --FROM calificacion WHERE promedio = '' ;
 
@@ -74,7 +79,7 @@ SELECT * FROM persona;
 
 SELECT c.id_persona, p.nombres, p.a_paterno, p.a_materno, AVG(c.promedio::decimal)  FROM calificacion c
 JOIN persona p ON c.id_persona = p.id_persona
-WHERE  REPLACE(concat(p.a_paterno,p.a_materno,p.nombres),' ','') SIMILAR TO '%(ESTELA|d)%'
+WHERE  UPPER(REPLACE(concat(p.a_paterno,p.a_materno,p.nombres),' ','')) SIMILAR TO '%(ESTELA|d)%'
 GROUP BY c.id_persona, p.nombres, p.a_paterno, p.a_materno;
 
 --DROP TABLE calificacion CASCADE ;
@@ -143,7 +148,74 @@ SELECT * FROM persona WHERE id_persona = 811;
 
 SELECT * FROM pers_temp_proc;
 
+SELECT * FROM periodo_curso;
+SELECT * FROM permat_tempo;
+SELECT * FROM calificacion LIMIT 10;
+/*
+	FULL OUTER JOIN persona p        ON REPLACE(concat(p.a_paterno,p.a_materno,p.nombres),' ','') = 		pc.nombre
+	FULL OUTER JOIN permat_tempo pt  ON pc.periodo = pt.periodo 
+	FULL OUTER JOIN materia mat      ON pc.materia = mat.materia
+	FULL OUTER JOIN grupo  gru       ON pc.grupo = gru.grupo
+*/
+
+SELECT c.id_persona, pt.periodo, gr.grupo, mat.materia, c.puntualidad, c.contenido, c.didactica, c.planeacion, c.evaluacion, c.actitud,c.promedio
+  FROM calificacion c
+  JOIN permat_tempo pt  ON c.id_periodo = pt.id_tempo
+  JOIN materia mat      ON c.id_materia = mat.id
+  JOIN grupo gr         ON c.id_grupo = gr.id 
+WHERE id_persona = 110;
+
+SELECT * FROM re;
+
+SELECT * FROM cat_perfil;
+
+SELECT * FROM cursos_draft WHERE f6 IS NOT NULL;
+--DELETE FROM cursos_draft WHERE nombre = '1';
 
 
+CREATE TABLE cursos_draft(
+  f1 text,
+  nombre text,
+  curso text,
+ termino text,
+ horas text ,
+  f6 text,
+  f7 text,
+  f8 text,
+  f9 text,
+  f10 text,
+  f11 text,
+  f12 text,
+  f13 text,
+  f14 text,
+  f15 text,
+  f16 text,
+  f17 text,
+  f18 text,
+  f19 text,
+  f20 text,
+  f21 text
+);
 
+SELECT * FROM curso WHERE id_persona = 74;
+DROP TABLE curso CASCADE;
+
+CREATE TABLE curso(
+  id serial,
+  id_persona integer,
+  curso text,
+  inicio text,
+  termino text,
+  horas  text,
+  PRIMARY KEY (id)
+);
+
+COMMIT;
+--COPY cursos_draft FROM '/Users/oscar/Desktop/CURSOS2007a-2016/CURSOS-Table.csv' WITH CSV;
+
+-- Total 4894 - 4795 = 99
+INSERT INTO curso (id_persona,curso,inicio,termino,horas)
+SELECT p.id_persona::INT, cd.curso, cd.termino as inicio, cd.horas as termino, cd.f6 as horas FROM cursos_draft cd 
+  INNER JOIN persona p 
+  ON UPPER(REPLACE(concat(p.a_paterno,p.a_materno,p.nombres),' ','')) = UPPER(REPLACE(nombre,' ',''));
 

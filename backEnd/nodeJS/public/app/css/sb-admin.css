@@ -3,13 +3,14 @@
  * Copyright 2013-2016 Start Bootstrap
  * Licensed under MIT (https://github.com/BlackrockDigital/startbootstrap/blob/gh-pages/LICENSE)
  */
-
 /* Global Styles */
 
+
 body {
-    margin-top: 100px;
-    background-color: #222;
+    margin-top: 10px;
+    background-color: #fff;
 }
+
 
 @media(min-width:768px) {
     body {
@@ -22,6 +23,7 @@ body {
 }
 
 #page-wrapper {
+    height: 100%;
     width: 100%;
     padding: 0;
     background-color: #fff;
