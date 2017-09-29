@@ -38,6 +38,10 @@ app.config(['$routeProvider', '$locationProvider', '$sceDelegateProvider',
       templateUrl: 'welcome.html',
       controller: 'welcomeController'
     })
+    $routeProvider.when('/profesor/:query', {
+      templateUrl: 'profesor.html',
+      controller: 'profesorController'
+    })
     $routeProvider.when('/profesor', {
       templateUrl: 'profesor.html',
       controller: 'profesorController'
@@ -85,22 +89,36 @@ app.controller('profesorController', ['$scope', '$http', '$location', '$routePar
   function ($scope, $http, $location, $routeParams, servicesLoc) {
 
     $scope.searchResult = []
-    $scope.queryProfessors = function () {
-      if ($scope.query !== undefined && validQuery($scope.query))
-        $http.get(servicesLoc + 'professor/' + $scope.query)
-          .success(function (data) {
-            $scope.searchResult = data
-          })
-          .error(function (error, status) {
-            alert('An error ocurs: ' + error + ' ' + status)
-          })
+    console.log('query: ',$routeParams.query)
+
+    let query = $routeParams.query
+
+    let queryProfessors = function ( query ) {
+      // if ($scope.query !== undefined && validQuery($scope.query))
+      $http.get(servicesLoc + 'professor/' + query)
+        .success(function (data) {
+          $scope.searchResult = data
+        })
+        .error(function (error, status) {
+          alert('An error ocurs: ' + error + ' ' + status)
+        })
     }
 
-    validQuery = function (query) {
+    let validQuery = function (query) {
       var validChars = /^[a-zA-Z!@#\$%\^\&*\) ]+$/g
-      if (query === undefined || query.length === 0 || !validChars.test(query))
+      if ( !query || query.length === 0 || !validChars.test(query))
         return false
       return true
+    }
+
+    if( validQuery(query) ){
+      $scope.query = query
+      queryProfessors(query)
+    }
+
+
+    $scope.queryProfessors = function () {
+      $scope.changeView('/profesor/' + $scope.query)
     }
 
     $scope.getProfessorDetails = function (profesor) {

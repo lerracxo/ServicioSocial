@@ -1,33 +1,72 @@
 <div ng-controller="profDetailsController">
 
-    <h2 align="center">{{profDet.nombres}} {{profDet.a_paterno}} {{profDet.a_materno}}</h2>
+    <h3 align="center">{{profDet.nombres}} {{profDet.a_paterno}} {{profDet.a_materno}}</h3>
     <br>
-    <br>
-    <table class="table table-hover">
-        <tr>
-            <td>Teléfono fijo: {{profDet.f_telefono}}</td>
-            <td>Cédula: {{profDet.cedula}}</td>
-        </tr>
-        <tr>
-            <td>Teléfono móvil: {{profDet.m_telefono}}</td>
-            <td>RFC: {{profDet.rfc}}</td>
-        </tr>
-        <tr>
-            <td>Teléfono trabajo: {{profDet.t_telefono}}</td>
-            <td>Fecha de ingreso: {{profDet.f_ingreso}}</td>
-        </tr>
-        <tr>
-            <td>Ext: {{profDet.ext}}</td>
-            <td>Exámen de oposición: {{profDet.ex_oposicion}}</td>
-        </tr>
-        <tr>
-            <td>Correo eléctronico: {{profDet.mail}}</td>
-            <td>Grado: {{profDet.grado}}</td>
-        </tr>
-    </table>
 
 
-    <div class="container">
+    <form class="form-inline ">
+        <div class="form-group">
+            <!--Telefono fijo-->
+            <div class="col-md-6 ">
+                <label for="telFijo"> Teléfono fijo: </label>
+                <input id="telFijo" class="form-control" value="{{profDet.f_telefono}}"/>
+            </div>
+
+            <!--Cedula-->
+            <div class="col-md-6 ">
+                <label for="cedula"> Cédula: </label>
+                <input id="cedula" class="form-control" value="{{profDet.cedula}}"/>
+            </div>
+            <!--Telefono movil-->
+            <div class="col-md-6 ">
+                <label for="telMovil"> Teléfono movil: </label>
+                <input id="telMovil" class="form-control" value="{{profDet.m_telefono}}"/>
+            </div>
+
+            <!--RFC-->
+            <div class="col-md-6 ">
+                <label for="rfc"> RFC: </label>
+                <input id="rfc" class="form-control" value="{{profDet.rfc}}"/>
+            </div>
+
+            <!--Telefono trabajo-->
+            <div class="col-md-6 ">
+                <label for="telTrabajo"> Teléfono trabajo: </label>
+                <input id="telTrabajo" class="form-control" value="{{profDet.t_telefono}}"/>
+            </div>
+
+            <!--Fecha ingreso-->
+            <div class="col-md-6 ">
+                <label for="fIngreso"> Fecha de ingreso: </label>
+                <input id="fIngreso" class="form-control" value="{{profDet.f_ingreso}}"/>
+            </div>
+
+            <!--Ext -->
+            <div class="col-md-6 ">
+                <label for="ext"> Ext: </label>
+                <input id="ext" class="form-control" value="{{profDet.ext}}"/>
+            </div>
+
+            <!--Examen oposición -->
+            <div class="col-md-6 ">
+                <label for="exOp"> Exámen de oposición: </label>
+                <input id="exOp" class="form-control" value="{{profDet.ex_oposicion}}"/>
+            </div>
+
+            <!--Correo -->
+            <div class="col-md-6 ">
+                <label for="correo"> Correo eléctronico: </label>
+                <input id="correo" class="form-control" value="{{profDet.mail}}"/>
+            </div>
+
+            <!--Grado-->
+            <div class="col-md-6 ">
+                <label for="grado"> Grado: </label>
+                <input id="grado" class="form-control" value="{{profDet.grado}}"/>
+            </div>
+        </div>
+    </form>
+    <div class="container ">
         <button type="button" class="btn btn-info" data-toggle="collapse" data-target="#cursos">Cursos</button>
         <div id="cursos" class="collapse">
             <h2 align="center">Cursos</h2>
@@ -50,8 +89,8 @@
             </table>
         </div>
     </div>
-
     <br>
+
     <div class="container">
         <button type="button" class="btn btn-info" data-toggle="collapse" data-target="#calificaciones">Calificaciones
         </button>
