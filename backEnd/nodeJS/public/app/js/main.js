@@ -172,7 +172,7 @@ app.controller('profDetailsController', ['$scope', '$http', '$location', '$route
       $location.path(view) // path not hash
     }
 
-    $scope.generateCSV = function (body,name) {
+    $scope.generateCSV = function (body, name) {
       if (!body || !body[0]) {
         alert('No hay datos para descargar')
         return
@@ -181,12 +181,12 @@ app.controller('profDetailsController', ['$scope', '$http', '$location', '$route
       let csv = [Object.keys(JSON.parse(angular.toJson(body[0]))).join(',')].concat(
         body.map((x) => {
           return Object.values(JSON.parse(angular.toJson(x)))
-        })).join('%0A').replace(/[ ]+/g,'%20')
+        })).join('%0A').replace(/[ ]+/g, '%20')
       console.log(csv)
       let a = document.createElement('a')
       a.href = 'data:attachment/csv,' + csv
       a.target = '_blank'
-      a.download = name.trim()+'.csv'
+      a.download = name.trim() + '.csv'
       document.body.appendChild(a)
       a.click()
     }
