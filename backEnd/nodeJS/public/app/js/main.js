@@ -1,8 +1,57 @@
-var app = angular.module('administracion', ['ngRoute'])
+const app = angular.module('administracion', ['ngRoute'])
 
-app.factory('servicesLoc', function () {
-  return '../'
-})
+app.factory('profUtils', ['$http', '$location',
+  function ($http, $location) {
+    return {
+      serviceLoc: '/',
+      parseQuery: function (query) {
+        return 'callToObjFunction'
+      },
+      changeView: function (destiny) {
+        $location.path(destiny) // path not hash
+      },
+      queryProfessors: function (query, callback) {
+        $http.post(this.serviceLoc + 'professor/', query) //+ '/' + query.prom + '/' + query.mat + '/' + query.per
+          .success((data) => callback(data))
+          .error(function (error, status) {
+            alert('An error ocurs: ' + error + ' ' + status)
+          })
+      },
+      validQuery: function (query) {
+
+        let test = query &&
+          (query.name ? this.validString(query.name) : true) &&
+          (query.prom ? this.validDecimal(query.prom) : true) &&
+          (query.mat ? this.validDecimal(query.mat) : true) &&
+          (query.per ? this.validDecimal(query.per) : true)
+
+        return test
+      },
+      validString: function (query) {
+        let validChars = /^[a-zA-Z!@#\$%\^\&*\) ]+$/g
+        return validChars.test(query)
+      },
+      validDecimal: function (query) {
+        let validDecimal = /^[0-9.!<>=*\) ]+$/g
+        return validDecimal.test(query)
+      },
+      getMaterias: function (callback) {
+        $http.get(this.serviceLoc + 'materia/') //+ '/' + query.prom + '/' + query.mat + '/' + query.per
+          .success((data) => callback(data))
+          .error(function (error, status) {
+            alert('An error ocurs: ' + error + ' ' + status)
+          })
+      },
+      getPeriodos: function (callback) {
+        $http.get(this.serviceLoc + 'periodo/') //+ '/' + query.prom + '/' + query.mat + '/' + query.per
+          .success((data) => callback(data))
+          .error(function (error, status) {
+            alert('An error ocurs: ' + error + ' ' + status)
+          })
+      }
+
+    }
+  }])
 
 app.controller('welcomeController',
   function () {
@@ -21,24 +70,13 @@ app.directive('myEnter', function () {
   }
 })
 
-app.config(['$routeProvider', '$locationProvider', '$sceDelegateProvider',
-  function ($routeProvider, $locationProvider, $sceDelegateProvider) {
-//        $sceDelegateProvider.resourceUrlWhitelist([
-//            // Allow same origin resource loads.
-//            'self',
-//            // Allow loading from our assets domain.  Notice the difference between * and **.
-//            'http://localhost:8081/mansysSS/professor/generic/*'
-//        ]);
-//
-//        // The blacklist overrides the whitelist so the open redirect here is blocked.
-//        $sceDelegateProvider.resourceUrlBlacklist([
-//            'http://myapp.example.com/clickThru**'
-//        ]);
+app.config(['$routeProvider',
+  function ($routeProvider) {
     $routeProvider.when('/', {
       templateUrl: 'welcome.html',
       controller: 'welcomeController'
     })
-    $routeProvider.when('/profesor/:query', {
+    $routeProvider.when('/profesor/:name/:prom/:mat/:per', {
       templateUrl: 'profesor.html',
       controller: 'profesorController'
     })
@@ -78,65 +116,34 @@ app.config(['$routeProvider', '$locationProvider', '$sceDelegateProvider',
       templateUrl: 'perfil.html',
       controller: 'perfilController'
     })
-// .otherwise({
-// redirectTo : 'databases.html'
-// });
-// $locationProvider.html5Mode(true); //Remove the '#' from URL.
   }
 ])
 
-app.controller('profesorController', ['$scope', '$http', '$location', '$routeParams', 'servicesLoc',
-  function ($scope, $http, $location, $routeParams, servicesLoc) {
-
+app.controller('profesorController', ['$scope', '$routeParams', 'profUtils',
+  function ($scope, $routeParams, profUtils) {
     $scope.searchResult = []
-    console.log('query: ',$routeParams.query)
 
-    let query = $routeParams.query
+    profUtils.getMaterias((data) => $scope.materias = data)
+    profUtils.getPeriodos((data) => $scope.periodos = data)
 
-    let queryProfessors = function ( query ) {
-      // if ($scope.query !== undefined && validQuery($scope.query))
-      $http.get(servicesLoc + 'professor/' + query)
-        .success(function (data) {
-          $scope.searchResult = data
-        })
-        .error(function (error, status) {
-          alert('An error ocurs: ' + error + ' ' + status)
-        })
-    }
-
-    let validQuery = function (query) {
-      var validChars = /^[a-zA-Z!@#\$%\^\&*\) ]+$/g
-      if ( !query || query.length === 0 || !validChars.test(query))
-        return false
-      return true
-    }
-
-    if( validQuery(query) ){
-      $scope.query = query
-      queryProfessors(query)
-    }
-
-
-    $scope.queryProfessors = function () {
-      $scope.changeView('/profesor/' + $scope.query)
+    $scope.queryProfessors = function (query) {
+      if (profUtils.validQuery(query)) {
+        profUtils.queryProfessors(query, (data) => { $scope.searchResult = data})
+      }
     }
 
     $scope.getProfessorDetails = function (profesor) {
-      $scope.changeView('/profesor/detail/' + profesor.id_persona)
+      profUtils.changeView('/profesor/detail/' + profesor.id_persona)
     }
 
-    $scope.changeView = function (view) {
-      $location.path(view) // path not hash
-    }
   }])
 
-app.controller('profDetailsController', ['$scope', '$http', '$location', '$routeParams', 'servicesLoc',
-  function ($scope, $http, $location, $routeParams, servicesLoc) {
+app.controller('profDetailsController', ['$scope', '$http', '$location', '$routeParams', 'profUtils',
+  function ($scope, $http, $location, $routeParams, profUtils) {
 
-//        alert("Get the id: "+$routeParams.personId);
     $http({
       method: 'GET',
-      url: servicesLoc + 'professor/detail/' + $routeParams.personId
+      url: profUtils.serviceLoc + 'professor/detail/' + $routeParams.personId
     }).then(function (response) {
       $scope.profDet = response.data
     }, function (response) {
@@ -145,7 +152,7 @@ app.controller('profDetailsController', ['$scope', '$http', '$location', '$route
 
     $http({
       method: 'GET',
-      url: servicesLoc + 'professor/detail/calif/' + $routeParams.personId
+      url: profUtils.serviceLoc + 'professor/detail/calif/' + $routeParams.personId
     }).then(function (response) {
       $scope.profCal = response.data
     }, function (response) {
@@ -154,9 +161,9 @@ app.controller('profDetailsController', ['$scope', '$http', '$location', '$route
 
     $http({
       method: 'GET',
-      url: servicesLoc + 'curso/' + $routeParams.personId
+      url: profUtils.serviceLoc + 'curso/' + $routeParams.personId
     }).then(function (response) {
-      $scope.profCursos = response.data
+      $scope.profCursos = response.data  //.map((x) => new ProfCursos(x))
     }, function (response) {
       alert('An error ocurs' + response.data)
     })
@@ -164,4 +171,24 @@ app.controller('profDetailsController', ['$scope', '$http', '$location', '$route
     $scope.changeView = function (view) {
       $location.path(view) // path not hash
     }
+
+    $scope.generateCSV = function (body,name) {
+      if (!body || !body[0]) {
+        alert('No hay datos para descargar')
+        return
+      }
+
+      let csv = [Object.keys(JSON.parse(angular.toJson(body[0]))).join(',')].concat(
+        body.map((x) => {
+          return Object.values(JSON.parse(angular.toJson(x)))
+        })).join('%0A').replace(/[ ]+/g,'%20')
+      console.log(csv)
+      let a = document.createElement('a')
+      a.href = 'data:attachment/csv,' + csv
+      a.target = '_blank'
+      a.download = name.trim()+'.csv'
+      document.body.appendChild(a)
+      a.click()
+    }
+
   }])

@@ -2,12 +2,23 @@
 
 const pool = require('../database/DAO')
 const queries = require('../database/Queries')
+const personUtil = require('../utils/PersonasUtil')
 
 exports.listAll = function (req, res) {
   pool.query(queries.listAllProfessor, [], function (err, data) {
     if (err)
       res.send(err)
     res.json(data)
+  })
+}
+
+exports.listJson = function (req, res) {
+  const query = personUtil.buildQuery(req.body)
+  pool.query(query, [],(err, data) => {
+    if (err) {
+      res.send(err)
+    }
+    res.json(data.rows)
   })
 }
 

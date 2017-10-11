@@ -2,13 +2,17 @@
 
 module.exports = function (app) {
   const contPersonas = require('../controllers/Personas')
-  const contPeriod = require('../controllers/Period')
+  const contPeriodo = require('../controllers/Periodos')
   const contCurso = require('../controllers/Cursos')
+  const contMateria = require('../controllers/Materias')
 
-
+  // deprecated
   app.route('/professor')
     .get(contPersonas.listAll)
-
+  // deprecated
+  app.route('/professor')
+    .post(contPersonas.listJson)
+  // deprecated
   app.route('/professor/:filtr')
     .get(contPersonas.listAllAvg)
 
@@ -18,10 +22,17 @@ module.exports = function (app) {
   app.route('/professor/detail/calif/:id')
     .get(contPersonas.detailCalif)
 
-  app.route('/period/')
-    .get(contPeriod.listAll)
-
   //Curso
   app.route('/curso/:id')
     .get(contCurso.getById)
+
+  // Materia
+  app.route('/materia/')
+    .get(contMateria.listAll)
+
+  // Periodo
+  app.route('/periodo/')
+    .get(contPeriodo.listAll)
+
+
 }

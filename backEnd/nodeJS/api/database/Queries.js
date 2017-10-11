@@ -26,3 +26,6 @@ exports.listAllPeriod = 'SELECT * FROM periodo'
 
 // Cursos
 exports.cursoById = 'SELECT * FROM curso WHERE id_persona = $1::INT'
+
+
+exports.listAllMateria= 'SELECT id, materia FROM materia'

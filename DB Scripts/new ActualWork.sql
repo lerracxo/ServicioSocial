@@ -42,18 +42,27 @@ CREATE TABLE pers_temp_proc (
 	promedio text
 );
 
+ALTER TABLE r_prof_materia DROP CONSTRAINT r_prof_materia_id_profesor_fkey;
+
+SELECT * FROM r_prof_materia;
+
+SELECT * FROM cat_materia;
+
+SELECT * from materia;
+
 COPY pers_temp_proc FROM '/Users/oscar/Projects/Personal/ServicioSocial/DB Scripts/pers_tempo_proc.csv' WITH DELIMITER '|' ;
 
---WITH temp_table as (
-CREATE TABLE calificacion AS(
-SELECT p.id_persona,pt.id_tempo as id_periodo, gru.id as id_grupo, mat.id as id_materia, pc.puntualidad, pc.contenido, pc.didactica, pc.planeacion, pc.evaluacion, pc.actitud, pc.promedio 
+--INSERT INTO r_prof_materia (id_profesor,id_materia) 
+WITH temp_table as (
+SELECT pc.nombre, p.id_persona,pt.id_tempo as id_periodo, gru.id as id_grupo, mat.id as id_materia, pc.puntualidad, pc.contenido, pc.didactica, pc.planeacion, pc.evaluacion, pc.actitud, pc.promedio 
              FROM pers_temp_proc pc
 	FULL OUTER JOIN persona p        ON REPLACE(concat(p.a_paterno,p.a_materno,p.nombres),' ','') = 		pc.nombre
 	FULL OUTER JOIN permat_tempo pt  ON pc.periodo = pt.periodo 
 	FULL OUTER JOIN materia mat      ON pc.materia = mat.materia
 	FULL OUTER JOIN grupo  gru       ON pc.grupo = gru.grupo
 )
-; SELECT * FROM temp_table;
+SELECT DISTINCT id_persona,id_materia FROM temp_table 
+  WHERE id_persona is not null AND id_materia is not null;
 
 SELECT * FROM calificacion WHERE promedio = '2CM10';
 
@@ -79,7 +88,7 @@ SELECT * FROM persona;
 
 SELECT c.id_persona, p.nombres, p.a_paterno, p.a_materno, AVG(c.promedio::decimal)  FROM calificacion c
 JOIN persona p ON c.id_persona = p.id_persona
-WHERE  UPPER(REPLACE(concat(p.a_paterno,p.a_materno,p.nombres),' ','')) SIMILAR TO '%(ESTELA|d)%'
+WHERE  UPPER(REPLACE(concat(p.a_paterno,p.a_materno,p.nombres),' ','')) SIMILAR TO '%(OSCAR|d)%'
 GROUP BY c.id_persona, p.nombres, p.a_paterno, p.a_materno;
 
 --DROP TABLE calificacion CASCADE ;
@@ -219,3 +228,25 @@ SELECT p.id_persona::INT, cd.curso, cd.termino as inicio, cd.horas as termino, c
   INNER JOIN persona p 
   ON UPPER(REPLACE(concat(p.a_paterno,p.a_materno,p.nombres),' ','')) = UPPER(REPLACE(nombre,' ',''));
 
+
+
+SELECT * FROM materia;
+SELECT * FROM calificacion;
+
+SELECT * FROM r_prof_materia WHERE id_profesor = 58;
+
+
+
+WITH temp_table AS  (
+  SELECT  c.id_persona, p.nombres, p.a_paterno, p.a_materno, AVG(c.promedio::decimal) as promedio 
+       FROM calificacion c
+       JOIN persona p ON c.id_persona = p.id_persona
+       --Si pides filtrar por materia
+       --JOIN r_prof_materia rpm ON rpm.id_materia = 400 AND rpm.id_profesor = p.id_persona  
+       --WHERE  UPPER(REPLACE(concat(p.a_paterno,p.a_materno,p.nombres),' ',''))  SIMILAR TO '%(OSCAR)%'::TEXT 
+       GROUP BY c.id_persona, p.nombres, p.a_paterno, p.a_materno )
+SELECT * FROM temp_table WHERE promedio::decimal > 0 ;
+
+
+
+SELECT * FROM pers_tempo;

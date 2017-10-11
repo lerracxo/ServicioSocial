@@ -1,76 +1,120 @@
 <div ng-controller="profDetailsController">
+    <div>
+        <h3 align="center" >{{profDet.nombres}} {{profDet.a_paterno}} {{profDet.a_materno}} </h3>
+    </div>
 
-    <h3 align="center">{{profDet.nombres}} {{profDet.a_paterno}} {{profDet.a_materno}}</h3>
+
     <br>
 
+    <div class="table-responsive">
+        <table class="table table-borderless">
+            <tbody>
+            <tr>
+                <td>
+                    <label for="telFijo"> Teléfono fijo: </label>
+                </td>
+                <td>
+                    <input id="telFijo" class="form-control" value="{{profDet.f_telefono}}"/>
+                </td>
+                <td>
+                    <label for="cedula"> Cédula: </label>
+                </td>
+                <td>
+                    <input id="cedula" class="form-control" value="{{profDet.cedula}}"/>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <label for="telMovil"> Teléfono movil: </label>
 
-    <form class="form-inline ">
-        <div class="form-group">
-            <!--Telefono fijo-->
-            <div class="col-md-6 ">
-                <label for="telFijo"> Teléfono fijo: </label>
-                <input id="telFijo" class="form-control" value="{{profDet.f_telefono}}"/>
-            </div>
+                </td>
+                <td>
+                    <input id="telMovil" class="form-control" value="{{profDet.m_telefono}}"/>
+                </td>
+                <td>
+                    <label for="rfc"> RFC: </label>
 
-            <!--Cedula-->
-            <div class="col-md-6 ">
-                <label for="cedula"> Cédula: </label>
-                <input id="cedula" class="form-control" value="{{profDet.cedula}}"/>
-            </div>
-            <!--Telefono movil-->
-            <div class="col-md-6 ">
-                <label for="telMovil"> Teléfono movil: </label>
-                <input id="telMovil" class="form-control" value="{{profDet.m_telefono}}"/>
-            </div>
+                </td>
+                <td>
+                    <input id="rfc" class="form-control" value="{{profDet.rfc}}"/>
 
-            <!--RFC-->
-            <div class="col-md-6 ">
-                <label for="rfc"> RFC: </label>
-                <input id="rfc" class="form-control" value="{{profDet.rfc}}"/>
-            </div>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <label for="telTrabajo"> Teléfono trabajo: </label>
 
-            <!--Telefono trabajo-->
-            <div class="col-md-6 ">
-                <label for="telTrabajo"> Teléfono trabajo: </label>
-                <input id="telTrabajo" class="form-control" value="{{profDet.t_telefono}}"/>
-            </div>
+                </td>
 
-            <!--Fecha ingreso-->
-            <div class="col-md-6 ">
-                <label for="fIngreso"> Fecha de ingreso: </label>
-                <input id="fIngreso" class="form-control" value="{{profDet.f_ingreso}}"/>
-            </div>
+                <td>
+                    <input id="telTrabajo" class="form-control" value="{{profDet.t_telefono}}"/>
 
-            <!--Ext -->
-            <div class="col-md-6 ">
-                <label for="ext"> Ext: </label>
-                <input id="ext" class="form-control" value="{{profDet.ext}}"/>
-            </div>
 
-            <!--Examen oposición -->
-            <div class="col-md-6 ">
-                <label for="exOp"> Exámen de oposición: </label>
-                <input id="exOp" class="form-control" value="{{profDet.ex_oposicion}}"/>
-            </div>
+                </td>
+                <td>
+                    <label for="fIngreso"> Fecha de ingreso: </label>
 
-            <!--Correo -->
-            <div class="col-md-6 ">
-                <label for="correo"> Correo eléctronico: </label>
-                <input id="correo" class="form-control" value="{{profDet.mail}}"/>
-            </div>
 
-            <!--Grado-->
-            <div class="col-md-6 ">
-                <label for="grado"> Grado: </label>
-                <input id="grado" class="form-control" value="{{profDet.grado}}"/>
-            </div>
+                </td>
+                <td>
+                    <input id="fIngreso" class="form-control" value="{{profDet.f_ingreso}}"/>
+
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <label for="ext"> Ext: </label>
+
+                </td>
+                <td>
+                    <input id="ext" class="form-control" value="{{profDet.ext}}"/>
+
+                </td>
+
+
+                <td>
+                    <label for="exOp"> Exámen de oposición: </label>
+
+
+                </td>
+                <td>
+                    <input id="exOp" class="form-control" value="{{profDet.ex_oposicion}}"/>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <label for="correo"> Correo eléctronico: </label>
+
+                </td>
+                <td>
+                    <input id="correo" class="form-control" value="{{profDet.mail}}"/>
+
+                </td>
+                <td>
+                    <label for="grado"> Grado: </label>
+
+                </td>
+                <td>
+                    <input id="grado" class="form-control" value="{{profDet.grado}}"/>
+
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div>
+        <div class="span9 btn-block">
+            <button type="button" class="btn btn-large btn-block btn-primary -align-center" data-toggle="collapse"
+                    data-target="#cursos">Cursos
+            </button>
         </div>
-    </form>
-    <div class="container ">
-        <button type="button" class="btn btn-info" data-toggle="collapse" data-target="#cursos">Cursos</button>
-        <div id="cursos" class="collapse">
-            <h2 align="center">Cursos</h2>
+        <i class="fa fa-print -align-right" ng-click="generateCSV(profCursos,'Cursos')"></i>
+
+        <div id="cursos" class="collapse table-responsive ">
+            <!--<h4 align="center">Cursos</h4>-->
             <table class="table table-hover">
+                <thead>
                 <tr>
                     <th>Curso</th>
                     <!--<th>Descripción</th>-->
@@ -80,23 +124,27 @@
                     <th>Fecha fin</th>
                     <th>Horas</th>
                 </tr>
+                </thead>
+                <tbody>
                 <tr ng-repeat="curso in profCursos">
                     <td>{{curso.curso}}</td>
                     <td>{{curso.inicio}}</td>
                     <td>{{curso.termino}}</td>
                     <td>{{curso.horas}}</td>
                 </tr>
+                </tbody>
             </table>
         </div>
     </div>
     <br>
-
-    <div class="container">
-        <button type="button" class="btn btn-info" data-toggle="collapse" data-target="#calificaciones">Calificaciones
-        </button>
+    <div>
+        <div class="span9 btn-block">
+            <button type="button" class="btn btn-large btn-block btn-primary -align-center" data-toggle="collapse"
+                    data-target="#calificaciones">Calificaciones</button>
+        </div>
+        <i class="fa fa-print -align-right" ng-click="generateCSV(profCal,'Calificaciones')"></i>
         <div id="calificaciones" class="collapse">
-            <h2 align="center">Calificaciones</h2>
-            <table class="table table-hover">
+            <table class="table table-hover table-condensed">
                 <tr>
                     <th>Periodo</th>
                     <th>Grupo</th>
