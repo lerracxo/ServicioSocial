@@ -6,12 +6,12 @@ module.exports = function (app) {
   const contCurso = require('../controllers/Cursos')
   const contMateria = require('../controllers/Materias')
 
+  // Professor
+  app.route('/professor')
+    .post(contPersonas.listJson)
   // deprecated
   app.route('/professor')
     .get(contPersonas.listAll)
-  // deprecated
-  app.route('/professor')
-    .post(contPersonas.listJson)
   // deprecated
   app.route('/professor/:filtr')
     .get(contPersonas.listAllAvg)
@@ -21,6 +21,9 @@ module.exports = function (app) {
 
   app.route('/professor/detail/calif/:id')
     .get(contPersonas.detailCalif)
+
+  app.route('/professor/exop/:id')
+    .post(contPersonas.uploadExop)
 
   //Curso
   app.route('/curso/:id')

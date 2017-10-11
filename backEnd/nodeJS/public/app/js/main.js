@@ -1,12 +1,9 @@
-const app = angular.module('administracion', ['ngRoute'])
+const app = angular.module('administracion', ['ngRoute','ngFileUpload'])
 
 app.factory('profUtils', ['$http', '$location',
   function ($http, $location) {
     return {
       serviceLoc: '/',
-      parseQuery: function (query) {
-        return 'callToObjFunction'
-      },
       changeView: function (destiny) {
         $location.path(destiny) // path not hash
       },
@@ -18,14 +15,11 @@ app.factory('profUtils', ['$http', '$location',
           })
       },
       validQuery: function (query) {
-
-        let test = query &&
+        return query &&
           (query.name ? this.validString(query.name) : true) &&
           (query.prom ? this.validDecimal(query.prom) : true) &&
           (query.mat ? this.validDecimal(query.mat) : true) &&
           (query.per ? this.validDecimal(query.per) : true)
-
-        return test
       },
       validString: function (query) {
         let validChars = /^[a-zA-Z!@#\$%\^\&*\) ]+$/g
@@ -49,26 +43,12 @@ app.factory('profUtils', ['$http', '$location',
             alert('An error ocurs: ' + error + ' ' + status)
           })
       }
-
     }
   }])
 
 app.controller('welcomeController',
   function () {
   })
-
-app.directive('myEnter', function () {
-  return function (scope, element, attrs) {
-    element.bind('keydown keypress', function (event) {
-      if (event.which === 13) {
-        scope.$apply(function () {
-          scope.$eval(attrs.myEnter)
-        })
-        event.preventDefault()
-      }
-    })
-  }
-})
 
 app.config(['$routeProvider',
   function ($routeProvider) {
@@ -138,8 +118,8 @@ app.controller('profesorController', ['$scope', '$routeParams', 'profUtils',
 
   }])
 
-app.controller('profDetailsController', ['$scope', '$http', '$location', '$routeParams', 'profUtils',
-  function ($scope, $http, $location, $routeParams, profUtils) {
+app.controller('profDetailsController', ['$scope', '$http', '$location', '$routeParams', 'profUtils','Upload',
+  function ($scope, $http, $location, $routeParams, profUtils,Upload) {
 
     $http({
       method: 'GET',
@@ -182,13 +162,26 @@ app.controller('profDetailsController', ['$scope', '$http', '$location', '$route
         body.map((x) => {
           return Object.values(JSON.parse(angular.toJson(x)))
         })).join('%0A').replace(/[ ]+/g, '%20')
-      console.log(csv)
       let a = document.createElement('a')
       a.href = 'data:attachment/csv,' + csv
       a.target = '_blank'
       a.download = name.trim() + '.csv'
       document.body.appendChild(a)
       a.click()
+    }
+
+    $scope.uploadFile = function($files){
+      Upload.upload({
+        url: profUtils.serviceLoc + 'professor/exop/' + $scope.profDet.id_persona,
+        file: $files,
+      })
+        .progress(function(e){})
+        .then(function (data,status,headers,config){
+          console.log('File uploaded correctly')
+        })
+        // .reject(function(reason){
+        //   console.error(reason)
+        // })
     }
 
   }])

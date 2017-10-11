@@ -1,19 +1,24 @@
-var express = require('express'),
-  app = express(),
-  port = process.env.PORT || 3000,
-  // mongoose = require('mongoose'),
-  Task = require('./api/models/Model'),
-  bodyParser = require('body-parser')
+const express = require('express')
+const path = require('path')
+const app = express()
+const bodyParser = require('body-parser')
+const routes = require('./api/routes/Routes')
 
-// mongoose.Promise = global.Promise
-// mongoose.connect('mongodb://localhost/Tododb')
+const port = process.env.PORT || 3000
 
-console.log('directory to public',(__dirname + '/public'))
-app.use(express.static(__dirname + '/public'));
+global.project = {
+  projectDir: path.dirname(require.main.filename),
+  publicDir: path.dirname(require.main.filename) + '/public/',
+  uploadDir: path.dirname(require.main.filename) + '/public/uploads/',
+}
+
+console.log('directory to public', project.projectDir)
+console.log('directory to public', project.publicDir)
+
+app.use(express.static(project.publicDir))
 app.use(bodyParser.urlencoded({extended: true}))
 app.use(bodyParser.json())
 
-const routes = require('./api/routes/Routes')
 routes(app)
 
 app.listen(port)
