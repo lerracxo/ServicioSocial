@@ -249,4 +249,23 @@ SELECT * FROM temp_table WHERE promedio::decimal > 0 ;
 
 
 
-SELECT * FROM pers_tempo;
+SELECT * FROM materia;
+
+
+
+WITH temp_table AS  (   SELECT  c.id_persona, p.nombres, p.a_paterno, p.a_materno, AVG(c.promedio::decimal) as promedio        FROM calificacion c        JOIN persona p ON c.id_persona = p.id_persona  WHERE UPPER(REPLACE(concat(p.a_paterno,p.a_materno,p.nombres),' ',''))   SIMILAR TO '%(OSCAR)%'::TEXT        GROUP BY c.id_persona, p.nombres, p.a_paterno, p.a_materno ) SELECT * FROM temp_table ;
+
+SELECT id, materia FROM materia;
+
+SELECT * FROM periodo;
+SELECT * FROM persona;
+
+SELECT * FROM profesor;
+
+SELECT * FROM persona pe JOIN profesor pr ON  pe.id_persona = pr.id_profesor;
+
+-- ALTER TABLE profesor ADD COLUMN ex_oposicion TEXT DEFAULT NULL;
+
+SELECT * FROM profesor WHERE id_profesor = 74::INT;
+
+UPDATE profesor SET ex_oposicion = ''::TEXT WHERE id_profesor = $2::INT

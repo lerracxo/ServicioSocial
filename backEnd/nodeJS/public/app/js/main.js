@@ -1,9 +1,10 @@
-const app = angular.module('administracion', ['ngRoute','ngFileUpload'])
+const app = angular.module('administracion', ['ngRoute', 'ngFileUpload'])
 
 app.factory('profUtils', ['$http', '$location',
   function ($http, $location) {
     return {
       serviceLoc: '/',
+      filesLoc: '/files/',
       changeView: function (destiny) {
         $location.path(destiny) // path not hash
       },
@@ -118,9 +119,10 @@ app.controller('profesorController', ['$scope', '$routeParams', 'profUtils',
 
   }])
 
-app.controller('profDetailsController', ['$scope', '$http', '$location', '$routeParams', 'profUtils','Upload',
-  function ($scope, $http, $location, $routeParams, profUtils,Upload) {
+app.controller('profDetailsController', ['$scope', '$http', '$location', '$routeParams', 'profUtils', 'Upload',
+  function ($scope, $http, $location, $routeParams, profUtils, Upload) {
 
+    $scope.filesLoc = profUtils.filesLoc
     $http({
       method: 'GET',
       url: profUtils.serviceLoc + 'professor/detail/' + $routeParams.personId
@@ -170,18 +172,16 @@ app.controller('profDetailsController', ['$scope', '$http', '$location', '$route
       a.click()
     }
 
-    $scope.uploadFile = function($files){
+    $scope.uploadFile = function ($files) {
       Upload.upload({
         url: profUtils.serviceLoc + 'professor/exop/' + $scope.profDet.id_persona,
         file: $files,
       })
-        .progress(function(e){})
-        .then(function (data,status,headers,config){
+        .progress(function (e) {})
+        .then(function (data, status, headers, config) {
           console.log('File uploaded correctly')
+          alert('Archivo cargado exitosamente')
         })
-        // .reject(function(reason){
-        //   console.error(reason)
-        // })
     }
 
   }])

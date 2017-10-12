@@ -7,16 +7,23 @@ const formidable = require('formidable')
 const path = require('path')
 const fs = require('fs')
 
-
-
 exports.uploadExop = function (req, res) {
+  let exopDir = '/exop/'
+  let fileDir =  project.uploadDir
+  let id_profesor = req.params.id
+
   console.log('uploading a file')
+
   const form = new formidable.IncomingForm()
   form.multiples = false
-  form.uploadDir = project.uploadDir
+  form.uploadDir = fileDir
 
   form.on('file', function (field, file) {
-    fs.rename(file.path, path.join(form.uploadDir, file.name))
+    // Remove spaces [id_profesor + extension of the file]
+    let fileName = exopDir+id_profesor+'.'+file.name.split('.').pop().replace(/[ ]+/g, '')
+    fs.rename(file.path, path.join(form.uploadDir, fileName))
+    console.log('Nombre archivo: ',fileName)
+    console.log('update EXOP of ',id_profesor,' result: ',addExop(id_profesor,fileName))
   })
 
   form.on('error', function (err) {
@@ -28,6 +35,12 @@ exports.uploadExop = function (req, res) {
   })
 
   form.parse(req)
+}
+
+function addExop (id_profesor, fileName ){
+  pool.query(queries.updateProfExop,[fileName,id_profesor],function(err,data){
+    return err ? err : data
+  })
 }
 
 exports.listAll = function (req, res) {

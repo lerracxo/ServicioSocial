@@ -1,6 +1,6 @@
 <div ng-controller="profDetailsController">
     <div>
-        <h3 align="center" >{{profDet.nombres}} {{profDet.a_paterno}} {{profDet.a_materno}} </h3>
+        <h3 align="center">{{profDet.nombres}} {{profDet.a_paterno}} {{profDet.a_materno}} </h3>
     </div>
 
 
@@ -64,23 +64,21 @@
             <tr>
                 <td>
                     <label for="ext"> Ext: </label>
-
                 </td>
                 <td>
                     <input id="ext" class="form-control" value="{{profDet.ext}}"/>
-
                 </td>
-
-
                 <td>
                     <label for="exOp"> Exámen de oposición: </label>
-
-
                 </td>
+                <!-- File UPLOAD-->
                 <td>
-                    <!--<input id="exOp" class="form-control" value="{{profDet.ex_oposicion}}"/>-->
-                    <button type="file" id="exOp" type="file"
-                            ngf-select="uploadFile($files)" >Upload a file</button>
+                    <div ng-hide="profDet.ex_oposicion === null">
+                        <a href="{{filesLoc+profDet.ex_oposicion}}" download="img.png" >Descargar Archivo</a>
+                    </div>
+                    <button type="file" id="exOp" type="file" ng-hide="profDet.ex_oposicion !== null"
+                            ngf-select="uploadFile($files)">Upload a file
+                    </button>
                 </td>
             </tr>
             <tr>
@@ -142,7 +140,8 @@
     <div>
         <div class="span9 btn-block">
             <button type="button" class="btn btn-large btn-block btn-primary -align-center" data-toggle="collapse"
-                    data-target="#calificaciones">Calificaciones</button>
+                    data-target="#calificaciones">Calificaciones
+            </button>
         </div>
         <i class="fa fa-print -align-right" ng-click="generateCSV(profCal,'Calificaciones')"></i>
         <div id="calificaciones" class="collapse">

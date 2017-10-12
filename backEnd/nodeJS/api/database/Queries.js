@@ -7,10 +7,10 @@ exports.listAllProfessorAVG = 'SELECT c.id_persona, p.nombres, p.a_paterno, p.a_
   ' WHERE  UPPER(REPLACE(concat(p.a_paterno,p.a_materno,p.nombres),\' \',\'\'))  SIMILAR TO $1::TEXT ' +
   ' GROUP BY c.id_persona, p.nombres, p.a_paterno, p.a_materno '
 
-exports.detailProfessor = 'SELECT p.id_persona, p.nombres, p.a_paterno, p.a_materno, \'555555\' as f_telefono, \'242342342\' as m_telefono, \'122234\' as t_telefono, ' +
+exports.detailProfessor = 'SELECT p.id_persona, p.nombres, p.a_paterno, p.a_materno, pr.ex_oposicion, \'555555\' as f_telefono, \'242342342\' as m_telefono, \'122234\' as t_telefono, ' +
   ' \'333\' as ext, \'alguien@ipn.mx\' as mail, ' +
-  ' \'33d3dsdas2\' as cedula, \'ASDAS13DSF22\' as rfc, \'12-34-01\' as f_ingreso, \'si\' as ex_oposicion, \'Maestria\' as Grado ' +
-  ' FROM persona p ' +
+  ' \'33d3dsdas2\' as cedula, \'ASDAS13DSF22\' as rfc, \'12-34-01\' as f_ingreso, \'Maestria\' as Grado ' +
+  ' FROM persona p JOIN profesor pr ON p.id_persona = pr.id_profesor' +
   ' WHERE p.id_persona = $1::INT'
 
 exports.detailProfesorCalif =
@@ -29,3 +29,5 @@ exports.cursoById = 'SELECT * FROM curso WHERE id_persona = $1::INT'
 
 
 exports.listAllMateria= 'SELECT id, materia FROM materia'
+
+exports.updateProfExop = 'UPDATE profesor SET ex_oposicion = $1::TEXT WHERE id_profesor = $2::INT'
