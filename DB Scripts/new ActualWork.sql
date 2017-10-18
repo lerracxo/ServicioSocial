@@ -268,4 +268,18 @@ SELECT * FROM persona pe JOIN profesor pr ON  pe.id_persona = pr.id_profesor;
 
 SELECT * FROM profesor WHERE id_profesor = 74::INT;
 
-UPDATE profesor SET ex_oposicion = ''::TEXT WHERE id_profesor = $2::INT
+UPDATE profesor SET ex_oposicion = ''::TEXT WHERE id_profesor = $2::INT;
+
+SELECT * FROM curso WHERE id_persona = 5 ;
+ALTER TABLE curso ADD COLUMN constancia TEXT DEFAULT NULL;
+
+-- ALTER TABLE calificacion ADD COLUMN comprobante TEXT DEFAULT NULL;
+
+UPDATE calificacion SET comprobante = NULL WHERE id_persona = 852 AND id_periodo = 62 AND id_grupo = 38 AND id_materia = 338;
+
+SELECT * FROM calificacion WHERE id_persona = 852 AND id_periodo = 62 AND id_grupo = 38 AND id_materia = 338;
+
+
+-- ALTER TABLE calificacion ADD COLUMN id SERIAL PRIMARY KEY;
+SELECT * FROM calificacion WHERE id = 16040;
+ 

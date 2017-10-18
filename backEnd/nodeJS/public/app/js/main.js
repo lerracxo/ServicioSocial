@@ -1,15 +1,49 @@
 const app = angular.module('administracion', ['ngRoute', 'ngFileUpload'])
 
-app.factory('profUtils', ['$http', '$location',
-  function ($http, $location) {
+app.directive('ngConfirmClick', [
+  function () {
+    return {
+      priority: 1,
+      terminal: true,
+      link: function (scope, element, attr) {
+        var msg = attr.ngConfirmClick || "Are you sure?";
+        var clickAction = attr.ngClick;
+        element.bind('click', function (event) {
+          if (window.confirm(msg)) {
+            scope.$eval(clickAction)
+          }
+        });
+      }
+    };
+  }])
+
+app.factory('profUtils', ['$http', '$location', '$window',
+  function ($http, $location, $window) {
     return {
       serviceLoc: '/',
       filesLoc: '/files/',
+      reloadPage: function () {
+        $window.location.reload();
+      },
       changeView: function (destiny) {
         $location.path(destiny) // path not hash
       },
       queryProfessors: function (query, callback) {
         $http.post(this.serviceLoc + 'professor/', query) //+ '/' + query.prom + '/' + query.mat + '/' + query.per
+          .success((data) => callback(data))
+          .error(function (error, status) {
+            alert('An error ocurs: ' + error + ' ' + status)
+          })
+      },
+      httpGet: function (url, callback) {
+        $http.get(this.serviceLoc + url)
+          .success((data) => callback(data))
+          .error(function (error, status) {
+            alert('An error ocurs: ' + error + ' ' + status)
+          })
+      },
+      httpDelete: function (url, callback) {
+        $http.delete(this.serviceLoc + url)
           .success((data) => callback(data))
           .error(function (error, status) {
             alert('An error ocurs: ' + error + ' ' + status)
@@ -109,7 +143,7 @@ app.controller('profesorController', ['$scope', '$routeParams', 'profUtils',
 
     $scope.queryProfessors = function (query) {
       if (profUtils.validQuery(query)) {
-        profUtils.queryProfessors(query, (data) => { $scope.searchResult = data})
+        profUtils.queryProfessors(query, (data) => { $scope.searchResult = data })
       }
     }
 
@@ -123,43 +157,34 @@ app.controller('profDetailsController', ['$scope', '$http', '$location', '$route
   function ($scope, $http, $location, $routeParams, profUtils, Upload) {
 
     $scope.filesLoc = profUtils.filesLoc
-    $http({
-      method: 'GET',
-      url: profUtils.serviceLoc + 'professor/detail/' + $routeParams.personId
-    }).then(function (response) {
-      $scope.profDet = response.data
-    }, function (response) {
-      alert('An error ocurs' + response.data)
-    })
 
-    $http({
-      method: 'GET',
-      url: profUtils.serviceLoc + 'professor/detail/calif/' + $routeParams.personId
-    }).then(function (response) {
-      $scope.profCal = response.data
-    }, function (response) {
-      alert('An error ocurs' + response.data)
-    })
-
-    $http({
-      method: 'GET',
-      url: profUtils.serviceLoc + 'curso/' + $routeParams.personId
-    }).then(function (response) {
-      $scope.profCursos = response.data  //.map((x) => new ProfCursos(x))
-    }, function (response) {
-      alert('An error ocurs' + response.data)
-    })
-
-    $scope.changeView = function (view) {
-      $location.path(view) // path not hash
+    function getDetalle() {
+      profUtils.httpGet('professor/detail/' + $routeParams.personId, (data) => {
+        $scope.profDet = data
+      })
     }
+
+    function getCursos() {
+      profUtils.httpGet('curso/' + $routeParams.personId, (data) => {
+        $scope.profCursos = data
+      })
+    }
+
+    function getCalificaciones() {
+      profUtils.httpGet('calificaciones/profesor/' + $routeParams.personId, (data) => {
+        $scope.profCal = data
+      })
+    }
+
+    getDetalle()
+    getCursos()
+    getCalificaciones()
 
     $scope.generateCSV = function (body, name) {
       if (!body || !body[0]) {
         alert('No hay datos para descargar')
         return
       }
-
       let csv = [Object.keys(JSON.parse(angular.toJson(body[0]))).join(',')].concat(
         body.map((x) => {
           return Object.values(JSON.parse(angular.toJson(x)))
@@ -177,11 +202,57 @@ app.controller('profDetailsController', ['$scope', '$http', '$location', '$route
         url: profUtils.serviceLoc + 'professor/exop/' + $scope.profDet.id_persona,
         file: $files,
       })
-        .progress(function (e) {})
+        .progress(function (e) { })
         .then(function (data, status, headers, config) {
           console.log('File uploaded correctly')
-          alert('Archivo cargado exitosamente')
+          getDetalle()
         })
     }
+
+    $scope.removeExop = function (profesor) {
+      profUtils.httpDelete('professor/exop/' + profesor.id_persona, (data) => {
+        getDetalle()
+      })
+    }
+
+    $scope.uploadConstancia = function (curso, $files) {
+      Upload.upload({
+        url: profUtils.serviceLoc + 'curso/constancia/' + curso.id,
+        file: $files,
+      })
+        .progress(function (e) { })
+        .then(function (data, status, headers, config) {
+          console.log('File uploaded correctly')
+          getCursos()
+        })
+    }
+
+    $scope.removeConstancia = function (curso) {
+      profUtils.httpDelete('curso/constancia/' + curso.id, (data) => {
+        getCursos()
+      })
+    }
+
+    $scope.uploadComprobante = function (calificacion, $files) {
+      Upload.upload({
+        url: profUtils.serviceLoc + 'calificaciones/comprobante/' + calificacion.id,
+        file: $files,
+      })
+        .progress(function (e) { })
+        .then(function (data, status, headers, config) {
+          console.log('File uploaded correctly')
+          getCalificaciones()
+        })
+    }
+
+    $scope.removeComprobante = function (calificacion) {
+      profUtils.httpDelete('calificaciones/comprobante/' + calificacion.id, (data) => {
+        getCalificaciones()
+      })
+    }
+
+
+
+
 
   }])
