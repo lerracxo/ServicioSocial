@@ -1,1 +1,1 @@
-pg_dump -Fc oscar > database.bak
+pg_dump -Fc --no-owner --inserts --clean --if-exists oscar > database.bak
