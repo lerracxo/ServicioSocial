@@ -1,0 +1,1 @@
+pg_restore -d oscar database.bak
