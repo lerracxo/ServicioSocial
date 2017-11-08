@@ -10,10 +10,13 @@ module.exports = function (app) {
   // Professor
   app.route('/professor')
     .post(contPersonas.listJson)
-  // deprecated
-  // app.route('/professor')
-  //   .get(contPersonas.listAll)
-  // deprecated
+
+  app.route('/professor/exop/:id')
+    .post(contPersonas.uploadExop)
+
+  app.route('/professor/curso/')
+    .post(contPersonas.personsByCurso)
+
   app.route('/professor/:filtr')
     .get(contPersonas.listAllAvg)
 
@@ -21,11 +24,7 @@ module.exports = function (app) {
     .get(contPersonas.detail)
 
   app.route('/professor/exop/:id')
-    .post(contPersonas.uploadExop)
-
-  app.route('/professor/exop/:id')
     .delete(contPersonas.deleteExop)
-
 
   //Curso
   app.route('/curso/:id')
@@ -36,6 +35,9 @@ module.exports = function (app) {
 
   app.route('/curso/constancia/:id')
     .delete(contCurso.deleteConstancia)
+
+  app.route('/curso/')
+    .post(contCurso.search)
 
   // Calificacion
   app.route('/calificaciones/profesor/:id')
@@ -54,6 +56,5 @@ module.exports = function (app) {
   // Periodo
   app.route('/periodo/')
     .get(contPeriodo.listAll)
-
 
 }

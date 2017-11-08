@@ -1,89 +1,4 @@
-const app = angular.module('administracion', ['ngRoute', 'ngFileUpload'])
-
-app.directive('ngConfirmClick', [
-  function () {
-    return {
-      priority: 1,
-      terminal: true,
-      link: function (scope, element, attr) {
-        var msg = attr.ngConfirmClick || "Are you sure?";
-        var clickAction = attr.ngClick;
-        element.bind('click', function (event) {
-          if (window.confirm(msg)) {
-            scope.$eval(clickAction)
-          }
-        });
-      }
-    };
-  }])
-
-app.factory('profUtils', ['$http', '$location', '$window',
-  function ($http, $location, $window) {
-    return {
-      serviceLoc: '/',
-      filesLoc: '/files/',
-      reloadPage: function () {
-        $window.location.reload();
-      },
-      changeView: function (destiny) {
-        $location.path(destiny) // path not hash
-      },
-      queryProfessors: function (query, callback) {
-        $http.post(this.serviceLoc + 'professor/', query) //+ '/' + query.prom + '/' + query.mat + '/' + query.per
-          .success((data) => callback(data))
-          .error(function (error, status) {
-            alert('An error ocurs: ' + error + ' ' + status)
-          })
-      },
-      httpGet: function (url, callback) {
-        $http.get(this.serviceLoc + url)
-          .success((data) => callback(data))
-          .error(function (error, status) {
-            alert('An error ocurs: ' + error + ' ' + status)
-          })
-      },
-      httpDelete: function (url, callback) {
-        $http.delete(this.serviceLoc + url)
-          .success((data) => callback(data))
-          .error(function (error, status) {
-            alert('An error ocurs: ' + error + ' ' + status)
-          })
-      },
-      validQuery: function (query) {
-        return query &&
-          (query.name ? this.validString(query.name) : true) &&
-          (query.prom ? this.validDecimal(query.prom) : true) &&
-          (query.mat ? this.validDecimal(query.mat) : true) &&
-          (query.per ? this.validDecimal(query.per) : true)
-      },
-      validString: function (query) {
-        let validChars = /^[a-zA-Z!@#\$%\^\&*\) ]+$/g
-        return validChars.test(query)
-      },
-      validDecimal: function (query) {
-        let validDecimal = /^[0-9.!<>=*\) ]+$/g
-        return validDecimal.test(query)
-      },
-      getMaterias: function (callback) {
-        $http.get(this.serviceLoc + 'materia/') //+ '/' + query.prom + '/' + query.mat + '/' + query.per
-          .success((data) => callback(data))
-          .error(function (error, status) {
-            alert('An error ocurs: ' + error + ' ' + status)
-          })
-      },
-      getPeriodos: function (callback) {
-        $http.get(this.serviceLoc + 'periodo/') //+ '/' + query.prom + '/' + query.mat + '/' + query.per
-          .success((data) => callback(data))
-          .error(function (error, status) {
-            alert('An error ocurs: ' + error + ' ' + status)
-          })
-      }
-    }
-  }])
-
-app.controller('welcomeController',
-  function () {
-  })
+const app = angular.module('administracion', ['ngRoute', 'ngFileUpload', 'query-string'])
 
 app.config(['$routeProvider',
   function ($routeProvider) {
@@ -106,6 +21,10 @@ app.config(['$routeProvider',
     $routeProvider.when('/curso', {
       templateUrl: 'curso.html',
       controller: 'cursoController'
+    })
+    $routeProvider.when('/curso/detail/:curso', {
+      templateUrl: 'curso_detail.html',
+      controller: 'cursoDetailController'
     })
     $routeProvider.when('/periodo', {
       templateUrl: 'periodo.html',
@@ -134,16 +53,104 @@ app.config(['$routeProvider',
   }
 ])
 
-app.controller('profesorController', ['$scope', '$routeParams', 'profUtils',
-  function ($scope, $routeParams, profUtils) {
-    $scope.searchResult = []
+app.directive('ngConfirmClick', [
+  function () {
+    return {
+      priority: 1,
+      terminal: true,
+      link: function (scope, element, attr) {
+        let msg = attr.ngConfirmClick || 'Are you sure?'
+        let clickAction = attr.ngClick
+        element.bind('click', function (event) {
+          if (window.confirm(msg)) {
+            scope.$eval(clickAction)
+          }
+        })
+      }
+    }
+  }])
 
-    profUtils.getMaterias((data) => $scope.materias = data)
-    profUtils.getPeriodos((data) => $scope.periodos = data)
+app.factory('httpInterface', ['$http', '$q','$httpParamSerializer',
+  function ($http, $q,$httpParamSerializer) {
+    return {
+      serviceLoc: '/',
+      post: function (url, data) {
+        return $q((resolve, reject) => {
+          $http.post(this.serviceLoc + url, data)
+            .success(resolve)
+            .error(reject)
+        })
+      },
+      get: function (url) {
+        return $q((resolve, reject) => {
+          $http.get(this.serviceLoc + url)
+            .success(resolve)
+            .error(reject)
+        })
+      },
+      delete: function (url) {
+        return $q((resolve, reject) => {
+          $http.delete(this.serviceLoc + url)
+            .success(resolve)
+            .error(reject)
+        })
+      },
+      toQueryString: function (obj) {
+        return $httpParamSerializer(obj)
+      },
+      fromQueryString: function (params){
+        // return $httpParamSerializer.
+      }
+    }
+  }])
 
-    $scope.queryProfessors = function (query) {
+app.factory('profUtils', ['httpInterface', '$location', '$window',
+  function (httpInterface, $location, $window) {
+    return {
+      filesLoc: '/files/',
+      reloadPage: function () {
+        $window.location.reload()
+      },
+      changeView: function (destiny) {
+        $location.path(destiny) // path not hash
+      },
+      validQuery: function (query) {
+        return query &&
+          (query.name ? this.validString(query.name) : true) &&
+          (query.prom ? this.validDecimal(query.prom) : true) &&
+          (query.mat ? this.validDecimal(query.mat) : true) &&
+          (query.per ? this.validDecimal(query.per) : true)
+      },
+      validString: function (query) {
+        let validChars = /^[a-zA-Z!@#\$%\^\&*\) ]+$/g
+        return validChars.test(query)
+      },
+      validDecimal: function (query) {
+        let validDecimal = /^[0-9.!<>=*\) ]+$/g
+        return validDecimal.test(query)
+      }
+    }
+  }])
+
+app.controller('welcomeController',
+  function () {
+  })
+
+app.controller('profesorController', ['$scope', 'httpInterface', 'profUtils',
+  function ($scope, httpInterface, profUtils) {
+
+    httpInterface.get('materia/').then((msg) => $scope.materias = msg.data)
+    httpInterface.get('periodo/').then((msg) => $scope.periodos = msg.data)
+
+    $scope.queryProfessors = (event, query) => {
+      if (![13, 1].includes(event.which)) {
+        return
+      }
       if (profUtils.validQuery(query)) {
-        profUtils.queryProfessors(query, (data) => { $scope.searchResult = data })
+        httpInterface.post('professor/', query).then((msg) => {
+          $scope.searchResult = msg.data
+          console.log('received data', $scope.searchResult)
+        })
       }
     }
 
@@ -153,32 +160,40 @@ app.controller('profesorController', ['$scope', '$routeParams', 'profUtils',
 
   }])
 
-app.controller('profDetailsController', ['$scope', '$http', '$location', '$routeParams', 'profUtils', 'Upload',
-  function ($scope, $http, $location, $routeParams, profUtils, Upload) {
+app.controller('profDetailsController', ['$scope', 'httpInterface', '$routeParams', 'profUtils', 'Upload',
+  function ($scope, httpInterface, $routeParams, profUtils, Upload) {
 
     $scope.filesLoc = profUtils.filesLoc
 
-    function getDetalle() {
-      profUtils.httpGet('professor/detail/' + $routeParams.personId, (data) => {
-        $scope.profDet = data
+    getDetalle = () => {
+      httpInterface.get('professor/detail/' + $routeParams.personId).then((msg) => {
+        $scope.profDet = msg.data[0]
+        console.log('msg', msg)
+        console.log('profDet', $scope.profDet)
       })
     }
 
-    function getCursos() {
-      profUtils.httpGet('curso/' + $routeParams.personId, (data) => {
-        $scope.profCursos = data
+    function getCursos () {
+      httpInterface.get('curso/' + $routeParams.personId).then((data) => {
+        $scope.profCursos = data.data
       })
     }
 
-    function getCalificaciones() {
-      profUtils.httpGet('calificaciones/profesor/' + $routeParams.personId, (data) => {
-        $scope.profCal = data
+    function getCalificaciones () {
+      httpInterface.get('calificaciones/profesor/' + $routeParams.personId).then((data) => {
+        $scope.profCal = data.data
       })
     }
 
     getDetalle()
     getCursos()
     getCalificaciones()
+
+    $scope.removeExop = function (profesor) {
+      httpInterface.delete('professor/exop/' + profesor.id_persona).then((data) => {
+        getDetalle()
+      })
+    }
 
     $scope.generateCSV = function (body, name) {
       if (!body || !body[0]) {
@@ -199,25 +214,19 @@ app.controller('profDetailsController', ['$scope', '$http', '$location', '$route
 
     $scope.uploadFile = function ($files) {
       Upload.upload({
-        url: profUtils.serviceLoc + 'professor/exop/' + $scope.profDet.id_persona,
+        url: httpInterface.serviceLoc + 'professor/exop/' + $scope.profDet.id_persona,
         file: $files,
       })
-        .progress(function (e) { })
+        .progress(function (e) { console.log(e)})
         .then(function (data, status, headers, config) {
           console.log('File uploaded correctly')
           getDetalle()
         })
     }
 
-    $scope.removeExop = function (profesor) {
-      profUtils.httpDelete('professor/exop/' + profesor.id_persona, (data) => {
-        getDetalle()
-      })
-    }
-
     $scope.uploadConstancia = function (curso, $files) {
       Upload.upload({
-        url: profUtils.serviceLoc + 'curso/constancia/' + curso.id,
+        url: httpInterface.serviceLoc + 'curso/constancia/' + curso.id,
         file: $files,
       })
         .progress(function (e) { })
@@ -228,14 +237,14 @@ app.controller('profDetailsController', ['$scope', '$http', '$location', '$route
     }
 
     $scope.removeConstancia = function (curso) {
-      profUtils.httpDelete('curso/constancia/' + curso.id, (data) => {
+      httpInterface.delete('curso/constancia/' + curso.id).then((data) => {
         getCursos()
       })
     }
 
     $scope.uploadComprobante = function (calificacion, $files) {
       Upload.upload({
-        url: profUtils.serviceLoc + 'calificaciones/comprobante/' + calificacion.id,
+        url: httpInterface.serviceLoc + 'calificaciones/comprobante/' + calificacion.id,
         file: $files,
       })
         .progress(function (e) { })
@@ -246,13 +255,69 @@ app.controller('profDetailsController', ['$scope', '$http', '$location', '$route
     }
 
     $scope.removeComprobante = function (calificacion) {
-      profUtils.httpDelete('calificaciones/comprobante/' + calificacion.id, (data) => {
+      httpInterface.delete('calificaciones/comprobante/' + calificacion.id, (data) => {
         getCalificaciones()
       })
     }
 
+  }])
 
+app.controller('cursoController', ['$scope', 'httpInterface', 'profUtils',
+  function ($scope, httpInterface, profUtils) {
 
+    // httpInterface.get('materia/').then((msg) => $scope.materias = msg.data)
+    // httpInterface.get('periodo/').then((msg) => $scope.periodos = msg.data)
 
+    $scope.queryCursos = (event, query) => {
+      if (![13, 1].includes(event.which) || !query) return
+      console.log('exec event', query)
+      // if () {
+      //   return
+      // }
+      // if (profUtils.validQuery(query)) {
+      httpInterface.post('curso/', query).then((msg) => {
+        console.log('response', msg.data)
+        $scope.searchResult = msg.data
+      })
+      // }
+    }
+
+    $scope.getCursoDetails = function (curso) {
+      profUtils.changeView('/curso/detail/' + httpInterface.toQueryString(JSON.parse(angular.toJson(curso))))
+    }
 
   }])
+
+app.controller('cursoDetailController', ['$scope', 'httpInterface', '$routeParams',
+  function ($scope, httpInterface, $routeParams) {
+
+    $scope.curso = {}
+    $scope.curso.curso = $routeParams.curso
+
+    console.log('on curso detail :',$scope.curso)
+    //
+    // getDetail = () => {
+    //   httpInterface.post('curso/detail/',query).then((msg) => {
+    //     $scope.curso = msg.data[0]
+    //   })
+    // }
+
+    function getProfesores () {
+      httpInterface.post('professor/curso/',$scope.curso).then((data) => {
+        $scope.profCursos = data.data
+      })
+    }
+    //
+    // function getCalificaciones () {
+    //   httpInterface.get('calificaciones/profesor/' + $routeParams.personId).then((data) => {
+    //     $scope.profCal = data.data
+    //   })
+    // }
+
+    // getDetalle()
+    getProfesores()
+    // getCalificaciones()
+
+  }])
+
+

@@ -1,0 +1,183 @@
+<div ng-controller="cursoDetailController">
+    <div>
+        <h3 align="center">{{curso.curso}} </h3>
+    </div>
+    <br>
+
+    <!--<div class="table-responsive">-->
+        <!--<table class="table table-borderless">-->
+            <!--<tbody>-->
+                <!--<tr>-->
+                    <!--<td>-->
+                        <!--<label for="telFijo"> Teléfono fijo: </label>-->
+                    <!--</td>-->
+                    <!--<td>-->
+                        <!--<input id="telFijo" class="form-control" value="{{profDet.f_telefono}}" />-->
+                    <!--</td>-->
+                    <!--<td>-->
+                        <!--<label for="cedula"> Cédula: </label>-->
+                    <!--</td>-->
+                    <!--<td>-->
+                        <!--<input id="cedula" class="form-control" value="{{profDet.cedula}}" />-->
+                    <!--</td>-->
+                <!--</tr>-->
+                <!--<tr>-->
+                    <!--<td>-->
+                        <!--<label for="telMovil"> Teléfono movil: </label>-->
+                    <!--</td>-->
+                    <!--<td>-->
+                        <!--<input id="telMovil" class="form-control" value="{{profDet.m_telefono}}" />-->
+                    <!--</td>-->
+                    <!--<td>-->
+                        <!--<label for="rfc"> RFC: </label>-->
+                    <!--</td>-->
+                    <!--<td>-->
+                        <!--<input id="rfc" class="form-control" value="{{profDet.rfc}}" />-->
+                    <!--</td>-->
+                <!--</tr>-->
+                <!--<tr>-->
+                    <!--<td>-->
+                        <!--<label for="telTrabajo"> Teléfono trabajo: </label>-->
+                    <!--</td>-->
+                    <!--<td>-->
+                        <!--<input id="telTrabajo" class="form-control" value="{{profDet.t_telefono}}" />-->
+                    <!--</td>-->
+                    <!--<td>-->
+                        <!--<label for="fIngreso"> Fecha de ingreso: </label>-->
+                    <!--</td>-->
+                    <!--<td>-->
+                        <!--<input id="fIngreso" class="form-control" value="{{profDet.f_ingreso}}" />-->
+                    <!--</td>-->
+                <!--</tr>-->
+                <!--<tr>-->
+                    <!--<td>-->
+                        <!--<label for="ext"> Ext: </label>-->
+                    <!--</td>-->
+                    <!--<td>-->
+                        <!--<input id="ext" class="form-control" value="{{profDet.ext}}" />-->
+                    <!--</td>-->
+                    <!--<td>-->
+                        <!--<label for="exOp"> Exámen de oposición: </label>-->
+                    <!--</td>-->
+                    <!--&lt;!&ndash; File UPLOAD&ndash;&gt;-->
+                    <!--<td>-->
+                        <!--<div ng-hide="profDet.ex_oposicion === null">-->
+                            <!--<a href="{{filesLoc+profDet.ex_oposicion}}" download="img.png">Descargar Archivo</a>-->
+                            <!--<button type="button" class="btn btn-default" ng-click="removeExop(profDet)" ng-confirm-click="Eliminar archivo?">-->
+                                <!--<span class="glyphicon glyphicon-remove"></span>-->
+                            <!--</button>-->
+                        <!--</div>-->
+                        <!--<button type="file" id="exOp" type="file" ng-hide="profDet.ex_oposicion !== null" ngf-select="uploadFile($files)">Subir archivo-->
+                        <!--</button>-->
+                    <!--</td>-->
+                <!--</tr>-->
+                <!--<tr>-->
+                    <!--<td>-->
+                        <!--<label for="correo"> Correo eléctronico: </label>-->
+                    <!--</td>-->
+                    <!--<td>-->
+                        <!--<input id="correo" class="form-control" value="{{profDet.mail}}" />-->
+                    <!--</td>-->
+                    <!--<td>-->
+                        <!--<label for="grado"> Grado: </label>-->
+                    <!--</td>-->
+                    <!--<td>-->
+                        <!--<input id="grado" class="form-control" value="{{profDet.grado}}" />-->
+                    <!--</td>-->
+                <!--</tr>-->
+            <!--</tbody>-->
+        <!--</table>-->
+    <!--</div>-->
+
+    <div>
+        <div class="span9 btn-block">
+            <button type="button" class="btn btn-large btn-block btn-primary -align-center" data-toggle="collapse" data-target="#cursos">Cursos
+            </button>
+        </div>
+        <i class="fa fa-print -align-right" ng-click="generateCSV(profCursos,'Cursos')"></i>
+
+        <div id="cursos" class="collapse table-responsive ">
+            <!--<h4 align="center">Cursos</h4>-->
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th>Curso</th>
+                        <!--<th>Descripción</th>-->
+                        <!--<th>Eje</th>-->
+                        <!--<th>Tipo de curso</th>-->
+                        <th>Fecha inicio</th>
+                        <th>Fecha fin</th>
+                        <th>Horas</th>
+                        <th>Archivo</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="curso in profCursos">
+                        <td>{{curso.curso}}</td>
+                        <td>{{curso.inicio}}</td>
+                        <td>{{curso.termino}}</td>
+                        <td>{{curso.horas}}</td>
+                        <td>
+                            <div ng-hide="curso.constancia === null">
+                                <a href="{{filesLoc+curso.constancia}}" download="img.png">Descargar Archivo</a>
+                                <button type="button" class="btn btn-default" ng-click="removeConstancia(curso)" ng-confirm-click="Eliminar archivo?">
+                                    <span class="glyphicon glyphicon-remove"></span>
+                                </button>
+                            </div>
+                            <button type="file" id="exOp" type="file" ng-hide="curso.constancia !== null" ngf-select="uploadConstancia(curso,$files)">Subir archivo
+                            </button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <br>
+    <div>
+        <div class="span9 btn-block">
+            <button type="button" class="btn btn-large btn-block btn-primary -align-center" data-toggle="collapse" data-target="#calificaciones">Calificaciones
+            </button>
+        </div>
+        <i class="fa fa-print -align-right" ng-click="generateCSV(profCal,'Calificaciones')"></i>
+        <div id="calificaciones" class="collapse">
+            <table class="table table-hover table-condensed">
+                <tr>
+                    <th>Periodo</th>
+                    <th>Grupo</th>
+                    <th>Asignatura</th>
+                    <!--<th>Dominio del grupo</th>-->
+                    <th>Puntualidad</th>
+                    <th>Contenido</th>
+                    <th>Didáctica</th>
+                    <th>Planeación</th>
+                    <th>Evaluación</th>
+                    <th>Actitud</th>
+                    <th>Promedio</th>
+                    <th>Archivo</th>
+                </tr>
+                <tr ng-repeat="cal in profCal">
+                    <td>{{cal.periodo}}</td>
+                    <td>{{cal.grupo}}</td>
+                    <td>{{cal.materia}}</td>
+                    <td>{{cal.puntualidad}}</td>
+                    <td>{{cal.contenido}}</td>
+                    <td>{{cal.didactica}}</td>
+                    <td>{{cal.evaluacion}}</td>
+                    <td>{{cal.planeacion}}</td>
+                    <td>{{cal.actitud}}</td>
+                    <td>{{cal.promedio}}</td>
+                    <td>
+                            <div ng-hide="cal.comprobante === null">
+                                    <a href="{{filesLoc+cal.comprobante}}" download="img.png">Descargar Archivo</a>
+                                    <button type="button" class="btn btn-default" ng-click="removeComprobante(cal)" ng-confirm-click="Eliminar archivo?">
+                                        <span class="glyphicon glyphicon-remove"></span>
+                                    </button>
+                                </div>
+                                <button type="file" id="exOp" type="file" ng-hide="cal.comprobante!== null" ngf-select="uploadComprobante(cal,$files)">Subir archivo
+                                </button>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>
+</div>

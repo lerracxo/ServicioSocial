@@ -5,8 +5,7 @@ const queries = require('../database/Queries')
 const personUtil = require('../utils/PersonasUtil')
 const filesUtil = require('../utils/FilesUtil')
 
-
-let exopDir = '/exop/'
+const exopDir = '/exop/'
 
 exports.uploadExop = function (req, res) {
   let id_profesor = req.params.id
@@ -15,63 +14,48 @@ exports.uploadExop = function (req, res) {
   filesUtil.uploadFile(req, fileName)
     .then((finalName) => addExop(id_profesor, finalName))
     .then(res.send('success'))
-      .catch(console.error)
+    .catch(console.error)
 }
 
-exports.deleteExop = function (req, res) {
-  getDetail(req.params.id).then((profesor) => {
-    deleteExop(profesor)
-    filesUtil.removeFile(project.uploadDir + profesor.ex_oposicion)
-  }).then(res.send('success')).catch(console.log)
+exports.personsByCurso = function (req,res) {
+  let query = req.body
+  console.log(query)
+  pool.queryResponse(queries.personsByCurso, [query.curso], res)
 }
 
-function deleteExop(profesor) {
-  pool.query(queries.deleteProfExop, [profesor.id_persona], function (err, data) {
-    return err ? err : data
-  })
+exports.deleteExop = async function (req, res) {
+  let profesor = await getDetail(req.params.id)
+  deleteExop(profesor)
+  filesUtil.removeFile(project.uploadDir + profesor.ex_oposicion)
+  res.send('success')
 }
-
-function addExop(id_profesor, fileName) {
-  console.log('update EXOP of ', id_profesor, ' fileName : ', fileName)
-  pool.query(queries.updateProfExop, [fileName, id_profesor], function (err, data) {
-    return err ? err : data
-  })
-}
-
 
 exports.listJson = function (req, res) {
   const query = personUtil.buildQuery(req.body)
-  pool.query(query, [], (err, data) => {
-    if (err) {
-      res.send(err)
-    }
-    res.json(data.rows)
-  })
+  return pool.queryResponse(query, [], res)
 }
 
 exports.listAllAvg = function (req, res) {
   console.log('params', req.params)
   let param = req.params.filtr.toUpperCase()
   param = '%(' + param.replace(' ', '|') + ')%'
-  pool.query(queries.listAllProfessorAVG, [param], function (err, data) {
-    if (err)
-      res.send(err)
-    res.json(data.rows)
-  })
+  pool.queryResponse(queries.listAllProfessorAVG, [param], res)
 }
 
-exports.detail = function (req, res) {
-  getDetail(req.params.id).then((data) => res.json(data))
+exports.detail = async function (req, res) {
+  pool.queryResponse(queries.detailProfessor,[req.params.id],res)
 }
 
-function getDetail(param) {
-  return new Promise((resolve, reject) => {
-    pool.query(queries.detailProfessor, [param], (err, data) => {
-      if (err) {
-        reject(err)
-      }
-      resolve(data.rows[0])
-    })
-  })
+function deleteExop (profesor) {
+  pool.query(queries.deleteProfExop, [profesor.id_persona])
+}
+
+function addExop (id_profesor, fileName) {
+  pool.query(queries.updateProfExop, [fileName, id_profesor])
+}
+
+async function getDetail (param) {
+  const result = await pool.query(queries.detailProfessor, [param])
+  return result[0]
 }
 

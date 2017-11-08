@@ -1,7 +1,7 @@
 <div ng-controller="profesorController">
     <h3 align="center">Consultar profesor</h3>
     <br>
-    <form ng-keypress="($event.which === 13)?queryProfessors(query):0">
+    <form ng-keypress="queryProfessors($event,query)">
         <div class="container-fluid">
             <div class="form-group">
                 <label for="profName"> Nombre Profesor </label>
@@ -9,13 +9,13 @@
                         id="profName"
                         class="form-control"
                         placeholder="Profesor" ng-model="query.name"
-                        />
+                />
             </div>
             <button type="button" class="btn btn-info" data-toggle="collapse" data-target="#busqueda">Búsqueda
                 avanzada
             </button>
             <button type="button" class="btn btn-default right-block"
-                    ng-click="queryProfessors(query)">
+                    ng-click="queryProfessors($event,query)">
                 <i class="fa fa-search"></i> Buscar
             </button>
             <div id="busqueda" class="collapse container-fluid form-group well">
@@ -47,10 +47,11 @@
                                 <i class="fa fa-male"></i>
                             </div>
                             <div class="col-xs-9 text-right">
-                                <div><p>{{profesor.a_paterno}} {{profesor.a_materno}}
+                                <p>{{profesor.a_paterno}} {{profesor.a_materno}}
                                     {{profesor.nombres}} </p>
-                                    <h6>Promedio: {{profesor.promedio}}</h6>
-                                </div>
+                            </div>
+                            <div class="col-xs-9 text-left">
+                                <p><h6>Promedio: {{profesor.promedio}}</h6></p>
                             </div>
                         </div>
                     </div>

@@ -23,6 +23,7 @@
   },
   "homepage": "http://angularjs.org",
   "dependencies": {
-    "ng-file-upload": "^12.2.13"
+    "ng-file-upload": "^12.2.13",
+    "query-string": "^5.0.1"
   }
 }

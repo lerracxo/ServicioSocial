@@ -13,6 +13,8 @@ exports.detailProfessor = 'SELECT p.id_persona, p.nombres, p.a_paterno, p.a_mate
   ' FROM persona p JOIN profesor pr ON p.id_persona = pr.id_profesor' +
   ' WHERE p.id_persona = $1::INT'
 
+exports.personsByCurso = 'SELECT * FROM persona WHERE '
+
 exports.deleteProfExop = 'UPDATE profesor SET ex_oposicion = NULL WHERE id_profesor = $1::INT'
 
 exports.updateProfExop = 'UPDATE profesor SET ex_oposicion = $1::TEXT WHERE id_profesor = $2::INT'
@@ -29,17 +31,21 @@ exports.updateCursoConstancia = 'UPDATE curso SET constancia = $1::TEXT WHERE id
 
 exports.deleteCursoConstancia = 'UPDATE curso SET constancia = NULL WHERE id = $1::INT'
 
+exports.searchCurso = 'SELECT DISTINCT curso, UPPER(REPLACE(TRIM(concat(curso)),\' \',\'\')) as short FROM curso ' +
+  ' WHERE UPPER(REPLACE(TRIM(concat(curso)),\' \',\'\')) SIMILAR TO $1::TEXT '
+
+
 // Materias
-exports.listAllMateria= 'SELECT id, materia FROM materia'
+exports.listAllMateria = 'SELECT id, materia FROM materia'
 
 // Calificaciones
 exports.detailProfesorCalif =
-' SELECT c.id, c.id_persona, pt.periodo, gr.grupo, mat.materia, c.puntualidad, c.contenido, c.didactica, c.planeacion, c.evaluacion, c.actitud,c.promedio,c.comprobante ' +
-' FROM calificacion c ' +
-' JOIN permat_tempo pt  ON c.id_periodo = pt.id_tempo ' +
-' JOIN materia mat      ON c.id_materia = mat.id ' +
-' JOIN grupo gr         ON c.id_grupo = gr.id ' +
-' WHERE id_persona = $1::INT'
+  ' SELECT c.id, c.id_persona, pt.periodo, gr.grupo, mat.materia, c.puntualidad, c.contenido, c.didactica, c.planeacion, c.evaluacion, c.actitud,c.promedio,c.comprobante ' +
+  ' FROM calificacion c ' +
+  ' JOIN permat_tempo pt  ON c.id_periodo = pt.id_tempo ' +
+  ' JOIN materia mat      ON c.id_materia = mat.id ' +
+  ' JOIN grupo gr         ON c.id_grupo = gr.id ' +
+  ' WHERE id_persona = $1::INT'
 
 exports.detailCalificacion = 'SELECT * FROM calificacion WHERE id = $1::INT'
 

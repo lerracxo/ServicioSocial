@@ -7,13 +7,15 @@ const filesUtil = require('../utils/FilesUtil')
 let subDir = '/constancias/'
 
 exports.getById = function (req, res) {
-  console.log('params', req.params)
-  let param = req.params.id
-  pool.query(queries.cursoById, [param], function (err, data) {
-    err ? res.send(err) : res.json(data.rows)
-  })
+  pool.queryResponse(queries.cursoById, [req.params.id], res)
 }
 
+exports.search = (req, res) => {
+  const query = '' +
+    '%(' + req.body.name.toUpperCase().replace(' ', '|') + ')%'
+  console.log('Query curso: ',query)
+  return pool.queryResponse(queries.searchCurso, [query], res)
+}
 
 exports.uploadConstancia = function (req, res) {
   let id_profesor = req.params.id
@@ -23,13 +25,10 @@ exports.uploadConstancia = function (req, res) {
     .then((finalName) => addConstancia(id_profesor, finalName))
     .then(res.send('success'))
     .catch(console.error)
-
 }
 
-function addConstancia(id, finalName) {
-  pool.query(queries.updateCursoConstancia, [finalName, id], function (err, data) {
-    return err ? err : data 
-  })
+function addConstancia (id, finalName) {
+  return pool.query(queries.updateCursoConstancia, [finalName, id])
 }
 
 exports.deleteConstancia = function (req, res) {
@@ -39,18 +38,12 @@ exports.deleteConstancia = function (req, res) {
   }).then(res.send('success')).catch(console.log)
 }
 
-function deleteConstancia(curso){
-  pool.query(queries.deleteCursoConstancia,[curso.id],(err,data)=>{
-    return err ? err : data
-  })
+async function deleteConstancia (curso) {
+  return await pool.query(queries.deleteCursoConstancia, [curso.id])
 }
 
-function getDetail(id) {
-  return new Promise((resolve, reject) => {
-    pool.query(queries.detailCurso, [id], (err, data) => {
-      err ? reject(err) : resolve(data.rows[0])
-    })
-  })
+function getDetail (id) {
+  return pool.query(queries.detailCurso, [id])
 }
 
 
