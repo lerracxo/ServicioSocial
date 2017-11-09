@@ -13,7 +13,9 @@ exports.detailProfessor = 'SELECT p.id_persona, p.nombres, p.a_paterno, p.a_mate
   ' FROM persona p JOIN profesor pr ON p.id_persona = pr.id_profesor' +
   ' WHERE p.id_persona = $1::INT'
 
-exports.personsByCurso = 'SELECT * FROM persona WHERE '
+exports.personsByCurso = 'SELECT * FROM persona p ' +
+  'JOIN curso c ON p.id_persona = c.id_persona ' +
+  'WHERE UPPER(REPLACE(TRIM(concat(curso)),\' \',\'\')) = $1::TEXT '
 
 exports.deleteProfExop = 'UPDATE profesor SET ex_oposicion = NULL WHERE id_profesor = $1::INT'
 

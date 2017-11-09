@@ -1,4 +1,4 @@
-const app = angular.module('administracion', ['ngRoute', 'ngFileUpload', 'query-string'])
+const app = angular.module('administracion', ['ngRoute', 'ngFileUpload'])
 
 app.config(['$routeProvider',
   function ($routeProvider) {
@@ -70,8 +70,8 @@ app.directive('ngConfirmClick', [
     }
   }])
 
-app.factory('httpInterface', ['$http', '$q','$httpParamSerializer',
-  function ($http, $q,$httpParamSerializer) {
+app.factory('httpInterface', ['$http', '$q', '$httpParamSerializer',
+  function ($http, $q, $httpParamSerializer) {
     return {
       serviceLoc: '/',
       post: function (url, data) {
@@ -96,10 +96,22 @@ app.factory('httpInterface', ['$http', '$q','$httpParamSerializer',
         })
       },
       toQueryString: function (obj) {
-        return $httpParamSerializer(obj)
+        let result = Object.keys(obj).map((x) => {
+          console.log(x, obj[x])
+          return x + '=' + encodeURIComponent(obj[x])
+        }).join('&')
+
+        return result
       },
-      fromQueryString: function (params){
-        // return $httpParamSerializer.
+      fromQueryString: function (params) {
+        let pairs = params.split('&')
+
+        let result = {}
+        pairs.forEach(function (pair) {
+          pair = pair.split('=')
+          result[pair[0]] = decodeURIComponent(pair[1] || '')
+        })
+        return JSON.parse(JSON.stringify(result))
       }
     }
   }])
@@ -265,21 +277,11 @@ app.controller('profDetailsController', ['$scope', 'httpInterface', '$routeParam
 app.controller('cursoController', ['$scope', 'httpInterface', 'profUtils',
   function ($scope, httpInterface, profUtils) {
 
-    // httpInterface.get('materia/').then((msg) => $scope.materias = msg.data)
-    // httpInterface.get('periodo/').then((msg) => $scope.periodos = msg.data)
-
     $scope.queryCursos = (event, query) => {
       if (![13, 1].includes(event.which) || !query) return
-      console.log('exec event', query)
-      // if () {
-      //   return
-      // }
-      // if (profUtils.validQuery(query)) {
       httpInterface.post('curso/', query).then((msg) => {
-        console.log('response', msg.data)
         $scope.searchResult = msg.data
       })
-      // }
     }
 
     $scope.getCursoDetails = function (curso) {
@@ -291,33 +293,15 @@ app.controller('cursoController', ['$scope', 'httpInterface', 'profUtils',
 app.controller('cursoDetailController', ['$scope', 'httpInterface', '$routeParams',
   function ($scope, httpInterface, $routeParams) {
 
-    $scope.curso = {}
-    $scope.curso.curso = $routeParams.curso
-
-    console.log('on curso detail :',$scope.curso)
-    //
-    // getDetail = () => {
-    //   httpInterface.post('curso/detail/',query).then((msg) => {
-    //     $scope.curso = msg.data[0]
-    //   })
-    // }
+    $scope.curso = httpInterface.fromQueryString($routeParams.curso)
 
     function getProfesores () {
-      httpInterface.post('professor/curso/',$scope.curso).then((data) => {
+      httpInterface.post('professor/curso/', $scope.curso).then((data) => {
+        console.log(data)
         $scope.profCursos = data.data
       })
     }
-    //
-    // function getCalificaciones () {
-    //   httpInterface.get('calificaciones/profesor/' + $routeParams.personId).then((data) => {
-    //     $scope.profCal = data.data
-    //   })
-    // }
-
-    // getDetalle()
     getProfesores()
-    // getCalificaciones()
-
   }])
 
 

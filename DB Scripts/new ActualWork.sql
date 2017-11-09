@@ -1,15 +1,17 @@
 SELECT count(*) FROM persona;
 
+SELECT * FROM 
 
 SELECT * FROM profesor;
 
-SELECT * from   calificacion;
+SELECT * from calificacion Limit 100;
 
 SELECT count(*) FROM pers_tempo;
 
 COPY pers_tempo TO '/Users/oscar/Projects/Personal/ServicioSocial/pers_tempo.txt' WITH CSV;
 
 SELECT * FROM GRUPO;
+SELECT * FROM periodo;
 
 SELECT * FROM permat_tempo ORDER BY periodo;
 
@@ -273,13 +275,58 @@ UPDATE profesor SET ex_oposicion = ''::TEXT WHERE id_profesor = $2::INT;
 SELECT * FROM curso WHERE id_persona = 5 ;
 ALTER TABLE curso ADD COLUMN constancia TEXT DEFAULT NULL;
 
--- ALTER TABLE calificacion ADD COLUMN comprobante TEXT DEFAULT NULL;
+--ALTER TABLE calificacion ADD COLUMN comprobante TEXT DEFAULT NULL;
 
 UPDATE calificacion SET comprobante = NULL WHERE id_persona = 852 AND id_periodo = 62 AND id_grupo = 38 AND id_materia = 338;
 
 SELECT * FROM calificacion WHERE id_persona = 852 AND id_periodo = 62 AND id_grupo = 38 AND id_materia = 338;
 
 
--- ALTER TABLE calificacion ADD COLUMN id SERIAL PRIMARY KEY;
+--ALTER TABLE calificacion ADD COLUMN id SERIAL PRIMARY KEY;
 SELECT * FROM calificacion WHERE id = 16040;
- 
+
+-- This table is to import all the data into, and then distribute it along the tables.
+CREATE TABLE importCalif (
+nombre  TEXT,
+periodo TEXT,
+grupo   TEXT,
+materia TEXT,
+puntualidad TEXT,
+contenido   TEXT,
+didactica TEXT,
+planeacion TEXT,
+evaluacion TEXT,
+actitud TEXT
+);
+
+DROP TABLE importCalif;
+
+SELECT * FROM importCalif;
+
+SELECT * FROM calificacion LIMIT 100;
+
+SELECT * FROM curso;
+
+
+SELECT c.id, c.id_persona, pt.periodo, gr.grupo, mat.materia, c.puntualidad, 
+c.contenido, c.didactica, c.planeacion, c.evaluacion, c.actitud,c.promedio,c.comprobante  
+FROM calificacion c  JOIN permat_tempo pt  ON c.id_periodo = pt.id_tempo  
+JOIN materia mat      ON c.id_materia = mat.id  JOIN grupo gr         
+ON c.id_grupo = gr.id  WHERE c.id_persona = '238'::INT;
+
+
+
+
+SELECT UPPER(REPLACE(TRIM(concat(curso)),' ','')) FROM curso  ;
+curso = 'NO HAY REGISTRO';
+
+-- DELETE FROM curso where inicio = 'NO HAY REGISTRO';
+
+;
+SELECT DISTINCT curso, UPPER(REPLACE(TRIM(concat(curso)),' ','')) FROM curso WHERE UPPER(REPLACE(TRIM(concat(curso)),' ',''))  SIMILAR TO '%(ADMINISTRACION)%'::TEXT;
+
+SELECT * FROM persona p 
+JOIN curso c ON p.id_persona = c.id_persona
+WHERE UPPER(REPLACE(TRIM(concat(curso)),' ','')) = 'INGLESPARALAADMINISTRACIONYLAGESTION'
+
+

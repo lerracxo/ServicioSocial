@@ -19,8 +19,8 @@ exports.uploadExop = function (req, res) {
 
 exports.personsByCurso = function (req,res) {
   let query = req.body
-  console.log(query)
-  pool.queryResponse(queries.personsByCurso, [query.curso], res)
+  console.log('On persons by curso',query)
+  pool.queryResponse(queries.personsByCurso, [query.short], res)
 }
 
 exports.deleteExop = async function (req, res) {
