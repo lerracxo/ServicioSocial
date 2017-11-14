@@ -329,4 +329,17 @@ SELECT * FROM persona p
 JOIN curso c ON p.id_persona = c.id_persona
 WHERE UPPER(REPLACE(TRIM(concat(curso)),' ','')) = 'INGLESPARALAADMINISTRACIONYLAGESTION'
 
+;
+
+SELECT 
+  nspname AS schemaname,relname,reltuples
+FROM pg_class C
+LEFT JOIN pg_namespace N ON (N.oid = C.relnamespace)
+WHERE 
+  nspname NOT IN ('pg_catalog', 'information_schema') AND
+  relkind='r' 
+ORDER BY reltuples DESC;
+
+SELECT * FROM cat_materia;
+
 
