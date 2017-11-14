@@ -6,6 +6,11 @@ module.exports = function (app) {
   const contCurso = require('../controllers/Cursos')
   const contMateria = require('../controllers/Materias')
   const contCalificaciones = require('../controllers/Calificaciones')
+  const contAuth = require('../controllers/Authentication')
+
+  //Authentication
+  app.route('/authenticate')
+    .post(contAuth.authToken)
 
   // Professor
   app.route('/professor')
