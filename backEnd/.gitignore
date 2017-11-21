@@ -1,8 +1,0 @@
-target/*
-/target/
-/.metadata/
-.settings/
-.idea
-*.iws
-*iml
-*ipr

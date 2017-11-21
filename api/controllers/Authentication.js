@@ -36,7 +36,7 @@ function isTokenValid (req, res) {
 }
 
 function validateToken (req) {
-  console.log('validating token', req.headers['token'], ' params ', req.body)
+  console.log('validating token', req.headers['token'], ' params ', req.body, 'trying to reach ',req.path)
   return new Promise(function (resolve, reject) {
 
     if (publicEndPoints.includes(req.path)) {return resolve()}
