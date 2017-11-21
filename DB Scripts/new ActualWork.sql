@@ -342,4 +342,25 @@ ORDER BY reltuples DESC;
 
 SELECT * FROM cat_materia;
 
+SELECT * FROM materia;
 
+SELECT * FROM calificacion;
+
+SELECT Max(id) FROM calificacion;
+
+CREATE TABLE usuario (
+id_usuario serial,
+username text,
+pass text,
+date date
+);
+
+DROP TABLE usuario;
+
+SELECT now(),'1' ;
+
+INSERT INTO usuario (username, pass, date) VALUES ('admin','xrt23p3x',now());
+
+-- The pass should be digested
+
+SELECT * FROM usuario;
