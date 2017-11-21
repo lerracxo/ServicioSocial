@@ -19,6 +19,7 @@ hs_err_pid*
 */.recommenders/
 */.settings
 */target
+.idea/
 
 #Build
 */build/
@@ -27,3 +28,7 @@ hs_err_pid*
 *.netbeans_automatic_build
 nb-configuration.xml
 target/
+
+#Node JS project
+node_modules/
+files/

@@ -25,7 +25,7 @@ exports.updateProfExop = 'UPDATE profesor SET ex_oposicion = $1::TEXT WHERE id_p
 exports.listAllPeriod = 'SELECT * FROM periodo'
 
 // Cursos
-exports.cursoById = 'SELECT * FROM curso WHERE id_persona = $1::INT'
+exports.cursoById = 'SELECT * FROM curso WHERE id_persona = $1::INT ORDER BY curso'
 
 exports.detailCurso = 'SELECT * FROM curso WHERE id = $1::INT'
 

@@ -329,4 +329,38 @@ SELECT * FROM persona p
 JOIN curso c ON p.id_persona = c.id_persona
 WHERE UPPER(REPLACE(TRIM(concat(curso)),' ','')) = 'INGLESPARALAADMINISTRACIONYLAGESTION'
 
+;
 
+SELECT 
+  nspname AS schemaname,relname,reltuples
+FROM pg_class C
+LEFT JOIN pg_namespace N ON (N.oid = C.relnamespace)
+WHERE 
+  nspname NOT IN ('pg_catalog', 'information_schema') AND
+  relkind='r' 
+ORDER BY reltuples DESC;
+
+SELECT * FROM cat_materia;
+
+SELECT * FROM materia;
+
+SELECT * FROM calificacion;
+
+SELECT Max(id) FROM calificacion;
+
+CREATE TABLE usuario (
+id_usuario serial,
+username text,
+pass text,
+date date
+);
+
+DROP TABLE usuario;
+
+SELECT now(),'1' ;
+
+INSERT INTO usuario (username, pass, date) VALUES ('admin','xrt23p3x',now());
+
+-- The pass should be digested
+
+SELECT * FROM usuario;
