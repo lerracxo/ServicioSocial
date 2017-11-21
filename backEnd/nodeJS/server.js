@@ -10,7 +10,10 @@ global.project = {
   projectDir: path.dirname(require.main.filename),
   publicDir: path.dirname(require.main.filename) + '/public/',
   uploadDir: path.dirname(require.main.filename) + '/files/',
+  secret: 'secret'
 }
+
+app.set('superSecret', 'secretVar'); // secret variable
 
 console.log('directory to public', project.projectDir)
 console.log('directory to public', project.publicDir)

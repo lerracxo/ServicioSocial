@@ -8,9 +8,19 @@ module.exports = function (app) {
   const contCalificaciones = require('../controllers/Calificaciones')
   const contAuth = require('../controllers/Authentication')
 
+  //Middleware
+  app.use(function (req, res, next) {
+    contAuth.validateToken(req,res)
+      .then(next)
+      .catch((error) => contAuth.failedTokenValidation(res,error))
+  })
+
   //Authentication
   app.route('/authenticate')
     .post(contAuth.authToken)
+
+  app.route('/authenticate/verify')
+    .get(contAuth.isTokenValid)
 
   // Professor
   app.route('/professor')
