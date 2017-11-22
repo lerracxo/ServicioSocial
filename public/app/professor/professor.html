@@ -1,7 +1,7 @@
-<div ng-controller="profesorController">
+<div >
     <h3 align="center">Consultar profesor</h3>
     <br>
-    <form ng-keypress="queryProfessors($event,query)">
+    <form ng-keypress="vm.queryProfessors($event,query)">
         <div class="container-fluid">
             <div class="form-group">
                 <label for="profName"> Nombre Profesor </label>
@@ -15,7 +15,7 @@
                 avanzada
             </button>
             <button type="button" class="btn btn-default right-block"
-                    ng-click="queryProfessors($event,query)">
+                    ng-click="vm.queryProfessors($event,query)">
                 <i class="fa fa-search"></i> Buscar
             </button>
             <div id="busqueda" class="collapse container-fluid form-group well">
@@ -24,23 +24,23 @@
                        placeholder="Ejemplo: <= [menor o igual] | >= [mayor o igual] | != [diferente]"/>
                 <label for="profMateria">Materia</label>
                 <select id="profMateria" class="form-control" ng-model="query.mat">
-                    <option ng-repeat="option in materias" value="{{option.id}}">{{option.materia}}</option>
+                    <option ng-repeat="option in vm.materias" value="{{option.id}}">{{option.materia}}</option>
                 </select>
 
                 <label for="profPeriodo">Periodo</label>
 
                 <select id="profPeriodo" class="form-control" ng-model="query.per">
-                    <option ng-repeat="option in periodos" value="{{option.id_tempo}}">{{option.periodo}}</option>
+                    <option ng-repeat="option in vm.periodos" value="{{option.id_tempo}}">{{option.periodo}}</option>
                 </select>
             </div>
-            <p>{{searchResult.length}} : resultados</p>
+            <p>{{vm.searchResult.length}} : resultados</p>
         </div>
     </form>
 
-    <div ng-repeat="profesor in searchResult">
+    <div ng-repeat="profesor in vm.searchResult">
         <div class="col-lg-6 col-md-6">
             <div class="panel panel-primary">
-                <a href="" ng-click="getProfessorDetails(profesor)">
+                <a href="" ng-click="vm.getProfessorDetails(profesor)">
                     <div class="panel-heading">
                         <div class="row">
                             <div class="col-xs-3">
