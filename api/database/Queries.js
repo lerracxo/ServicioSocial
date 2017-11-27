@@ -1,3 +1,6 @@
+// User validation
+exports.validateUser = 'SELECT * FROM usuario WHERE username = $1::TEXT AND pass = $2::TEXT'
+
 // Professor
 exports.listAllProfessor = 'SELECT * FROM persona'
 

@@ -7,15 +7,7 @@
 
   function Controller ($location, AuthenticationService) {
     const vm = this
-
     vm.login = login
-
-    initController()
-
-    function initController () {
-      // reset login status
-      // AuthenticationService.Logout()
-    }
 
     function login () {
       vm.loading = true

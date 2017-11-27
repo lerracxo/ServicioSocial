@@ -539,3 +539,5 @@ DELETE FROM importCurso;
 SELECT * FROM persona order by id_persona desc;
 SELECT * FROM curso ORDER BY id desc;
 
+SELECT * FROM usuario;
+

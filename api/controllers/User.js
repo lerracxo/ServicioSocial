@@ -1,6 +1,16 @@
 'use strict'
 
+const queries = require('../database/Queries')
+const dao = require('../database/DAO')
+
 exports.validateUser = function (user, pass) {
-  const testUser = {username: 'test', password: 'test', firstName: 'Test', lastName: 'User'}
-  return user === testUser.username && pass === testUser.password
+  return dao.query(queries.validateUser, [user, pass])
+}
+
+exports.isUserValid = (data) => {
+  let valid = false
+  try {
+    valid = data[0].id_usuario !== undefined
+  } catch (error) {}
+  return valid
 }
