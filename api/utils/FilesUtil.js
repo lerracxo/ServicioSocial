@@ -6,7 +6,6 @@ const fs = require('fs')
 
 exports.uploadFile = function (req, fileNameWOext) {
     console.log('uploading a file')
-
     return new Promise((resolve, reject) => {
         const form = new formidable.IncomingForm()
         form.multiples = false
@@ -17,20 +16,15 @@ exports.uploadFile = function (req, fileNameWOext) {
             fs.renameSync(file.path, path.join(form.uploadDir, fileName))
             console.log('Nombre archivo: ', fileName)
         })
-
         form.on('error', function (err) {
             console.log('UPLOAD FILE: An error has occur: \n', err)
             reject(err)
         })
-
         form.on('end', function () {
             resolve(fileName)
         })
-
         form.parse(req)
-
     })
-
 }
 
 exports.removeFile = function (file){

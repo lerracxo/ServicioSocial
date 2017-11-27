@@ -1,0 +1,91 @@
+'use strict'
+
+const pool = require('../database/DAO')
+const queries = require('../database/Queries')
+const filesUtil = require('../utils/FilesUtil')
+const dataImport = require('../database/DataImport')
+
+const subDir = '/dataUpload/calif/'
+const tableName = 'importCalif'
+
+/*
+* Expected Layout
+* [NOMBRE (paterno materno nombres), periodo, grupo, materia, puntualidad, contenido, didactica, planeacion, evaluacion,
+ * actitud]
+*/
+
+exports.calif = calif
+let finalName
+
+function calif (req, res) {
+  let fileName = subDir + Date.now()
+
+  console.log(fileName)
+
+  filesUtil.uploadFile(req, fileName)
+    .then((x) => {
+      finalName = x
+      loadCSVtoPG(finalName)
+    })
+    .then(sanitizeFields)
+    .then(insertProfessors)
+    .then(insertGrupos)
+    .then(insertMaterias)
+    .then(insertPeriodos)
+    .then(insertCalifs)
+    .then(finalizeImport)
+    .then(res.send(importSuccess))
+    .catch((error) => res.send(importFail(error)))
+
+}
+
+function loadCSVtoPG (fileName) {
+  console.log('Step loadCSVtoPG')
+  const finalName = project.uploadDir + fileName
+  return dataImport.doImport(finalName, tableName)
+}
+
+function sanitizeFields () {
+  console.log('Step sanitizeFields')
+  return pool.query(queries.dataImportCalifsanitizeFields)
+}
+
+function insertProfessors () {
+  console.log('Step insertProfessors')
+  return pool.query(queries.dataImportCalifInsertProfessors)
+}
+
+function insertGrupos () {
+  console.log('Step insertGrupos')
+  return pool.query(queries.dataImportCalifInsertGrupos)
+}
+
+function insertMaterias () {
+  console.log('Step insertMaterias')
+  return pool.query(queries.dataImportCalifInsertMaterias)
+}
+
+function insertPeriodos () {
+  console.log('Step insertPeriodos')
+  return pool.query(queries.dataImportCalifInsertPeriodos)
+}
+
+function insertCalifs () {
+  console.log('Step insertCalifs')
+  return pool.query(queries.dataImportCalifInsertCalifs)
+}
+
+function finalizeImport () {
+  console.log('Step finalizeImport')
+  filesUtil.removeFile(project.uploadDir + finalName)
+  return pool.query(queries.dataImportCalifFinalizeImport)
+}
+
+function importSuccess () {
+  return {success: true}
+}
+
+function importFail (error) {
+  console.log(error)
+  return {success: false, reason: error}
+}

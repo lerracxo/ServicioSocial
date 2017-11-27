@@ -36,7 +36,6 @@ exports.deleteCursoConstancia = 'UPDATE curso SET constancia = NULL WHERE id = $
 exports.searchCurso = 'SELECT DISTINCT curso, UPPER(REPLACE(TRIM(concat(curso)),\' \',\'\')) as short FROM curso ' +
   ' WHERE UPPER(REPLACE(TRIM(concat(curso)),\' \',\'\')) SIMILAR TO $1::TEXT '
 
-
 // Materias
 exports.listAllMateria = 'SELECT id, materia FROM materia'
 
@@ -47,10 +46,106 @@ exports.detailProfesorCalif =
   ' JOIN permat_tempo pt  ON c.id_periodo = pt.id_tempo ' +
   ' JOIN materia mat      ON c.id_materia = mat.id ' +
   ' JOIN grupo gr         ON c.id_grupo = gr.id ' +
-  ' WHERE id_persona = $1::INT'
+  ' WHERE id_persona = $1::INT ORDER BY mat.materia, c.id'
 
 exports.detailCalificacion = 'SELECT * FROM calificacion WHERE id = $1::INT'
 
 exports.updateCalificacionComprobante = 'UPDATE calificacion SET comprobante = $1::TEXT WHERE id = $2::INT'
 
 exports.deleteCalificacionComprobante = 'UPDATE calificacion SET comprobante = NULL WHERE id = $1::INT'
+
+// Data Import
+exports.dataImportStartTransaction = ''
+exports.dataImportCalifsanitizeFields = 'UPDATE importCalif SET \n' +
+  'nombre\t\t\t\t= TRIM(nombre),\n' +
+  'periodo\t\t\t\t= TRIM(periodo),\n' +
+  'grupo\t\t\t\t= TRIM(grupo),\n' +
+  'materia\t\t\t\t= TRIM(materia),\n' +
+  'puntualidad\t\t\t= TRIM(puntualidad),\n' +
+  'contenido\t\t\t= TRIM(contenido),\n' +
+  'didactica\t\t\t= TRIM(didactica),\n' +
+  'planeacion\t\t\t= TRIM(planeacion),\n' +
+  'evaluacion\t\t\t= TRIM(evaluacion),\n' +
+  'actitud\t\t\t\t= TRIM(actitud);'
+
+exports.dataImportCalifInsertProfessors = 'INSERT INTO persona (a_paterno,a_materno,nombres)\n' +
+  '  SELECT \n' +
+  '  split_part(nombre, \' \', 1) AS a_paterno,   split_part(nombre, \' \', 2)  AS a_materno, split_part(nombre, \' \', 3 ) || split_part(nombre, \' \', 4 ) || split_part(nombre, \' \', 5 ) as nombres \n' +
+  '    FROM importCalif ic LEFT JOIN persona p\n' +
+  '    ON UPPER(REPLACE(ic.nombre,\' \',\'\')) = UPPER(REPLACE(TRIM(concat(p.a_paterno,p.a_materno,p.nombres)),\' \',\'\'))\n' +
+  '    WHERE p.id_persona IS NULL'
+
+exports.dataImportCalifInsertGrupos = 'INSERT INTO grupo (grupo) \n' +
+  '  SELECT ic.grupo\n' +
+  '  FROM importCalif ic LEFT JOIN \n' +
+  '  grupo g \n' +
+  '  ON UPPER(REPLACE(ic.grupo,\' \',\'\')) = UPPER(REPLACE(g.grupo,\' \',\'\'))\n' +
+  '  WHERE g.grupo IS NULL'
+
+exports.dataImportCalifInsertMaterias = 'INSERT INTO materia (materia) \n' +
+  '  SELECT ic.materia\n' +
+  '  FROM importCalif ic LEFT JOIN \n' +
+  '  materia m \n' +
+  '  ON UPPER(REPLACE(ic.materia,\' \',\'\')) = UPPER(REPLACE(m.materia,\' \',\'\'))\n' +
+  '  WHERE m.materia IS NULL'
+
+exports.dataImportCalifInsertPeriodos = 'INSERT INTO periodo (periodo) \n' +
+  '  SELECT ic.periodo\n' +
+  '  FROM importCalif ic LEFT JOIN\n' +
+  '  periodo p\n' +
+  '  ON UPPER(REPLACE(ic.periodo,\' \',\'\')) = UPPER(REPLACE(p.periodo,\' \',\'\'))\n' +
+  '  WHERE p.periodo IS NULL'
+
+exports.dataImportCalifInsertCalifs = 'INSERT INTO calificacion  (id_persona, id_periodo, id_grupo, id_materia, puntualidad, contenido, didactica, \n' +
+  '  planeacion, evaluacion, actitud, promedio, comprobante)\n' +
+  '  WITH califTable AS (\n' +
+  '    SELECT per.id_persona, p.id_tempo as id_periodo, g.id as id_grupo, m.id as id_materia, \n' +
+  '      ic.puntualidad,ic.contenido,ic.didactica,ic.planeacion,ic.evaluacion,ic.actitud,\n' +
+  '    (\n' +
+  '      CAST(puntualidad\t as DECIMAL) +\n' +
+  '      CAST(contenido\t as DECIMAL) +\n' +
+  '      CAST(didactica\t as DECIMAL) +\n' +
+  '      CAST(planeacion\t as DECIMAL) +\n' +
+  '      CAST(evaluacion\t as DECIMAL) +\n' +
+  '      CAST(actitud as DECIMAL)\n' +
+  '    ) / 6 as promedio, null::TEXT as comprobante\n' +
+  '    FROM importCalif ic \n' +
+  '      JOIN persona per ON UPPER(REPLACE(ic.nombre,\' \',\'\')) = UPPER(REPLACE(concat(per.a_paterno,per.a_materno,per.nombres),\' \',\'\'))\n' +
+  '      JOIN periodo p ON UPPER(REPLACE(ic.periodo,\' \',\'\')) = UPPER(REPLACE(p.periodo,\' \',\'\'))\n' +
+  '      JOIN grupo g ON UPPER(REPLACE(ic.grupo,\' \',\'\')) = UPPER(REPLACE(g.grupo,\' \',\'\'))\n' +
+  '      JOIN materia m ON UPPER(REPLACE(ic.materia,\' \',\'\')) = UPPER(REPLACE(m.materia,\' \',\'\'))\n' +
+  '  )\n' +
+  '  SELECT ct.* FROM califTable ct\n' +
+  '  LEFT JOIN calificacion c\n' +
+  '    ON ct.id_persona\t= c.id_persona\n' +
+  '    AND ct.id_periodo\t=c.id_periodo\n' +
+  '    AND ct.id_grupo\t=c.id_grupo\n' +
+  '    AND ct.id_materia\t=c.id_materia \n' +
+  '\n' +
+  '  WHERE c.id_persona IS NULL \n'
+
+exports.dataImportCalifFinalizeImport = 'DELETE FROM importCalif'
+
+// Curso import
+
+exports.dataImportCursoInsertProfessors = 'INSERT INTO persona (a_paterno,a_materno,nombres)\n' +
+  '  SELECT \n' +
+  '  split_part(nombre, \' \', 1) AS a_paterno,   split_part(nombre, \' \', 2)  AS a_materno, split_part(nombre, \' \', 3 ) || split_part(nombre, \' \', 4 ) || split_part(nombre, \' \', 5 ) as nombres \n' +
+  '    FROM importCurso ic LEFT JOIN persona p\n' +
+  '    ON UPPER(REPLACE(ic.nombre,\' \',\'\')) = UPPER(REPLACE(TRIM(concat(p.a_paterno,p.a_materno,p.nombres)),\' \',\'\'))\n' +
+  '    WHERE p.id_persona IS NULL'
+
+exports.dataImportCursoSanitizeFields = 'UPDATE importCurso SET \n' +
+  'nombre\t\t\t\t= TRIM(nombre),\n' +
+  'curso\t\t\t\t= TRIM(curso),\n' +
+  'fechai\t\t\t\t= TRIM(fechai),\n' +
+  'fechaf\t\t\t\t= TRIM(fechaf),\n' +
+  'horas\t\t\t= TRIM(horas);'
+
+exports.dataImportCursoInsertCursos = 'INSERT INTO curso (id_persona, curso,inicio,termino,horas,constancia)\n' +
+  'SELECT per.id_persona, ic.curso, ic.fechai, ic.fechaf, ic.horas, null::TEXT  FROM importCurso ic\n' +
+  'JOIN persona per ON UPPER(REPLACE(ic.nombre,\' \',\'\')) = UPPER(REPLACE(concat(per.a_paterno,per.a_materno,per.nombres),\' \',\'\'))'
+
+exports.dataImportCursoFinalizeImport = 'DELETE FROM importCurso'
+
+

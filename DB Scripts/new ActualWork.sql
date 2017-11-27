@@ -359,8 +359,183 @@ DROP TABLE usuario;
 
 SELECT now(),'1' ;
 
-INSERT INTO usuario (username, pass, date) VALUES ('admin','xrt23p3x',now());
+--INSERT INTO usuario (username, pass, date) VALUES ('admin','xrt23p3x',now());
 
 -- The pass should be digested
 
 SELECT * FROM usuario;
+
+SELECT * FROM calificacion;
+
+SELECT * FROM curso WHERE constancia IS NOT NULL;
+
+
+SELECT c.id, c.id_persona, pt.periodo, gr.grupo, mat.materia, c.puntualidad, c.contenido, 
+c.didactica, c.planeacion, c.evaluacion, c.actitud,c.promedio,c.comprobante 
+ FROM calificacion c  JOIN permat_tempo pt  ON c.id_periodo = pt.id_tempo  
+ JOIN materia mat      ON c.id_materia = mat.id  
+JOIN grupo gr         ON c.id_grupo = gr.id  WHERE id_persona = 74;
+
+
+SELECT * from importCalif;
+
+--DELETE FROM importCalif;
+SELECT * FROM persona limit 10;
+-- sanitizeFields
+UPDATE importCalif SET 
+nombre				= TRIM(nombre),
+periodo				= TRIM(periodo),
+grupo				= TRIM(grupo),
+materia				= TRIM(materia),
+puntualidad			= TRIM(puntualidad),
+contenido			= TRIM(contenido),
+didactica			= TRIM(didactica),
+planeacion			= TRIM(planeacion),
+evaluacion			= TRIM(evaluacion),
+actitud				= TRIM(actitud);
+
+-- insertProfessors
+INSERT INTO persona (a_paterno,a_materno,nombres)
+  SELECT 
+  split_part(nombre, ' ', 1) AS a_paterno,   split_part(nombre, ' ', 2)  AS a_materno, split_part(nombre, ' ', 3 ) || split_part(nombre, ' ', 4 ) || split_part(nombre, ' ', 5 ) as nombres
+    FROM importCalif ic --LEFT JOIN persona p
+    ON UPPER(REPLACE(ic.nombre,' ','')) = UPPER(REPLACE(TRIM(concat(p.a_paterno,p.a_materno,p.nombres)),' ',''))
+    WHERE p.id_persona IS NULL
+;
+
+-- insertGrupos
+INSERT INTO grupo (grupo) 
+  SELECT ic.grupo
+  FROM importCalif ic LEFT JOIN 
+  grupo g 
+  ON UPPER(REPLACE(ic.grupo,' ','')) = UPPER(REPLACE(g.grupo,' ',''))
+  WHERE g.grupo IS NULL;
+
+ 
+-- insertMaterias
+INSERT INTO materia (materia) 
+  SELECT ic.materia
+  FROM importCalif ic LEFT JOIN 
+  materia m 
+  ON UPPER(REPLACE(ic.materia,' ','')) = UPPER(REPLACE(m.materia,' ',''))
+  WHERE m.materia IS NULL;
+  
+-- insertPeriodos
+INSERT INTO periodo (periodo)
+  SELECT ic.periodo
+  FROM importCalif ic LEFT JOIN
+  periodo p
+  ON UPPER(REPLACE(ic.periodo,' ','')) = UPPER(REPLACE(p.periodo,' ',''))
+  WHERE p.periodo IS NULL;
+
+--insertCalifs
+
+--INSERT INTO calificacion (id_persona, id_periodo, id_grupo, id_materia, puntualidad, contenido, didactica, 
+  --planeacion, evaluacion, actitud, promedio, comprobante)
+  WITH califTable AS (
+    SELECT per.id_persona, p.id_tempo as id_periodo, g.id as id_grupo, m.id as id_materia, 
+      ic.puntualidad,ic.contenido,ic.didactica,ic.planeacion,ic.evaluacion,ic.actitud,
+    ROUND((
+      CAST(puntualidad	 as DECIMAL) +
+      CAST(contenido	 as DECIMAL) +
+      CAST(didactica	 as DECIMAL) +
+      CAST(planeacion	 as DECIMAL) +
+      CAST(evaluacion	 as DECIMAL) +
+      CAST(actitud as DECIMAL)
+    ) / 6,2) as promedio, null::TEXT as comprobante
+    FROM importCalif ic 
+      JOIN persona per ON UPPER(REPLACE(ic.nombre,' ','')) = UPPER(REPLACE(concat(per.a_paterno,per.a_materno,per.nombres),' ',''))
+      JOIN periodo p ON UPPER(REPLACE(ic.periodo,' ','')) = UPPER(REPLACE(p.periodo,' ',''))
+      JOIN grupo g ON UPPER(REPLACE(ic.grupo,' ','')) = UPPER(REPLACE(g.grupo,' ',''))
+      JOIN materia m ON UPPER(REPLACE(ic.materia,' ','')) = UPPER(REPLACE(m.materia,' ',''))
+  )
+  SELECT ct.* FROM califTable ct
+  LEFT JOIN calificacion c
+    ON ct.id_persona	= c.id_persona
+    AND ct.id_periodo	=c.id_periodo
+    AND ct.id_grupo	=c.id_grupo
+    AND ct.id_materia	=c.id_materia 
+
+  WHERE c.id_persona IS NULL 
+  ;
+
+--
+SELECT * FROM importCalif;
+DELETE FROM importCalif;
+-- Imported data uppon tests
+SELECT * FROM persona WHERE nombres = '1';
+SELECT * FROM periodo WHERE periodo = 'AGOSTO - DICIEMBRE 2020';
+SELECT * FROM materia WHERE materia = 'Materia TEST';
+SELECT * FROM grupo WHERE grupo = '2TEST2';
+SELECT * FROM calificacion WHERE id_materia = 757 ;
+
+SELECT * FROM persona ORDER BY id_persona dESC;
+
+SELECT * FROM curso;
+
+-- DELETE FROM persona WHERE nombres = '1';
+-- DELETE FROM periodo WHERE periodo = 'AGOSTO - DICIEMBRE 2020';
+-- DELETE FROM materia WHERE materia = 'Materia TEST';
+-- DELETE FROM calificacion WHERE ROUND(promedio::NUMERIC,2) = '0.00';;
+
+SELECT * FROM calificacion WHERE id_persona = 929;
+
+
+SELECT ROUND(AVG(0.00290000932320302032),2); 
+SELECT * FROM periodo;
+-- UPDATE periodo SET id_tempo = 80 WHERE periodo = 'AGOSTO - DICIEMBRE 2020';
+
+ALTER TABLE periodo ALTER COLUMN id_tempo TYPE serial;
+
+CREATE TABLE periodo_serial (
+id_tempo serial,
+periodo text);
+s
+--DROP TABLE period0_serial;
+DROP TABLE periodo;
+
+SELECT * FROM periodo_serial;
+
+ALTER TABLE periodo_serial RENAME TO periodo;
+
+
+SELECT * FROM usuario;
+
+SELECT 
+  split_part(nombre, ' ', 1) AS a_paterno,   split_part(nombre, ' ', 2)  AS a_materno, split_part(nombre, ' ', 3 ) || split_part(nombre, ' ', 4 ) || split_part(nombre, ' ', 5 ) as nombres
+    FROM importCalif ic;
+
+
+CREATE TABLE importCurso (
+nombre TEXT,
+curso TEXT,
+fechaI TEXT,
+fechaF TEXT,
+horas TEXT
+);
+
+SELECT * FROM curso;
+SELECT * FROM importCurso;
+SELECT * FROM persona;
+
+-- dataImportCursoSanitizeFields
+UPDATE importCurso SET 
+nombre				= TRIM(nombre),
+curso				= TRIM(curso),
+fechai				= TRIM(fechai),
+fechaf				= TRIM(fechaf),
+horas			= TRIM(horas);
+
+
+-- dataImportCursoInsertCursos
+INSERT INTO curso (id_persona, curso,inicio,termino,horas,constancia)
+SELECT per.id_persona, ic.curso, ic.fechai, ic.fechaf, ic.horas, null::TEXT  FROM importCurso ic
+ JOIN persona per ON UPPER(REPLACE(ic.nombre,' ','')) = UPPER(REPLACE(concat(per.a_paterno,per.a_materno,per.nombres),' ',''))
+ 
+
+-- dataImportCursoFinalizeImport
+DELETE FROM importCurso;
+
+SELECT * FROM persona order by id_persona desc;
+SELECT * FROM curso ORDER BY id desc;
+

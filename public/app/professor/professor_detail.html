@@ -124,7 +124,8 @@
                     <td>{{curso.horas}}</td>
                     <td>
                         <div ng-hide="curso.constancia === null">
-                            <a href="{{vm.filesLoc+curso.constancia}}" download="{{vm.fileName(curso.constancia)}}">Descargar Archivo</a>
+                            <a href="{{vm.filesLoc+curso.constancia}}" download="{{vm.fileName(curso.constancia)}}">Descargar
+                                Archivo</a>
                             <button type="button" class="btn btn-default" ng-click="vm.removeConstancia(curso)"
                                     ng-confirm-click="Eliminar archivo?">
                                 <span class="glyphicon glyphicon-remove"></span>
@@ -146,7 +147,7 @@
                     data-target="#calificaciones">Calificaciones
             </button>
         </div>
-        <i class="fa fa-print -align-right" ng-click="vm.generateCSV(profCal,'Calificaciones')"></i>
+        <i class="fa fa-print -align-right" ng-click="vm.generateCSV(vm.profCal,'Calificaciones')"></i>
         <div id="calificaciones" class="collapse">
             <table class="table table-hover table-condensed">
                 <tr>
@@ -162,7 +163,6 @@
                     <th>Actitud</th>
                     <th>Promedio</th>
                     <th>Archivo</th>
-                    <th>comprobane</th>
                 </tr>
                 <tr ng-repeat="cal in vm.profCal">
                     <td>{{cal.periodo}}</td>
@@ -175,10 +175,10 @@
                     <td>{{cal.planeacion}}</td>
                     <td>{{cal.actitud}}</td>
                     <td>{{cal.promedio}}</td>
-                    <td>{{cal.comprobante}}</td>
                     <td>
                         <div ng-hide="cal.comprobante === null">
-                            <a href="{{vm.filesLoc+cal.comprobante}}" download="{{vm.fileName(cal.comprobante)}}">Descargar Archivo</a>
+                            <a href="{{vm.filesLoc+cal.comprobante}}" download="{{vm.fileName(cal.comprobante)}}">Descargar
+                                Archivo</a>
                             <button type="button" class="btn btn-default" ng-click="vm.removeComprobante(cal)"
                                     ng-confirm-click="Eliminar archivo?">
                                 <span class="glyphicon glyphicon-remove"></span>

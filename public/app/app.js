@@ -58,10 +58,28 @@
         controllerAs: 'vm'
       })
 
+      .state('dataUpload', {
+        url: '/data/upload/',
+        templateUrl: 'dataUpload/dataUpload.view.html',
+        // controller: 'ProfessorDetailController',
+        // controllerAs: 'vm'
+      })
+      .state('uploadCalif', {
+        url: '/data/upload/calif/',
+        templateUrl: 'dataUpload/dataUpload.calif.view.html',
+        controller: 'dataUploadCalifController',
+        controllerAs: 'vm'
+      })
+      .state('uploadCurso', {
+        url: '/data/upload/curso/',
+        templateUrl: 'dataUpload/dataUpload.curso.view.html',
+        controller: 'dataUploadCursoController',
+        controllerAs: 'vm'
+      })
+
   }
 
-  function run (httpInterface, $rootScope, $http, $location, $localStorage, AuthenticationService) {
-
+  function run (httpInterface, $rootScope, $location, $localStorage, AuthenticationService) {
     let publicPages = ['/login', '/logout']
     // keep user logged in after page refresh
     if ($localStorage.currentUser) {
@@ -74,9 +92,7 @@
 
     // redirect to login page if not logged in and trying to access a restricted page
     $rootScope.$on('$locationChangeStart', function (event, next, current) {
-
-      let hasAccess = $localStorage.currentUser || publicPages.includes($location.path())
-
+      const hasAccess = $localStorage.currentUser || publicPages.includes($location.path())
       if (!hasAccess) {
         $location.path('/login')
       }

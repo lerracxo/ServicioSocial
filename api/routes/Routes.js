@@ -7,12 +7,14 @@ module.exports = function (app) {
   const contMateria = require('../controllers/Materias')
   const contCalificaciones = require('../controllers/Calificaciones')
   const contAuth = require('../controllers/Authentication')
+  const countDataUploadCalif = require('../controllers/DataUploadCalif')
+  const countDataUploadCurso = require('../controllers/DataUploadCurso')
 
   //Middleware
   app.use(function (req, res, next) {
-    contAuth.validateToken(req,res)
+    contAuth.validateToken(req, res)
       .then(next)
-      .catch((error) => contAuth.failedTokenValidation(res,error))
+      .catch((error) => contAuth.failedTokenValidation(res, error))
   })
 
   //Authentication
@@ -71,5 +73,12 @@ module.exports = function (app) {
   // Periodo
   app.route('/periodo/')
     .get(contPeriodo.listAll)
+
+  // dataUpload
+  app.route('/dataUpload/calif')
+    .post(countDataUploadCalif.calif)
+
+  app.route('/dataUpload/curso')
+    .post(countDataUploadCurso.curso)
 
 }
