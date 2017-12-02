@@ -32,7 +32,10 @@ function addConstancia (id, finalName) {
 }
 
 exports.deleteConstancia = function (req, res) {
+
   getDetail(req.params.id).then((curso) => {
+    curso = curso[0]
+    console.log('deleting',curso)
     deleteConstancia(curso)
     filesUtil.removeFile(project.uploadDir + curso.constancia)
   }).then(res.send('success')).catch(console.log)

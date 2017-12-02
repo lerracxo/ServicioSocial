@@ -40,6 +40,9 @@ module.exports = function (app) {
   app.route('/professor/detail/:id')
     .get(contPersonas.detail)
 
+  app.route('/professor/detail/:id')
+    .post(contPersonas.saveDetail)
+
   app.route('/professor/exop/:id')
     .delete(contPersonas.deleteExop)
 

@@ -10,11 +10,26 @@ exports.listAllProfessorAVG = 'SELECT c.id_persona, p.nombres, p.a_paterno, p.a_
   ' WHERE  UPPER(REPLACE(concat(p.a_paterno,p.a_materno,p.nombres),\' \',\'\'))  SIMILAR TO $1::TEXT ' +
   ' GROUP BY c.id_persona, p.nombres, p.a_paterno, p.a_materno '
 
-exports.detailProfessor = 'SELECT p.id_persona, p.nombres, p.a_paterno, p.a_materno, pr.ex_oposicion, \'555555\' as f_telefono, \'242342342\' as m_telefono, \'122234\' as t_telefono, ' +
-  ' \'333\' as ext, \'alguien@ipn.mx\' as mail, ' +
-  ' \'33d3dsdas2\' as cedula, \'ASDAS13DSF22\' as rfc, \'12-34-01\' as f_ingreso, \'Maestria\' as Grado ' +
-  ' FROM persona p JOIN profesor pr ON p.id_persona = pr.id_profesor' +
-  ' WHERE p.id_persona = $1::INT'
+exports.detailProfessor = 'SELECT p.id_persona, p.nombres, p.a_paterno, p.a_materno, pr.ex_oposicion, c.f_telefono, c.m_telefono, c.t_telefono,\n' +
+  '  c.ext, c.mail, c.cedula, c.rfc, c.f_ingreso, c.grado\n' +
+  '  FROM persona p \n' +
+  '    JOIN profesor pr ON p.id_persona = pr.id_profesor\n' +
+  '    LEFT JOIN contacto c ON p.id_persona = c.id_persona\n' +
+  'WHERE p.id_persona = $1::INT'
+
+exports.saveDetailProfessor =
+  'INSERT INTO contacto VALUES ($1::INT,$2::TEXT, $3::TEXT,$4::TEXT,$5::TEXT,$6::TEXT,\n' +
+  '                                                      $7::TEXT,$8::TEXT,$9::TEXT,$10::TEXT)\n' +
+  '  ON CONFLICT (id_persona) DO UPDATE SET\n' +
+  '    f_telefono = $2 :: TEXT,\n' +
+  '    m_telefono = $3 :: TEXT,\n' +
+  '    t_telefono = $4 :: TEXT,\n' +
+  '    ext        = $5 :: TEXT,\n' +
+  '    mail       = $6 :: TEXT,\n' +
+  '    cedula     = $7 :: TEXT,\n' +
+  '    rfc        = $8:: TEXT,\n' +
+  '    f_ingreso  = $9 :: TEXT,\n' +
+  '    grado      = $10 :: TEXT;'
 
 exports.personsByCurso = 'SELECT * FROM persona p ' +
   'JOIN curso c ON p.id_persona = c.id_persona ' +
@@ -46,7 +61,7 @@ exports.listAllMateria = 'SELECT id, materia FROM materia'
 exports.detailProfesorCalif =
   ' SELECT c.id, c.id_persona, pt.periodo, gr.grupo, mat.materia, c.puntualidad, c.contenido, c.didactica, c.planeacion, c.evaluacion, c.actitud,c.promedio,c.comprobante ' +
   ' FROM calificacion c ' +
-  ' JOIN permat_tempo pt  ON c.id_periodo = pt.id_tempo ' +
+  ' JOIN periodo pt  ON c.id_periodo = pt.id_tempo ' +
   ' JOIN materia mat      ON c.id_materia = mat.id ' +
   ' JOIN grupo gr         ON c.id_grupo = gr.id ' +
   ' WHERE id_persona = $1::INT ORDER BY mat.materia, c.id'

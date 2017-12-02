@@ -17,9 +17,9 @@ exports.uploadExop = function (req, res) {
     .catch(console.error)
 }
 
-exports.personsByCurso = function (req,res) {
+exports.personsByCurso = function (req, res) {
   let query = req.body
-  console.log('On persons by curso',query)
+  console.log('On persons by curso', query)
   pool.queryResponse(queries.personsByCurso, [query.short], res)
 }
 
@@ -43,7 +43,28 @@ exports.listAllAvg = function (req, res) {
 }
 
 exports.detail = async function (req, res) {
-  pool.queryResponse(queries.detailProfessor,[req.params.id],res)
+  pool.queryResponse(queries.detailProfessor, [req.params.id], res)
+}
+
+exports.saveDetail = function (req, res) {
+  const professor = req.body
+  console.log('at saving changes', professor)
+  const arg = [
+    professor. id_persona,
+    professor.f_telefono,
+    professor.m_telefono,
+    professor.t_telefono,
+    professor.ext,
+    professor.mail,
+    professor.cedula,
+    professor.rfc,
+    professor.f_ingreso,
+    professor.grado]
+
+  console.log(professor)
+  pool.query(queries.saveDetailProfessor, arg)
+    .catch(res.json({success: false}))
+    .then(res.json({success: true}))
 }
 
 function deleteExop (profesor) {

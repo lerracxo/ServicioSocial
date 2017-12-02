@@ -24,7 +24,10 @@ exports.uploadComprobante = function (req, res) {
 
 exports.deleteCompobante = function (req, res) {
   getDetail(req.params.id).then((calificacion) => {
+    calificacion = calificacion[0]
     console.log('calificacion obj: ', calificacion)
+    console.log('calificacion id: ', calificacion.id)
+    console.log('calificacion comprobante: ', calificacion.comprobante)
     deleteConstancia(calificacion)
     filesUtil.removeFile(project.uploadDir + calificacion.comprobante)
   }).then(res.send('success')).catch(console.log)

@@ -3,7 +3,6 @@
         <h3 align="center">{{vm.profDet.nombres}} {{vm.profDet.a_paterno}} {{vm.profDet.a_materno}} </h3>
     </div>
 
-
     <br>
 
     <div class="table-responsive">
@@ -14,13 +13,13 @@
                     <label for="telFijo"> Teléfono fijo: </label>
                 </td>
                 <td>
-                    <input id="telFijo" class="form-control" value="{{vm.profDet.f_telefono}}"/>
+                    <input id="telFijo" class="form-control" ng-model="vm.profDet.f_telefono" />
                 </td>
                 <td>
                     <label for="cedula"> Cédula: </label>
                 </td>
                 <td>
-                    <input id="cedula" class="form-control" value="{{vm.profDet.cedula}}"/>
+                    <input id="cedula" class="form-control" ng-model="vm.profDet.cedula"/>
                 </td>
             </tr>
             <tr>
@@ -28,13 +27,13 @@
                     <label for="telMovil"> Teléfono movil: </label>
                 </td>
                 <td>
-                    <input id="telMovil" class="form-control" value="{{vm.profDet.m_telefono}}"/>
+                    <input id="telMovil" class="form-control" ng-model="vm.profDet.m_telefono"/>
                 </td>
                 <td>
                     <label for="rfc"> RFC: </label>
                 </td>
                 <td>
-                    <input id="rfc" class="form-control" value="{{vm.profDet.rfc}}"/>
+                    <input id="rfc" class="form-control" ng-model="vm.profDet.rfc"/>
                 </td>
             </tr>
             <tr>
@@ -42,13 +41,13 @@
                     <label for="telTrabajo"> Teléfono trabajo: </label>
                 </td>
                 <td>
-                    <input id="telTrabajo" class="form-control" value="{{vm.profDet.t_telefono}}"/>
+                    <input id="telTrabajo" class="form-control" ng-model="vm.profDet.t_telefono"/>
                 </td>
                 <td>
                     <label for="fIngreso"> Fecha de ingreso: </label>
                 </td>
                 <td>
-                    <input id="fIngreso" class="form-control" value="{{vm.profDet.f_ingreso}}"/>
+                    <input id="fIngreso" class="form-control" ng-model="vm.profDet.f_ingreso"/>
                 </td>
             </tr>
             <tr>
@@ -56,7 +55,7 @@
                     <label for="ext"> Ext: </label>
                 </td>
                 <td>
-                    <input id="ext" class="form-control" value="{{vm.profDet.ext}}"/>
+                    <input id="ext" class="form-control" ng-model="vm.profDet.ext"/>
                 </td>
                 <td>
                     <label for="exOp"> Exámen de oposición: </label>
@@ -70,7 +69,8 @@
                             <span class="glyphicon glyphicon-remove"></span>
                         </button>
                     </div>
-                    <button type="file" id="exOp" type="file" ng-hide="vm.profDet.ex_oposicion !== null"
+                    <button class="btn btn-default -align-center"
+                            type="file" id="exOp" type="file" ng-hide="vm.profDet.ex_oposicion !== null"
                             ngf-select="vm.uploadFile($files)">Subir archivo
                     </button>
                 </td>
@@ -80,20 +80,25 @@
                     <label for="correo"> Correo eléctronico: </label>
                 </td>
                 <td>
-                    <input id="correo" class="form-control" value="{{vm.profDet.mail}}"/>
+                    <input id="correo" class="form-control" ng-model="vm.profDet.mail"/>
                 </td>
                 <td>
                     <label for="grado"> Grado: </label>
                 </td>
                 <td>
-                    <input id="grado" class="form-control" value="{{vm.profDet.grado}}"/>
+                    <input id="grado" class="form-control" ng-model="vm.profDet.grado"/>
                 </td>
             </tr>
             </tbody>
         </table>
+        <div class="col-md-7">
+            <button class="btn btn-primary" ng-click="vm.saveChanges(vm.profDet)">
+                Guardar Cambios
+            </button>
+        </div>
     </div>
-
     <div>
+        <br>
         <div class="span9 btn-block">
             <button type="button" class="btn btn-large btn-block btn-primary -align-center" data-toggle="collapse"
                     data-target="#cursos">Cursos

@@ -541,3 +541,6 @@ SELECT * FROM curso ORDER BY id desc;
 
 SELECT * FROM usuario;
 
+CREATE DATABASE testing WITH TEMPLATE oscar OWNER oscar;
+
+SELECT * FROM contacto;

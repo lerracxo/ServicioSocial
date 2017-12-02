@@ -7,8 +7,6 @@
       ['httpInterface', 'profUtils', '$stateParams', 'Upload', Controller]
     )
 
-  console.log(' REGISTERING CONTROLLER ')
-
   function Controller (httpInterface, profUtils, $stateParams, Upload) {
 
     const vm = this
@@ -17,17 +15,19 @@
 
     initController()
 
-    function initController(){
-      if(!vm.personId){
+    function initController () {
+      if (!vm.personId) {
         profUtils.changeView('/professor')
         return
       }
       getDetalle()
       getCursos()
       getCalificaciones()
-
     }
 
+    vm.saveChanges = (profDetail) => {
+      httpInterface.post('professor/detail/' + profDetail.id_persona, profDetail).then(getDetalle)
+    }
 
     vm.removeExop = function (profesor) {
       httpInterface.delete('professor/exop/' + profesor.id_persona).then(getDetalle)
@@ -95,22 +95,17 @@
     }
 
     vm.removeComprobante = function (calificacion) {
-      httpInterface.delete('calificaciones/comprobante/' + calificacion.id, (data) => {
-        getCalificaciones()
-      })
+      httpInterface.delete('calificaciones/comprobante/' + calificacion.id).then(getCalificaciones)
     }
 
     function getDetalle () {
-      console.log('calling detalle' + vm.personId)
-      httpInterface.get('professor/detail/' + vm.personId).then((msg) => {
-        vm.profDet = msg.data.data[0]
+      httpInterface.get('professor/detail/' + vm.personId).then((data) => {
+        vm.profDet = data.data.data[0]
       })
     }
 
     function getCursos () {
       httpInterface.get('curso/' + vm.personId).then((data) => {
-        console.log(data)
-
         vm.profCursos = data.data.data
       })
     }
