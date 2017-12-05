@@ -1,1 +1,1 @@
-pg_restore -d oscar database.bak
+pg_restore -d testing database.bak
