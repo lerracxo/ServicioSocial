@@ -544,3 +544,16 @@ SELECT * FROM usuario;
 CREATE DATABASE testing WITH TEMPLATE oscar OWNER oscar;
 
 SELECT * FROM contacto;
+
+CREATE TABLE contacto(
+id_persona  integer,
+tel_fijo	 text,
+tel_movil	text,
+tel_trabajo text,
+ext	       text,
+correo_elec text,
+cedula  text,
+rfc text,
+fecha_ingreso text,
+grado text
+);

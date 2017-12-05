@@ -26,7 +26,7 @@ function authToken (req, res) {
     } else {
       failedTokenValidation(res)
     }
-  })
+  }).catch(console.error)
 }
 
 function isTokenValid (req, res) {
