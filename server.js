@@ -4,9 +4,6 @@ const app = express()
 const bodyParser = require('body-parser')
 const routes = require('./api/routes/Routes')
 
-const dao = require('./api/database/DAO')
-const queries = require('./api/database/Queries')
-
 const port = process.env.PORT || 3000
 global.project = {
   projectDir: path.dirname(require.main.filename),
@@ -29,7 +26,4 @@ app.use(bodyParser.json())
 routes(app)
 
 app.listen(port)
-
 console.log('App listening on port : ' + port)
-
-dao.query(queries.test).catch(console.log).then(console.log)

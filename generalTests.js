@@ -17,7 +17,6 @@ async function main () {
   return quote
 }
 
-
 async function exec(){
   console.log('main:', await main())
 }
