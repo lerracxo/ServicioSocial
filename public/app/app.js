@@ -40,16 +40,6 @@
         templateUrl: 'professor/professor.html',
         controller: 'ProfessorController',
         controllerAs: 'vm'
-      }).state('curso', {
-        url: '/curso',
-        templateUrl: 'curso/curso.view.html',
-        controller: 'CursoController',
-        controllerAs: 'vm'
-      }).state('cursoDetail', {
-        url: '/curso/detail/:curso',
-        templateUrl: 'curso/curso.detail.view.html',
-        controller: 'CursoDetailController',
-        controllerAs: 'vm'
       })
       .state('professorDetail', {
         url: '/professor/detail/:personId',
@@ -57,12 +47,21 @@
         controller: 'ProfessorDetailController',
         controllerAs: 'vm'
       })
-
+      .state('curso', {
+        url: '/curso',
+        templateUrl: 'curso/curso.view.html',
+        controller: 'CursoController',
+        controllerAs: 'vm'
+      })
+      .state('cursoDetail', {
+        url: '/curso/detail/:curso',
+        templateUrl: 'curso/curso.detail.view.html',
+        controller: 'CursoDetailController',
+        controllerAs: 'vm'
+      })
       .state('dataUpload', {
         url: '/data/upload/',
         templateUrl: 'dataUpload/dataUpload.view.html',
-        // controller: 'ProfessorDetailController',
-        // controllerAs: 'vm'
       })
       .state('uploadCalif', {
         url: '/data/upload/calif/',
@@ -74,6 +73,12 @@
         url: '/data/upload/curso/',
         templateUrl: 'dataUpload/dataUpload.curso.view.html',
         controller: 'dataUploadCursoController',
+        controllerAs: 'vm'
+      })
+      .state('periodo', {
+        url: '/periodo',
+        templateUrl: 'periodo/periodo.view.html',
+        controller: 'PeriodoController',
         controllerAs: 'vm'
       })
 

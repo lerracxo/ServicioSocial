@@ -1,0 +1,45 @@
+<div>
+    <h3 align="center">Periodos</h3>
+    <br>
+    <!--<form ng-keypress="vm.queryPeriodos($event,query)">-->
+        <!--<div class="container-fluid">-->
+            <!--<div class="form-group">-->
+                <!--<label for="cursoName"> Nombre curso </label>-->
+                <!--<input-->
+                        <!--id="cursoName"-->
+                        <!--class="form-control"-->
+                        <!--placeholder="Curso" ng-model="query.name"-->
+                <!--/>-->
+            <!--</div>-->
+            <!--<button type="button" class="btn btn-default right-block"-->
+                    <!--ng-click="vm.queryCursos($event,query)">-->
+                <!--<i class="fa fa-search"></i> Buscar-->
+            <!--</button>-->
+            <!--<p>{{vm.searchResult.length}} : resultados</p>-->
+        <!--</div>-->
+    <!--</form>-->
+
+    <div ng-repeat="periodo in vm.searchResult">
+        <div class="col-lg-6 col-md-6">
+            <div class="panel panel-primary">
+                <!--<a href="" ng-click="vm.getCursoDetails(curso)">-->
+                <a href="" style="cursor:default;">
+                    <div class="panel-heading">
+                        <div class="row">
+                            <div class="col-xs-3">
+                                <i class="fa fa-male"></i>
+                            </div>
+                            <div class="col-xs-9 text-right">
+                                <div><p>{{periodo.periodo}} </p></div>
+                            </div>
+                            <!--<div class="col-xs-9 text-left">-->
+                                <!--<p><h6>Inicio: {{curso.inicio}}</h6> </p>-->
+                                <!--<p><h6>Termino: {{curso.termino}}</h6> </p>-->
+                            <!--</div>-->
+                        </div>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </div>
+</div>

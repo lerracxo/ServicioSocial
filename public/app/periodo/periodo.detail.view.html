@@ -1,0 +1,51 @@
+<div>
+    <div>
+        <h3 align="center">{{vm.curso.curso}} </h3>
+    </div>
+    <br>
+    <div>
+        <div class="span9 btn-block">
+            <button type="button" class="btn btn-large btn-block btn-primary -align-center" style="cursor:default;">
+                Profesores
+            </button>
+        </div>
+            <i class="fa fa-print -align-right" ng-click="vm.generateCSV(profCursos, 'Profesores'  )"></i>
+
+        <div class="table-responsive ">
+            <table class="table table-hover">
+                <thead>
+                <tr>
+                    <th>Profesor</th>
+                    <th>Curso</th>
+                    <th>Fecha inicio</th>
+                    <th>Fecha fin</th>
+                    <th>Horas</th>
+                    <th>Archivo</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr ng-repeat="curso in vm.profCursos">
+                    <td>{{curso.nombres}} {{curso.a_paterno}} {{curso.a_materno}}</td>
+                    <td>{{curso.curso}}</td>
+                    <td>{{curso.inicio}}</td>
+                    <td>{{curso.termino}}</td>
+                    <td>{{curso.horas}}</td>
+                    <td>
+                        <div ng-hide="curso.constancia === null">
+                            <a href="{{vm.filesLoc+curso.constancia}}" download="{{vm.fileName(curso.constancia)}}">Descargar Archivo</a>
+                            <button type="button" class="btn btn-default" ng-click="vm.removeConstancia(curso)"
+                                    ng-confirm-click="Eliminar archivo?">
+                                <span class="glyphicon glyphicon-remove"></span>
+                            </button>
+                        </div>
+                        <button type="file" id="exOp" type="file" ng-hide="curso.constancia !== null"
+                                ngf-select="uploadConstancia(curso,$files)">Subir archivo
+                        </button>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <br>
+</div>
