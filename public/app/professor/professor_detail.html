@@ -1,11 +1,12 @@
-<div>
+<form>
     <div>
         <h3 align="center">{{vm.profDet.nombres}} {{vm.profDet.a_paterno}} {{vm.profDet.a_materno}} </h3>
     </div>
 
     <br>
 
-    <div class="table-responsive">
+
+    <div class="table-responsive ">
         <table class="table table-borderless">
             <tbody>
             <tr>
@@ -13,7 +14,7 @@
                     <label for="telFijo"> Teléfono fijo: </label>
                 </td>
                 <td>
-                    <input id="telFijo" class="form-control" ng-model="vm.profDet.f_telefono" />
+                    <input id="telFijo" class="form-control" ng-model="vm.profDet.f_telefono"/>
                 </td>
                 <td>
                     <label for="cedula"> Cédula: </label>
@@ -62,15 +63,19 @@
                 </td>
                 <!-- File UPLOAD-->
                 <td>
-                    <div ng-hide="vm.profDet.ex_oposicion === null">
+                    <!--SHOWS DOWNLOAD AND DELETE-->
+                    <div ng-if="vm.profDet.ex_oposicion !== null">
                         <a href="{{vm.filesLoc+vm.profDet.ex_oposicion}}" download="img.png">Descargar Archivo</a>
-                        <button type="button" class="btn btn-default" ng-click="vm.removeExop(vm.profDet)"
+                        <button ng-if="vm.isAdmin()" type="button" class="btn btn-default"
+                                ng-click="vm.removeExop(vm.profDet)"
                                 ng-confirm-click="Eliminar archivo?">
                             <span class="glyphicon glyphicon-remove"></span>
                         </button>
                     </div>
-                    <button class="btn btn-default -align-center"
-                            type="file" id="exOp" type="file" ng-hide="vm.profDet.ex_oposicion !== null"
+                    <!--SHOWS LOAD FILE-->
+                    <button ng-if="vm.profDet.ex_oposicion === null && vm.isAdmin()"
+                            class="btn btn-default -align-center"
+                            type="file" type="file"
                             ngf-select="vm.uploadFile($files)">Subir archivo
                     </button>
                 </td>
@@ -91,12 +96,13 @@
             </tr>
             </tbody>
         </table>
-        <div class="col-md-7">
+        <div class="col-md-7" ng-if="vm.isAdmin()">
             <button class="btn btn-primary" ng-click="vm.saveChanges(vm.profDet)">
                 Guardar Cambios
             </button>
         </div>
     </div>
+
     <div>
         <br>
         <div class="span9 btn-block">
@@ -128,17 +134,22 @@
                     <td>{{curso.termino}}</td>
                     <td>{{curso.horas}}</td>
                     <td>
-                        <div ng-hide="curso.constancia === null">
+                        <div ng-if="curso.constancia !== null">
                             <a href="{{vm.filesLoc+curso.constancia}}" download="{{vm.fileName(curso.constancia)}}">Descargar
                                 Archivo</a>
-                            <button type="button" class="btn btn-default" ng-click="vm.removeConstancia(curso)"
+                            <button ng-if="vm.isAdmin()"
+                                    type="button" class="btn btn-default" ng-click="vm.removeConstancia(curso)"
                                     ng-confirm-click="Eliminar archivo?">
                                 <span class="glyphicon glyphicon-remove"></span>
                             </button>
                         </div>
-                        <button type="file" id="exOp" type="file" ng-hide="curso.constancia !== null"
-                                ngf-select="vm.uploadConstancia(curso,$files)">Subir archivo
-                        </button>
+                        <div>
+                            <button ng-if="curso.constancia === null && vm.isAdmin()"
+                                    type="file" id="exOp" type="file"
+                                    ngf-select="vm.uploadConstancia(curso,$files)">Subir archivo
+                            </button>
+                            <label ng-if="curso.constancia === null && !vm.isAdmin()"> No archivo</label>
+                        </div>
                     </td>
                 </tr>
                 </tbody>
@@ -181,20 +192,25 @@
                     <td>{{cal.actitud}}</td>
                     <td>{{cal.promedio}}</td>
                     <td>
-                        <div ng-hide="cal.comprobante === null">
+                        <div ng-if="cal.comprobante !== null">
                             <a href="{{vm.filesLoc+cal.comprobante}}" download="{{vm.fileName(cal.comprobante)}}">Descargar
                                 Archivo</a>
-                            <button type="button" class="btn btn-default" ng-click="vm.removeComprobante(cal)"
+                            <button ng-if="vm.isAdmin()"
+                                    type="button" class="btn btn-default" ng-click="vm.removeComprobante(cal)"
                                     ng-confirm-click="Eliminar archivo?">
                                 <span class="glyphicon glyphicon-remove"></span>
                             </button>
                         </div>
-                        <button type="file" id="exOp" type="file" ng-hide="cal.comprobante!== null"
-                                ngf-select="vm.uploadComprobante(cal,$files)">Subir archivo
-                        </button>
+                        <div>
+                            <button ng-if="cal.comprobante === null && mv.isAdmin()"
+                                    type="file" id="exOp" type="file"
+                                    ngf-select="vm.uploadComprobante(cal,$files)">Subir archivo
+                            </button>
+                            <label ng-if="cal.comprobante === null && !mv.isAdmin()">No archivo</label>
+                        </div>
                     </td>
                 </tr>
             </table>
         </div>
     </div>
-</div>
+</form>

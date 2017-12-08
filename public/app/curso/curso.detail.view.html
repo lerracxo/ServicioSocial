@@ -31,16 +31,21 @@
                     <td>{{curso.termino}}</td>
                     <td>{{curso.horas}}</td>
                     <td>
-                        <div ng-hide="curso.constancia === null">
+                        <div ng-if="curso.constancia !== null">
                             <a href="{{vm.filesLoc+curso.constancia}}" download="{{vm.fileName(curso.constancia)}}">Descargar Archivo</a>
-                            <button type="button" class="btn btn-default" ng-click="vm.removeConstancia(curso)"
+                            <button ng-if="vm.isAdmin()"
+                                    type="button" class="btn btn-default" ng-click="vm.removeConstancia(curso)"
                                     ng-confirm-click="Eliminar archivo?">
                                 <span class="glyphicon glyphicon-remove"></span>
                             </button>
                         </div>
-                        <button type="file" id="exOp" type="file" ng-hide="curso.constancia !== null"
+                        <div>
+                        <button ng-if="curso.constancia === null && vm.isAdmin()"
+                                type="file" id="exOp" type="file"
                                 ngf-select="uploadConstancia(curso,$files)">Subir archivo
                         </button>
+                            <label ng-if="curso.constancia === null && !vm.isAdmin()">No archivo</label>
+                        </div>
                     </td>
                 </tr>
                 </tbody>

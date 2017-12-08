@@ -4,10 +4,10 @@
   angular
     .module('app')
     .controller('ProfessorDetailController',
-      ['httpInterface', 'profUtils', '$stateParams', 'Upload', Controller]
+      ['httpInterface', 'AuthenticationService', 'profUtils', '$stateParams', 'Upload', Controller]
     )
 
-  function Controller (httpInterface, profUtils, $stateParams, Upload) {
+  function Controller (httpInterface, AuthenticationService, profUtils, $stateParams, Upload) {
 
     const vm = this
     vm.filesLoc = profUtils.filesLoc
@@ -24,6 +24,7 @@
       getCursos()
       getCalificaciones()
     }
+
 
     vm.saveChanges = (profDetail) => {
       httpInterface.post('professor/detail/' + profDetail.id_persona, profDetail).then(getDetalle)

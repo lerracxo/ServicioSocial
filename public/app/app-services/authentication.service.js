@@ -8,21 +8,34 @@
   function Service (httpInterface, $localStorage) {
     let service = {}
 
+    service.isAdmin = isAdmin
     service.Login = Login
     service.Logout = Logout
     service.isTokenValid = isTokenValid
 
     return service
 
+    function isUserLogged () {
+      return !!$localStorage.currentUser
+    }
+
+    function isAdmin () {
+      if (!isUserLogged())
+        return false
+      return $localStorage.currentUser.rol === 'admin'
+    }
+
     function Login (username, password, callback) {
       const payload = {username: username, password: password}
       httpInterface.post('authenticate', payload).then((response) => {
         const token = response.data.token
+        const rol = response.data.rol
+        console.log('rol', rol)
         console.log('token', token)
         // login successful if there's a token in the response
         if (token) {
           // store username and token in local storage to keep user logged in between page refreshes
-          $localStorage.currentUser = {username: username, token: token}
+          $localStorage.currentUser = {username, token, rol}
 
           httpInterface.setToken(token)
           // add jwt token to auth header for all requests made by the $http service

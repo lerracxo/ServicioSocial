@@ -1,4 +1,4 @@
-<div>
+<div ng-controller="IndexController as vm" >
     <!-- Page Heading -->
     <div class="row">
         <div class="col-lg-12">
@@ -13,7 +13,7 @@
                 </small>
             </h1>
             <br> <br>
-            <h4 align="center">Bienvenida Ana Lilia</h4>
+            <h4 align="center">Bienvenid@ {{vm.getCurrentUser().username}}</h4>
             <br> <br>
 
             <div class="row" align="center" style="font-size: 18px">

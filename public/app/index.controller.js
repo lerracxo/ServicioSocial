@@ -3,22 +3,17 @@
 
   angular
     .module('app')
-    .controller('IndexController', ['profUtils','$localStorage', Controller])
+    .controller('IndexController', ['profUtils', 'AuthenticationService', '$localStorage', Controller])
 
-  function Controller (profUtils,$localStorage) {
+  function Controller (profUtils, AuthenticationService, $localStorage) {
     let vm = this
-    vm.currentUser = $localStorage.currentUser
+    vm.getCurrentUser = () => $localStorage.currentUser
+    vm.isAdmin = AuthenticationService.isAdmin
 
-    if(! vm.currentUser ){
+    if (!vm.getCurrentUser()) {
       profUtils.changeView('/logout')
     }
-    console.log('$localStorage',$localStorage)
-
-    initController()
-
-    function initController () {
-
-    }
+    //console.log('$localStorage',$localStorage)
   }
 
 })()

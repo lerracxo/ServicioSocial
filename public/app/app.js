@@ -86,6 +86,7 @@
 
   function run (httpInterface, $rootScope, $location, $localStorage, AuthenticationService) {
     let publicPages = ['/login', '/logout']
+    let adminPages = ['/data/upload/calif/','/data/upload/curso/']
     // keep user logged in after page refresh
     if ($localStorage.currentUser) {
       httpInterface.setToken($localStorage.currentUser.token)
@@ -101,6 +102,11 @@
       if (!hasAccess) {
         $location.path('/login')
       }
+      console.log('isAdmin:',AuthenticationService.isAdmin(),'include',adminPages.includes($location.path()))
+      if(!AuthenticationService.isAdmin() && adminPages.includes($location.path())){
+        $location.path('/')
+      }
+
     })
   }
 })()
