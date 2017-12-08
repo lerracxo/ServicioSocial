@@ -6,7 +6,7 @@
     <br>
 
 
-    <div class="table-responsive ">
+    <div class="table-responsive " ng-if="vm.isAdmin()">
         <table class="table table-borderless">
             <tbody>
             <tr>
@@ -96,7 +96,7 @@
             </tr>
             </tbody>
         </table>
-        <div class="col-md-7" ng-if="vm.isAdmin()">
+        <div class="col-md-7" >
             <button class="btn btn-primary" ng-click="vm.saveChanges(vm.profDet)">
                 Guardar Cambios
             </button>
