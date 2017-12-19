@@ -41,8 +41,8 @@ exports.deleteConstancia = function (req, res) {
   }).then(res.send('success')).catch(console.log)
 }
 
-async function deleteConstancia (curso) {
-  return await pool.query(queries.deleteCursoConstancia, [curso.id])
+function deleteConstancia (curso) {
+  return pool.query(queries.deleteCursoConstancia, [curso.id])
 }
 
 function getDetail (id) {

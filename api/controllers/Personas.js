@@ -23,11 +23,12 @@ exports.personsByCurso = function (req, res) {
   pool.queryResponse(queries.personsByCurso, [query.short], res)
 }
 
-exports.deleteExop = async function (req, res) {
-  let profesor = await getDetail(req.params.id)
-  deleteExop(profesor)
-  filesUtil.removeFile(project.uploadDir + profesor.ex_oposicion)
-  res.send('success')
+exports.deleteExop = (req, res) => {
+  getDetail(req.params.id).then((profesor) => {
+    deleteExop(profesor)
+    filesUtil.removeFile(project.uploadDir + profesor.ex_oposicion)
+    res.send('success')
+  })
 }
 
 exports.listJson = function (req, res) {
@@ -42,7 +43,7 @@ exports.listAllAvg = function (req, res) {
   pool.queryResponse(queries.listAllProfessorAVG, [param], res)
 }
 
-exports.detail = async function (req, res) {
+exports.detail = function (req, res) {
   pool.queryResponse(queries.detailProfessor, [req.params.id], res)
 }
 
@@ -50,7 +51,7 @@ exports.saveDetail = function (req, res) {
   const professor = req.body
   console.log('at saving changes', professor)
   const arg = [
-    professor. id_persona,
+    professor.id_persona,
     professor.f_telefono,
     professor.m_telefono,
     professor.t_telefono,
@@ -75,8 +76,7 @@ function addExop (id_profesor, fileName) {
   pool.query(queries.updateProfExop, [fileName, id_profesor])
 }
 
-async function getDetail (param) {
-  const result = await pool.query(queries.detailProfessor, [param])
-  return result[0]
+function getDetail (param) {
+  return pool.query(queries.detailProfessor, [param])
 }
 

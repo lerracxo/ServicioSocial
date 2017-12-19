@@ -25,6 +25,7 @@
       getCalificaciones()
     }
 
+    vm.isAdmin = AuthenticationService.isAdmin
 
     vm.saveChanges = (profDetail) => {
       httpInterface.post('professor/detail/' + profDetail.id_persona, profDetail).then(getDetalle)

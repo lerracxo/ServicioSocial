@@ -20,11 +20,11 @@ pool.on('error', function (err, client) {
   console.log('idle client error', err.message, err.stack)
 })
 
-module.exports.queryResponse = async function (query, values, res) {
+module.exports.queryResponse = function (query, values, res) {
   try {
-    const data = await this.query(query, values)
-    let response = new message.message(null, data, null)
-    res.json(response)
+    this.query(query, values).then((data) => {
+      res.json(new message.message(null, data, null))
+    })
   } catch (error) {
     console.log(error)
     let response = new message.message(new errors.QueryError(error), null, null)

@@ -86,7 +86,7 @@
 
   function run (httpInterface, $rootScope, $location, $localStorage, AuthenticationService) {
     let publicPages = ['/login', '/logout']
-    let adminPages = ['/data/upload/calif/','/data/upload/curso/']
+    let adminPages = ['/data/upload/calif/','/data/upload/curso/','/data/upload/']
     // keep user logged in after page refresh
     if ($localStorage.currentUser) {
       httpInterface.setToken($localStorage.currentUser.token)

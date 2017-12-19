@@ -7,7 +7,7 @@ exports.buildQuery = function (body) {
   console.log('body: ', body)
   if (body.name) {
     nameQuery = ' WHERE UPPER(REPLACE(concat(p.a_paterno,p.a_materno,p.nombres),\' \',\'\'))  ' +
-      ' SIMILAR TO \'%(' + body.name.toUpperCase().replace(' ', '|') + ')%\'::TEXT '
+      ' SIMILAR TO \'%(' + body.name.toUpperCase().replace(' ', '') + ')%\'::TEXT '
   }
   if (body.prom) {
     promQuery = ' WHERE promedio::decimal  ' + body.prom
