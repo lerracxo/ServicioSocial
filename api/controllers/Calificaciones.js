@@ -38,6 +38,10 @@ exports.importCalificacion = function (data) {
 
 }
 
+exports.califByMateriaPeriod = (req, res) => {
+  pool.queryResponse(queries.califByMateriaPeriod, [req.params.id_materia, req.params.id_periodo], res)
+}
+
 function addComprobante (id, finalName) {
   pool.query(queries.updateCalificacionComprobante, [finalName, id])
 }

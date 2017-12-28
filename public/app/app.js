@@ -81,7 +81,18 @@
         controller: 'PeriodoController',
         controllerAs: 'vm'
       })
-
+      .state('periodoMateria', {
+        url: '/periodo/materia/:id_periodo',
+        templateUrl: 'periodo/periodo.materia.view.html',
+        controller: 'PeriodoMateriaController',
+        controllerAs: 'vm'
+      })
+      .state('periodoMateriaCalif', {
+        url: '/periodo/calif/:id_materia/:id_periodo',
+        templateUrl: 'periodo/periodo.materia.calif.view.html',
+        controller: 'PeriodoMateriaCalifController',
+        controllerAs: 'vm'
+      })
   }
 
   function run (httpInterface, $rootScope, $location, $localStorage, AuthenticationService) {

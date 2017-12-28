@@ -1,5 +1,5 @@
 <div>
-    <h3 align="center">Periodos</h3>
+    <h3 align="center">Materias del periodo {{vm.periodo.periodo}}</h3>
     <br>
     <!--<form ng-keypress="vm.queryPeriodos($event,query)">-->
         <!--<div class="container-fluid">-->
@@ -19,17 +19,17 @@
         <!--</div>-->
     <!--</form>-->
 
-    <div ng-repeat="periodo in vm.searchResult">
+    <div ng-repeat="materia in vm.searchResult">
         <div class="col-lg-6 col-md-6">
             <div class="panel panel-primary">
-                <a href="" ng-click="vm.getMateriasByPeriodo(periodo)">
+                <a href="" ng-click="vm.getCalifByMateriaPeriodo(materia)">
                     <div class="panel-heading">
                         <div class="row">
                             <div class="col-xs-3">
                                 <i class="fa fa-male"></i>
                             </div>
                             <div class="col-xs-9 text-right">
-                                <div><p>{{periodo.periodo}} </p></div>
+                                <div><p>{{materia.materia}} </p></div>
                             </div>
                             <!--<div class="col-xs-9 text-left">-->
                                 <!--<p><h6>Inicio: {{curso.inicio}}</h6> </p>-->

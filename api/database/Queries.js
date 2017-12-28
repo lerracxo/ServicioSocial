@@ -44,6 +44,7 @@ exports.updateProfExop = 'UPDATE profesor SET ex_oposicion = $1::TEXT WHERE id_p
 // Period
 exports.listAllPeriod = 'SELECT * FROM periodo'
 
+exports.periodoById = 'SELECT * FROM periodo WHERE id_tempo = $1::INT'
 // Cursos
 exports.cursoById = 'SELECT * FROM curso WHERE id_persona = $1::INT ORDER BY curso'
 
@@ -59,6 +60,13 @@ exports.searchCurso = 'SELECT DISTINCT curso, UPPER(REPLACE(TRIM(concat(curso)),
 // Materias
 exports.listAllMateria = 'SELECT id, materia FROM materia'
 
+exports.listMateriaByPeriod = 'SELECT DISTINCT mat.id, mat.materia FROM calificacion cal\n' +
+  '  JOIN materia mat ON mat.id = cal.id_materia\n' +
+  ' WHERE cal.id_periodo = $1::INT ' +
+  ' ORDER BY mat.materia '
+
+exports.materiaById = 'SELECT * FROM materia WHERE id = $1::INT'
+
 // Calificaciones
 exports.detailProfesorCalif =
   ' SELECT c.id, c.id_persona, pt.periodo, gr.grupo, mat.materia, c.puntualidad, c.contenido, c.didactica, c.planeacion, c.evaluacion, c.actitud,c.promedio,c.comprobante ' +
@@ -73,6 +81,15 @@ exports.detailCalificacion = 'SELECT * FROM calificacion WHERE id = $1::INT'
 exports.updateCalificacionComprobante = 'UPDATE calificacion SET comprobante = $1::TEXT WHERE id = $2::INT'
 
 exports.deleteCalificacionComprobante = 'UPDATE calificacion SET comprobante = NULL WHERE id = $1::INT'
+
+exports.califByMateriaPeriod = 'SELECT concat_ws(\' \', per.a_paterno, per.a_materno, per.nombres) as nombre, cal.puntualidad,\n' +
+  '  cal.contenido, cal.didactica, cal.planeacion, cal.evaluacion, cal.actitud, cal.promedio, cal.comprobante,\n' +
+  '  gr.grupo\n' +
+  'FROM calificacion cal\n' +
+  '  JOIN persona per ON per.id_persona = cal.id_persona\n' +
+  '  JOIN grupo gr ON gr.id = cal.id_grupo \n'+
+  ' WHERE cal.id_materia = $1::INT AND cal.id_periodo = $2::INT' +
+  ' ORDER BY per.a_paterno'
 
 // Data Import
 exports.dataImportStartTransaction = ''

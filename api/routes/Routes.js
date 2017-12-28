@@ -69,13 +69,25 @@ module.exports = function (app) {
   app.route('/calificaciones/comprobante/:id')
     .delete(contCalificaciones.deleteCompobante)
 
+  app.route('/calificaciones/:id_materia/:id_periodo')
+    .get(contCalificaciones.califByMateriaPeriod)
+
   // Materia
   app.route('/materia/')
     .get(contMateria.listAll)
 
+  app.route('/materia/:id')
+    .get(contMateria.materiaById)
+
+  app.route('/materia/periodo/:id_periodo')
+    .get(contMateria.materiasByPeriod)
+
   // Periodo
   app.route('/periodo/')
     .get(contPeriodo.listAll)
+
+  app.route('/periodo/:id_periodo')
+    .get(contPeriodo.listById)
 
   // dataUpload
   app.route('/dataUpload/calif')
