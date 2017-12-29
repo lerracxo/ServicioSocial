@@ -28,6 +28,7 @@
     vm.isAdmin = AuthenticationService.isAdmin
 
     vm.saveChanges = (profDetail) => {
+      console.log('to update',profDetail)
       httpInterface.post('professor/detail/' + profDetail.id_persona, profDetail).then(getDetalle)
     }
 

@@ -2,7 +2,7 @@
   'use strict'
 
   angular
-    .module('app', ['ngFileUpload', 'ui.router', 'ngMessages', 'ngStorage', 'ngRoute'])
+    .module('app', ['ngFileUpload', 'ui.router', 'ngMessages', 'ngStorage', 'ngRoute','ngSanitize'])
     .config(config)
     .run(run)
 

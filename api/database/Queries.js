@@ -33,6 +33,8 @@ exports.saveDetailProfessor =
   '    f_ingreso  = $9 :: TEXT,\n' +
   '    grado      = $10 :: TEXT;'
 
+exports.updatePersonaDetail = 'UPDATE persona SET nombres = $2::TEXT, a_paterno=$3::TEXT, a_materno=$4::TEXT WHERE id_persona=$1::INT'
+
 exports.personsByCurso = 'SELECT * FROM persona p ' +
   'JOIN curso c ON p.id_persona = c.id_persona ' +
   'WHERE UPPER(REPLACE(TRIM(concat(curso)),\' \',\'\')) = $1::TEXT '

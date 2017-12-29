@@ -47,6 +47,10 @@ exports.detail = function (req, res) {
   pool.queryResponse(queries.detailProfessor, [req.params.id], res)
 }
 
+function cleanHtmlSpaces (str) {
+  return str.replace(/&nbsp;/g, ' ')
+}
+
 exports.saveDetail = function (req, res) {
   const professor = req.body
   console.log('at saving changes', professor)
@@ -62,8 +66,17 @@ exports.saveDetail = function (req, res) {
     professor.f_ingreso,
     professor.grado]
 
+  const upPersona = [
+    professor.id_persona,
+    cleanHtmlSpaces(professor.nombres),
+    cleanHtmlSpaces(professor.a_paterno),
+    cleanHtmlSpaces(professor.a_materno)
+  ]
+
   console.log(professor)
   pool.query(queries.saveDetailProfessor, arg)
+    .catch(res.json({success: false}))
+    .then(pool.query(queries.updatePersonaDetail, upPersona))
     .catch(res.json({success: false}))
     .then(res.json({success: true}))
 }

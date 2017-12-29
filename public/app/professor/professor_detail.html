@@ -1,10 +1,12 @@
 <form>
     <div>
-        <h3 align="center">{{vm.profDet.nombres}} {{vm.profDet.a_paterno}} {{vm.profDet.a_materno}} </h3>
+        <h3 align="center">
+            <span contenteditable ng-model="vm.profDet.nombres"></span>
+            <span contenteditable ng-model="vm.profDet.a_paterno"></span>
+            <span contenteditable ng-model="vm.profDet.a_materno"></span>
+        </h3>
     </div>
-
     <br>
-
 
     <div class="table-responsive " ng-if="vm.isAdmin()">
         <table class="table table-borderless">
@@ -96,7 +98,7 @@
             </tr>
             </tbody>
         </table>
-        <div class="col-md-7" >
+        <div class="col-md-7">
             <button class="btn btn-primary" ng-click="vm.saveChanges(vm.profDet)">
                 Guardar Cambios
             </button>
