@@ -3,31 +3,34 @@
         <ul>
             <li><h2><a href="#/data/upload/calif/">Cargar Calificaciones</a></h2></li>
             <li><h2><a href="#/data/upload/curso/">Cargar Cursos</a></h2></li>
-            <!--<li><h2><a>Cargar Calificaciones</a></h2></li>-->
-            <!--<li><h2><a>Cargar Calificaciones</a></h2></li>-->
         </ul>
     </div>
-    <!--<h2>Login</h2>-->
-    <!--<form name="form" ng-submit="form.$valid && vm.login()" novalidate>-->
-        <!--<div class="form-group" ng-class="{ 'has-error': form.$submitted && form.username.$invalid }">-->
-            <!--<label for="username">Usuario</label>-->
-            <!--<input type="text" name="username" class="form-control" ng-model="vm.username" required/>-->
-            <!--<div ng-messages="form.$submitted && form.username.$error" class="help-block">-->
-                <!--<div ng-message="required">Username is required</div>-->
-            <!--</div>-->
-        <!--</div>-->
-        <!--<div class="form-group" ng-class="{ 'has-error': form.$submitted && form.password.$invalid }">-->
-            <!--<label for="password">Contraseña</label>-->
-            <!--<input type="password" name="password" class="form-control" ng-model="vm.password" required/>-->
-            <!--<div ng-messages="form.$submitted && form.password.$error" class="help-block">-->
-                <!--<div ng-message="required">Password is required</div>-->
-            <!--</div>-->
-        <!--</div>-->
-        <!--<div class="form-group">-->
-            <!--<button ng-disabled="vm.loading" class="btn btn-primary">Login</button>-->
-            <!--<img ng-if="vm.loading"-->
-                 <!--src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA=="/>-->
-        <!--</div>-->
-        <!--<div ng-if="vm.error" class="alert alert-danger">{{vm.error}}</div>-->
-    <!--</form>-->
+</div>
+
+
+<div class="col-md-9 col-md-offset-2 alert">
+    <h2>¿Cómo cargar archivos?</h2>
+    <h3>Archivo plantilla</h3>
+    <ul>
+        <li>
+            <p>Recuerda descargar el archivo plantilla, que encontrarás en las páginas de carga respectivamente. </p>
+        </li>
+        <li>
+            <p>Este archivo es de suma importancia porque contiene los lineamintos para que el sistema
+                pueda cargar la información.</p>
+            <figure>
+                <img src="/files/asserts/images/layoutFile.png" width="800px"/>
+                <figcaption>Fig.1 - Ubicación del archivo plantilla.</figcaption>
+            </figure>
+        </li>
+        <li><p>Cuidado al momento de rellenar los datos, no agreges mas columnas o cambies el orden de las mismas, de
+            otro modo
+            la información que se cargará será erronea.</p></li>
+        <li><p>Para la carga de está información se requiere un <a
+                href="https://es.wikipedia.org/wiki/Valores_separados_por_comas">archivo en formato CSV </a>
+            por lo cual es importante que uses la plantilla y una vez que rellenenaste la información guardes el archivo
+            de
+            nuevo en formato CSV.
+        </p></li>
+    </ul>
 </div>

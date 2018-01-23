@@ -557,3 +557,10 @@ rfc text,
 fecha_ingreso text,
 grado text
 );
+
+
+CREATE DATABASE predictive_listening;
+
+USE oscar;
+
+DROP DATABASE predictive_listening;

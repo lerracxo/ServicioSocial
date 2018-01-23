@@ -23,12 +23,20 @@
       getDetalle()
       getCursos()
       getCalificaciones()
+
+      console.log('This is ProfessorDetailController')
+      console.log('mv', vm)
+    }
+
+    vm.isAdminWrapper = (event) => {
+      console.log('isAdminWrapper',event)
+      return true
     }
 
     vm.isAdmin = AuthenticationService.isAdmin
 
     vm.saveChanges = (profDetail) => {
-      console.log('to update',profDetail)
+      console.log('to update', profDetail)
       httpInterface.post('professor/detail/' + profDetail.id_persona, profDetail).then(getDetalle)
     }
 

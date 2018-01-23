@@ -204,11 +204,12 @@
                             </button>
                         </div>
                         <div>
-                            <button ng-if="cal.comprobante === null && mv.isAdmin()"
-                                    type="file" id="exOp" type="file"
+                            <button ng-if="cal.comprobante === null && vm.isAdmin()"
+                                    type="file"
+                                    id="exOp" type="file"
                                     ngf-select="vm.uploadComprobante(cal,$files)">Subir archivo
                             </button>
-                            <label ng-if="cal.comprobante === null && !mv.isAdmin()">No archivo</label>
+                            <label ng-if="cal.comprobante === null && !vm.isAdmin('calif')">No archivos</label>
                         </div>
                     </td>
                 </tr>
