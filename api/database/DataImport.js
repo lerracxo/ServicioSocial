@@ -11,7 +11,8 @@ module.exports.doImport = doImport
 function doImport (fileName, tableName) {
   return new Promise((resolve, reject) => {
     pg.connect((err, client, done) => {
-      const sentence = 'COPY ' + tableName + ' FROM STDIN WITH CSV DELIMITER ' + delimiter + ' HEADER '
+      const sentence = 'COPY ' + tableName + ' FROM STDIN WITH CSV DELIMITER ' + delimiter + ' HEADER ' +
+        ' ENCODING \'WIN1252\' '
       console.log('SQL SENTENCE: ', sentence)
       let stream = client.query(copyFrom(sentence))
       let fileStream = fs.createReadStream(fileName)
