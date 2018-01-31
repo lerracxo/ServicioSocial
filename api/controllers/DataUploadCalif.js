@@ -23,25 +23,21 @@ function calif (req, res) {
   console.log(fileName)
 
   filesUtil.uploadFile(req, fileName)
-    .then((x) => {
-      finalName = x
-      loadCSVtoPG(finalName)
-    })
+    .then(loadCSVtoPG)
     .then(sanitizeFields)
     .then(insertProfessors)
     .then(insertGrupos)
     .then(insertMaterias)
     .then(insertPeriodos)
     .then(insertCalifs)
-    .then(finalizeImport)
-    .then(res.send(importSuccess))
-    .catch((error) => res.send(importFail(error)))
-
+    .then(() => res.send(importSuccess()))
+    .catch((error) => res.status(500).send(importFail(error)))
+    .then(() => finalizeImport())
 }
 
 function loadCSVtoPG (fileName) {
   console.log('Step loadCSVtoPG')
-  const finalName = project.uploadDir + fileName
+  finalName = project.uploadDir + fileName
   return dataImport.doImport(finalName, tableName)
 }
 
@@ -77,15 +73,18 @@ function insertCalifs () {
 
 function finalizeImport () {
   console.log('Step finalizeImport')
-  filesUtil.removeFile(project.uploadDir + finalName)
-  return pool.query(queries.dataImportCalifFinalizeImport)
+  return Promise.all([
+    pool.query(queries.dataImportCalifFinalizeImport),
+    filesUtil.removeFile(finalName)
+  ])
 }
 
 function importSuccess () {
+  console.log('All import is ok')
   return {success: true}
 }
 
 function importFail (error) {
-  console.log(error)
-  return {success: false, reason: error}
+  console.log('ImportFail method', error)
+  return {success: false, error}
 }

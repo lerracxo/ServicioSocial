@@ -15,32 +15,21 @@ function doImport (fileName, tableName) {
         ' ENCODING \'WIN1252\' '
       console.log('SQL SENTENCE: ', sentence)
       let stream = client.query(copyFrom(sentence))
-      let fileStream = fs.createReadStream(fileName)
+      let rs = fs.createReadStream(fileName)
 
-      fileStream.on('error', (error) => {console.error(error)})
-      fileStream.pipe(stream)
-        .on('finish', () => {
-          console.log('import finished')
+      rs.on('error', (error) => {console.error(error)})
+      rs.pipe(stream)
+        .on('end', () => {
+          console.log('loadCSV finished')
           done()
           resolve()
         })
         .on('error', (error) => {
-          console.log('IMPORT ERROR: ', error)
-          reject()
+          console.log('loadCSV ERROR')
           done()
+          reject(error)
         })
     })
   })
 }
-
-// Test purposes
-// main()
-//
-// function main () {
-//   const fileName = '/Users/oscar/Projects/Personal/ServicioSocial/DB Scripts/import1.csv'
-//
-//   console.log('hola')
-//   doImport(fileName, 'importCalif')
-//   console.log('waiting')
-// }
 

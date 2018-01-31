@@ -7,8 +7,8 @@ const routes = require('./api/routes/Routes')
 const port = process.env.PORT || 3000
 global.project = {
   projectDir: path.dirname(require.main.filename),
-  publicDir: path.dirname(require.main.filename) + '/public/',
-  uploadDir: path.dirname(require.main.filename) + '/files/',
+  publicDir: path.dirname(require.main.filename) + '/public',
+  uploadDir: path.dirname(require.main.filename) + '/files',
   secret: 'secret'
 }
 
