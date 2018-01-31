@@ -30,7 +30,25 @@
       let validDecimal = /^[0-9.!<>=*\) ]+$/g
       return validDecimal.test(query)
     }
+    service.generateCSV = (body, name) => {
+      if (!body || !body[0]) {
+        alert('No hay datos para descargar')
+        return
+      }
+      let csv = [Object.keys(JSON.parse(angular.toJson(body[0]))).join(',')].concat(
+        body.map((x) => {
+          return Object.values(JSON.parse(angular.toJson(x)))
+        })).join('%0A').replace(/[ ]+/g, '%20')
+      let a = document.createElement('a')
+      a.href = 'data:attachment/csv,' + csv
+      a.target = '_blank'
+      a.download = name.trim() + '.csv'
+      document.body.appendChild(a)
+      a.click()
+    }
     return service
   }
+
+
 
 })()

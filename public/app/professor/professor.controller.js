@@ -10,6 +10,7 @@
     let vm = this
 
     vm.searchResult = {}
+    vm.generateCSV = profUtils.generateCSV
     vm.activePeriod = undefined
     vm.promedioLabel = () => (vm.activePeriod ? 'Promedio del periodo '+ vm.activePeriod.periodo + ':': 'Promedio:')
 
