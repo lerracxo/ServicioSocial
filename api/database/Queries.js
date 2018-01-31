@@ -44,7 +44,9 @@ exports.deleteProfExop = 'UPDATE profesor SET ex_oposicion = NULL WHERE id_profe
 exports.updateProfExop = 'UPDATE profesor SET ex_oposicion = $1::TEXT WHERE id_profesor = $2::INT'
 
 // Period
-exports.listAllPeriod = 'SELECT * FROM periodo'
+exports.listAllPeriod = 'WITH temp_periodo as (' +
+  '  SELECT id_tempo, periodo, right(periodo, 4) anio FROM periodo' +
+  ') SELECT id_tempo, periodo FROM temp_periodo ORDER BY anio DESC, periodo DESC'
 
 exports.periodoById = 'SELECT * FROM periodo WHERE id_tempo = $1::INT'
 // Cursos
@@ -70,13 +72,16 @@ exports.listMateriaByPeriod = 'SELECT DISTINCT mat.id, mat.materia FROM califica
 exports.materiaById = 'SELECT * FROM materia WHERE id = $1::INT'
 
 // Calificaciones
-exports.detailProfesorCalif =
+exports.detailProfesorCalif = '' +
+  'WITH temp_periodo as (\n' +
+  '  SELECT id_tempo, periodo, right(periodo, 4) anio FROM periodo\n' +
+  ')\n' +
   ' SELECT c.id, c.id_persona, pt.periodo, gr.grupo, mat.materia, c.puntualidad, c.contenido, c.didactica, c.planeacion, c.evaluacion, c.actitud,c.promedio,c.comprobante ' +
   ' FROM calificacion c ' +
-  ' JOIN periodo pt  ON c.id_periodo = pt.id_tempo ' +
+  ' JOIN temp_periodo pt  ON c.id_periodo = pt.id_tempo ' +
   ' JOIN materia mat      ON c.id_materia = mat.id ' +
   ' JOIN grupo gr         ON c.id_grupo = gr.id ' +
-  ' WHERE id_persona = $1::INT ORDER BY mat.materia, c.id'
+  ' WHERE id_persona = $1::INT ORDER BY pt.anio DESC, pt.periodo DESC'
 
 exports.detailCalificacion = 'SELECT * FROM calificacion WHERE id = $1::INT'
 
@@ -89,7 +94,7 @@ exports.califByMateriaPeriod = 'SELECT concat_ws(\' \', per.a_paterno, per.a_mat
   '  gr.grupo\n' +
   'FROM calificacion cal\n' +
   '  JOIN persona per ON per.id_persona = cal.id_persona\n' +
-  '  JOIN grupo gr ON gr.id = cal.id_grupo \n'+
+  '  JOIN grupo gr ON gr.id = cal.id_grupo \n' +
   ' WHERE cal.id_materia = $1::INT AND cal.id_periodo = $2::INT' +
   ' ORDER BY per.a_paterno'
 
@@ -129,7 +134,7 @@ exports.dataImportCalifInsertMaterias = 'INSERT INTO materia (materia) \n' +
   '  WHERE m.materia IS NULL'
 
 exports.dataImportCalifInsertPeriodos = 'INSERT INTO periodo (periodo) \n' +
-  '  SELECT ic.periodo\n' +
+  '  SELECT DISTINCT ic.periodo\n' +
   '  FROM importCalif ic LEFT JOIN\n' +
   '  periodo p\n' +
   '  ON UPPER(REPLACE(ic.periodo,\' \',\'\')) = UPPER(REPLACE(p.periodo,\' \',\'\'))\n' +
@@ -140,14 +145,14 @@ exports.dataImportCalifInsertCalifs = 'INSERT INTO calificacion  (id_persona, id
   '  WITH califTable AS (\n' +
   '    SELECT per.id_persona, p.id_tempo as id_periodo, g.id as id_grupo, m.id as id_materia, \n' +
   '      ic.puntualidad,ic.contenido,ic.didactica,ic.planeacion,ic.evaluacion,ic.actitud,\n' +
-  '    (\n' +
+  '    round((\n' +
   '      CAST(puntualidad\t as DECIMAL) +\n' +
   '      CAST(contenido\t as DECIMAL) +\n' +
   '      CAST(didactica\t as DECIMAL) +\n' +
   '      CAST(planeacion\t as DECIMAL) +\n' +
   '      CAST(evaluacion\t as DECIMAL) +\n' +
   '      CAST(actitud as DECIMAL)\n' +
-  '    ) / 6 as promedio, null::TEXT as comprobante\n' +
+  '    ) / 6, 2) as promedio, null::TEXT as comprobante\n' +
   '    FROM importCalif ic \n' +
   '      JOIN persona per ON UPPER(REPLACE(ic.nombre,\' \',\'\')) = UPPER(REPLACE(concat(per.a_paterno,per.a_materno,per.nombres),\' \',\'\'))\n' +
   '      JOIN periodo p ON UPPER(REPLACE(ic.periodo,\' \',\'\')) = UPPER(REPLACE(p.periodo,\' \',\'\'))\n' +
@@ -166,7 +171,6 @@ exports.dataImportCalifInsertCalifs = 'INSERT INTO calificacion  (id_persona, id
 exports.dataImportCalifFinalizeImport = 'DELETE FROM importCalif'
 
 // Curso import
-
 exports.dataImportCursoInsertProfessors = 'INSERT INTO persona (a_paterno,a_materno,nombres)\n' +
   '  SELECT \n' +
   '  split_part(nombre, \' \', 1) AS a_paterno,   split_part(nombre, \' \', 2)  AS a_materno, split_part(nombre, \' \', 3 ) || split_part(nombre, \' \', 4 ) || split_part(nombre, \' \', 5 ) as nombres \n' +

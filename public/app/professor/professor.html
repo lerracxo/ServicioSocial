@@ -11,13 +11,6 @@
                         placeholder="Profesor" ng-model="query.name"
                 />
             </div>
-            <button type="button" class="btn btn-info" data-toggle="collapse" data-target="#busqueda">Búsqueda
-                avanzada
-            </button>
-            <button type="button" class="btn btn-default right-block"
-                    ng-click="vm.queryProfessors($event,query)">
-                <i class="fa fa-search"></i> Buscar
-            </button>
             <div id="busqueda" class="collapse container-fluid form-group well">
                 <label for="prom">Promedio</label>
                 <input id="prom" class="form-control" ng-model="query.prom"
@@ -32,6 +25,15 @@
                 <select id="profPeriodo" class="form-control" ng-model="query.per">
                     <option ng-repeat="option in vm.periodos" value="{{option.id_tempo}}">{{option.periodo}}</option>
                 </select>
+            </div>
+            <div>
+                <button type="button" class="btn btn-info" data-toggle="collapse" data-target="#busqueda">Búsqueda
+                    avanzada
+                </button>
+                <button type="button" class="btn btn-default right-block"
+                        ng-click="vm.queryProfessors($event,query)">
+                    <i class="fa fa-search"></i> Buscar
+                </button>
             </div>
             <p>{{vm.searchResult.length}} : resultados</p>
         </div>
@@ -51,7 +53,7 @@
                                     {{profesor.nombres}} </p>
                             </div>
                             <div class="col-xs-9 text-left">
-                                <p><h6>Promedio: {{profesor.promedio}}</h6></p>
+                                <p><h6>{{vm.promedioLabel()}} <strong>{{profesor.promedio}}</strong></h6></p>
                             </div>
                         </div>
                     </div>

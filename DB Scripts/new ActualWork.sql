@@ -564,3 +564,60 @@ CREATE DATABASE predictive_listening;
 USE oscar;
 
 DROP DATABASE predictive_listening;
+
+
+
+SELECT * FROM scandals;
+
+SELECT * FROM scandalrecords;
+
+SELECT * FROM "scandalRecords";
+
+UPDATE "scandalRecords" SET status = 'completed';
+INSERT INTO "scandalRecords" (scandal_id) VALUES (1);
+
+INSERT INTO reach (news_result, scandal_record_id) VALUES (1,2); 
+INSERT INTO engagement (twitter_result, scandal_record_id) VALUES (1,1);
+
+SELECT * FROM engagement;
+SELECT * FROM reach;
+
+SELECT * FROM importcalif;
+
+SELECT *, puntualidad::DECIMAL
+       -- + CAST(contenido	 as DECIMAL) +
+      -- CAST(didactica	 as DECIMAL) +
+      -- CAST(planeacion	 as DECIMAL) +
+      -- CAST(evaluacion	 as DECIMAL) +
+      -- CAST(actitud as DECIMAL) 
+      
+FROM importcalif;
+
+DELETE FROM importcalif;
+
+
+WITH califTable AS (
+    SELECT per.id_persona, p.id_tempo as id_periodo, g.id as id_grupo, m.id as id_materia,
+      ic.puntualidad,ic.contenido,ic.didactica,ic.planeacion,ic.evaluacion,ic.actitud,
+    (
+    6
+      --CAST(puntualidad	 as DECIMAL) +
+      --CAST(contenido	 as DECIMAL) +
+      --CAST(didactica	 as DECIMAL) +
+      --CAST(planeacion	 as DECIMAL) +
+      --CAST(evaluacion	 as DECIMAL) +
+      --CAST(actitud as DECIMAL)
+    ) / 6 as promedio, null::TEXT as comprobante
+    FROM importCalif ic
+      JOIN persona per ON UPPER(REPLACE(ic.nombre,' ','')) = UPPER(REPLACE(concat(per.a_paterno,per.a_materno,per.nombres),' ',''))
+      JOIN periodo p ON UPPER(REPLACE(ic.periodo,' ','')) = UPPER(REPLACE(p.periodo,' ',''))
+      JOIN grupo g ON UPPER(REPLACE(ic.grupo,' ','')) = UPPER(REPLACE(g.grupo,' ',''))
+      JOIN materia m ON UPPER(REPLACE(ic.materia,' ','')) = UPPER(REPLACE(m.materia,' ',''))
+  )
+  SELECT ct.* FROM califTable ct
+  LEFT JOIN calificacion c
+    ON ct.id_persona	= c.id_persona
+    AND ct.id_periodo	=c.id_periodo
+    AND ct.id_grupo	=c.id_grupo
+    AND ct.id_materia	=c.id_materia
+  WHERE c.id_persona IS NUlL;

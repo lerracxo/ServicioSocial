@@ -13,7 +13,7 @@
             <tbody>
             <tr>
                 <td>
-                    <label for="telFijo"> Teléfono fijo: </label>
+                    <label for="telFijo">Número Empleado: </label>
                 </td>
                 <td>
                     <input id="telFijo" class="form-control" ng-model="vm.profDet.f_telefono"/>
@@ -125,7 +125,7 @@
                     <!--<th>Tipo de curso</th>-->
                     <th>Fecha inicio</th>
                     <th>Fecha fin</th>
-                    <th>Horas</th>
+                    <th>Tipo</th>
                     <th>Archivo</th>
                 </tr>
                 </thead>
@@ -134,7 +134,7 @@
                     <td>{{curso.curso}}</td>
                     <td>{{curso.inicio}}</td>
                     <td>{{curso.termino}}</td>
-                    <td>{{curso.horas}}</td>
+                    <td>{{curso.tipo}}</td>
                     <td>
                         <div ng-if="curso.constancia !== null">
                             <a href="{{vm.filesLoc+curso.constancia}}" download="{{vm.fileName(curso.constancia)}}">Descargar

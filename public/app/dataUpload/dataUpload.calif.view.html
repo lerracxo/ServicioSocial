@@ -15,5 +15,7 @@
             <span class="sr-only">{{vm.progress}}% Complete</span>
         </div>
     </div>
-    <label for="message"></label>
+    <div ng-class="vm.isImportComplete().classes ">
+        {{vm.isImportComplete().message}}
+    </div>
 </div>
