@@ -10,4 +10,3 @@ exports.listAll = function (req, res) {
 exports.listById = (req, res) => {
   pool.queryResponse(queries.periodoById, [req.params.id_periodo], res)
 }
-

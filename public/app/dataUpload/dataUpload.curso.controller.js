@@ -1,4 +1,4 @@
-﻿(function () {
+(function () {
   'use strict'
 
   angular
@@ -11,32 +11,40 @@
     vm.helloWorld = 'hello world'
     vm.uploadCalif = uploadCalif
     vm.progress = 0
+    let importSuccess
 
-    initController()
+    vm.isImportComplete = () => {
+      let result = {
+        classes: ['alert', 'center', 'hide'],
+        message: 'Message test'
+      }
+      if (importSuccess !== undefined && importSuccess) {
+        result.classes = result.classes.filter(item => item !== 'hide')
+        result.classes.push('alert-success')
+        result.message = 'El arhivo se importó exitosamente :D'
+      }
+      if (importSuccess !== undefined && importSuccess === false) {
+        result.classes = result.classes.filter(item => item !== 'hide')
+        result.classes.push('alert-danger')
+        result.message = 'Ha ocurrido un error al importar el archivo :('
+      }
+      return result
+    }
 
     function uploadCalif ($files) {
       Upload.upload({
         url: httpInterface.serviceLoc + 'dataUpload/curso/',
-        file: $files,
+        file: $files
       })
-        .progress(function (e) {
-          console.log(e)
-          vm.progress = e.loaded / e.total * 100
-        })
-        .then(function (data, status, headers, config) {
-          // console.log('File uploaded correctly')
-          // console.log('data', data)
-          // console.log('status', status)
-          // console.log('headers', headers)
-          // console.log('config', config)
-        })
+            .progress(function (e) {
+              vm.progress = e.loaded / e.total * 100
+            })
+            .then(function (data) {
+              importSuccess = true
+            }, (error) => { throw error })
+            .catch((error) => {
+              importSuccess = false
+            })
     }
-
-    function initController () {
-      // reset login status
-      // AuthenticationService.Logout()
-    }
-
   }
-
 })()

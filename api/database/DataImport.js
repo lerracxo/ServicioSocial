@@ -17,7 +17,7 @@ function doImport (fileName, tableName) {
       let stream = client.query(copyFrom(sentence))
       let rs = fs.createReadStream(fileName)
 
-      rs.on('error', (error) => {console.error(error)})
+      rs.on('error', (error) => { console.error(error) })
       rs.pipe(stream)
         .on('end', () => {
           console.log('loadCSV finished')
@@ -32,4 +32,3 @@ function doImport (fileName, tableName) {
     })
   })
 }
-

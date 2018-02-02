@@ -39,7 +39,7 @@ function isTokenValid (req, res) {
 function validateToken (req) {
   console.log('validating token', req.headers['token'], ' params ', req.body, 'trying to reach ', req.path)
   return new Promise(function (resolve, reject) {
-    if (publicEndPoints.includes(req.path)) {return resolve()}
+    if (publicEndPoints.includes(req.path)) { return resolve() }
     // check header or url parameters or post parameters for token
     let token = getToken(req)
     // decode token
@@ -61,8 +61,3 @@ function failedTokenValidation (res, error) {
 function getToken (req) {
   return req.body.token || req.headers['token'] || req.headers['x-access-token']
 }
-
-
-
-
-

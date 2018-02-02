@@ -32,3 +32,5 @@ target/
 #Node JS project
 node_modules/
 
+#FileUpload
+files/dataUpload/calif/

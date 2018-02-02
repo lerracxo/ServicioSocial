@@ -31,10 +31,8 @@ obj.pro = ''
 
 console.log(!!obj.pro)
 
-console.log( evalu(obj.pro) + 'Hola')
+console.log(evalu(obj.pro) + 'Hola')
 
-
-function evalu(obj){
+function evalu (obj) {
   return !!obj && true
-
 }

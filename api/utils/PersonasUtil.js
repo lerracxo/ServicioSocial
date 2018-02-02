@@ -15,8 +15,8 @@ exports.buildQuery = function (body) {
   if (body.mat) {
     matQuery = ' JOIN materia mat ON mat.id = c.id_materia AND mat.id =  ' + body.mat
   }
-  if(body.per){
-    perQuery = (nameQuery !== '' ? ' AND ' : ' WHERE ') + 'c.id_periodo = '+body.per
+  if (body.per) {
+    perQuery = (nameQuery !== '' ? ' AND ' : ' WHERE ') + 'c.id_periodo = ' + body.per
   }
 
   let query = 'WITH temp_table AS  ( ' +

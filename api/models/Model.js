@@ -1,7 +1,6 @@
-'use strict';
-var mongoose = require('mongoose');
-var Schema = mongoose.Schema;
-
+'use strict'
+var mongoose = require('mongoose')
+var Schema = mongoose.Schema
 
 var TaskSchema = new Schema({
   name: {
@@ -19,6 +18,6 @@ var TaskSchema = new Schema({
     }],
     default: ['pending']
   }
-});
+})
 
-module.exports = mongoose.model('Tasks', TaskSchema);
+module.exports = mongoose.model('Tasks', TaskSchema)

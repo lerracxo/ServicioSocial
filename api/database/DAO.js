@@ -9,7 +9,7 @@ const config = {
   database: 'testing',
   port: 5432,
   max: '10',
-  idleTimeoutMillis: 30000,
+  idleTimeoutMillis: 30000
 }
 
 const pool = new Pool(processConnectionURL(process.env['DATABASE_URL']) || config)
@@ -50,8 +50,7 @@ module.exports.connect = function (callback) {
 }
 
 function processConnectionURL (url) {
-  if (!url)
-    return null
+  if (!url) { return null }
   const config = {}
   const util = url.split('//')[1]
   config.user = util.split(':')[0]
@@ -61,5 +60,3 @@ function processConnectionURL (url) {
   config.database = util.split(':')[2].split('/')[1]
   return config
 }
-
-

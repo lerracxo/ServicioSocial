@@ -13,7 +13,7 @@ exports.getById = function (req, res) {
 exports.search = (req, res) => {
   const query = '' +
     '%(' + req.body.name.toUpperCase().replace(' ', '|') + ')%'
-  console.log('Query curso: ',query)
+  console.log('Query curso: ', query)
   return pool.queryResponse(queries.searchCurso, [query], res)
 }
 
@@ -32,10 +32,9 @@ function addConstancia (id, finalName) {
 }
 
 exports.deleteConstancia = function (req, res) {
-
   getDetail(req.params.id).then((curso) => {
     curso = curso[0]
-    console.log('deleting',curso)
+    console.log('deleting', curso)
     deleteConstancia(curso)
     filesUtil.removeFile(project.uploadDir + curso.constancia)
   }).then(res.send('success')).catch(console.log)
@@ -48,6 +47,3 @@ function deleteConstancia (curso) {
 function getDetail (id) {
   return pool.query(queries.detailCurso, [id])
 }
-
-
-

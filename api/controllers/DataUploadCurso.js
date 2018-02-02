@@ -23,22 +23,18 @@ function curso (req, res) {
   console.log(fileName)
 
   filesUtil.uploadFile(req, fileName)
-    .then((x) => {
-      finalName = x
-      loadCSVtoPG(finalName)
-    })
-    .then(sanitizeFields)
-    .then(insertProfessors)
-    .then(insertCursos)
-    .then(finalizeImport)
-    .then(res.send(importSuccess))
-    .catch((error) => res.send(importFail(error)))
-
+        .then(loadCSVtoPG)
+        .then(sanitizeFields)
+        .then(insertProfessors)
+        .then(insertCursos)
+        .then(() => res.send(importSuccess))
+        .catch((error) => res.status(500).send(importFail(error)))
+        .then(finalizeImport)
 }
 
-function loadCSVtoPG (fileName) {
+function loadCSVtoPG (file) {
   console.log('Step loadCSVtoPG')
-  const finalName = project.uploadDir + fileName
+  finalName = project.uploadDir + file
   return dataImport.doImport(finalName, tableName)
 }
 
@@ -52,15 +48,14 @@ function insertProfessors () {
   return pool.query(queries.dataImportCursoInsertProfessors)
 }
 
-function insertCursos(){
+function insertCursos () {
   console.log('Step insertCursos')
   return pool.query(queries.dataImportCursoInsertCursos)
 }
 
 function finalizeImport () {
   console.log('Step finalizeImport')
-  filesUtil.removeFile(project.uploadDir + finalName)
-  return pool.query(queries.dataImportCursoFinalizeImport)
+  return Promise.all([ filesUtil.removeFile(project.uploadDir + finalName), pool.query(queries.dataImportCursoFinalizeImport)])
 }
 
 function importSuccess () {

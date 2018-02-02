@@ -1,4 +1,4 @@
-﻿(function () {
+(function () {
   'use strict'
 
   angular
@@ -18,7 +18,5 @@
     vm.getCursoDetails = function (curso) {
       profUtils.changeView('/curso/detail/' + httpInterface.toQueryString(JSON.parse(angular.toJson(curso))))
     }
-
   }
-
 })()

@@ -1,4 +1,4 @@
-﻿(function () {
+(function () {
   'use strict'
 
   angular
@@ -26,12 +26,5 @@
     function initController () {
       vm.getProfesores()
     }
-
   }
-
 })()
-
-
-
-
-

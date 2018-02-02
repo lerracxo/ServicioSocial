@@ -190,5 +190,3 @@ exports.dataImportCursoInsertCursos = 'INSERT INTO curso (id_persona, curso,inic
   'JOIN persona per ON UPPER(REPLACE(ic.nombre,\' \',\'\')) = UPPER(REPLACE(concat(per.a_paterno,per.a_materno,per.nombres),\' \',\'\'))'
 
 exports.dataImportCursoFinalizeImport = 'DELETE FROM importCurso'
-
-

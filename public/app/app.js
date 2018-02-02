@@ -1,8 +1,8 @@
-﻿(function () {
+(function () {
   'use strict'
 
   angular
-    .module('app', ['ngFileUpload', 'ui.router', 'ngMessages', 'ngStorage', 'ngRoute','ngSanitize'])
+    .module('app', ['ngFileUpload', 'ui.router', 'ngMessages', 'ngStorage', 'ngRoute', 'ngSanitize'])
     .config(config)
     .run(run)
 
@@ -22,7 +22,7 @@
       .state('logout', {
         url: '/logout',
         // templateUrl: 'login/index.view.html',
-        controller: 'LogoutController',
+        controller: 'LogoutController'
         // controllerAs: 'vm'
       })
       .state('home', {
@@ -33,7 +33,7 @@
       })
       .state('welcome', {
         url: '/',
-        templateUrl: 'welcome/welcome.html',
+        templateUrl: 'welcome/welcome.html'
       })
       .state('professor', {
         url: '/professor',
@@ -61,7 +61,7 @@
       })
       .state('dataUpload', {
         url: '/data/upload/',
-        templateUrl: 'dataUpload/dataUpload.view.html',
+        templateUrl: 'dataUpload/dataUpload.view.html'
       })
       .state('uploadCalif', {
         url: '/data/upload/calif/',
@@ -97,7 +97,7 @@
 
   function run (httpInterface, $rootScope, $location, $localStorage, AuthenticationService) {
     let publicPages = ['/login', '/logout']
-    let adminPages = ['/data/upload/calif/','/data/upload/curso/','/data/upload/']
+    let adminPages = ['/data/upload/calif/', '/data/upload/curso/', '/data/upload/']
     // keep user logged in after page refresh
     if ($localStorage.currentUser) {
       httpInterface.setToken($localStorage.currentUser.token)
@@ -113,11 +113,10 @@
       if (!hasAccess) {
         $location.path('/login')
       }
-      console.log('isAdmin:',AuthenticationService.isAdmin(),'include',adminPages.includes($location.path()))
-      if(!AuthenticationService.isAdmin() && adminPages.includes($location.path())){
+      console.log('isAdmin:', AuthenticationService.isAdmin(), 'include', adminPages.includes($location.path()))
+      if (!AuthenticationService.isAdmin() && adminPages.includes($location.path())) {
         $location.path('/')
       }
-
     })
   }
 })()

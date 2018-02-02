@@ -1,4 +1,4 @@
-﻿(function () {
+(function () {
   'use strict'
 
   angular
@@ -10,11 +10,11 @@
 
     vm.uploadCalif = uploadCalif
     vm.progress = 0
-    let importSuccess = undefined
+    let importSuccess
 
     vm.isImportComplete = () => {
       let result = {
-        classes: ['alert','center', 'hide'],
+        classes: ['alert', 'center', 'hide'],
         message: 'Message test'
       }
       if (importSuccess !== undefined && importSuccess) {
@@ -33,7 +33,7 @@
     function uploadCalif ($files) {
       Upload.upload({
         url: httpInterface.serviceLoc + 'dataUpload/calif/',
-        file: $files,
+        file: $files
       })
         .progress(function (e) {
           console.log(e)
@@ -41,12 +41,10 @@
         })
         .then(function (data) {
           importSuccess = true
-        }, (error) => { throw error})
+        }, (error) => { throw error })
         .catch((error) => {
           importSuccess = false
         })
-
     }
   }
-
 })()

@@ -1,4 +1,4 @@
-﻿(function () {
+(function () {
   'use strict'
 
   angular
@@ -48,7 +48,4 @@
     }
     return service
   }
-
-
-
 })()

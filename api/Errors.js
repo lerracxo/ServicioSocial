@@ -1,5 +1,4 @@
 exports.QueryError = function (message) {
-    this.message = message
-    this.error = 'QueryError'
+  this.message = message
+  this.error = 'QueryError'
 }
-

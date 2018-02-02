@@ -92,4 +92,3 @@ function addExop (id_profesor, fileName) {
 function getDetail (param) {
   return pool.query(queries.detailProfessor, [param])
 }
-

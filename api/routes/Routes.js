@@ -10,14 +10,14 @@ module.exports = function (app) {
   const countDataUploadCalif = require('../controllers/DataUploadCalif')
   const countDataUploadCurso = require('../controllers/DataUploadCurso')
 
-  //Middleware
+  // Middleware
   app.use(function (req, res, next) {
     contAuth.validateToken(req, res)
       .then(next)
       .catch((error) => contAuth.failedTokenValidation(res, error))
   })
 
-  //Authentication
+  // Authentication
   app.route('/authenticate')
     .post(contAuth.authToken)
 
@@ -46,7 +46,7 @@ module.exports = function (app) {
   app.route('/professor/exop/:id')
     .delete(contPersonas.deleteExop)
 
-  //Curso
+  // Curso
   app.route('/curso/:id')
     .get(contCurso.getById)
 
@@ -95,5 +95,4 @@ module.exports = function (app) {
 
   app.route('/dataUpload/curso')
     .post(countDataUploadCurso.curso)
-
 }

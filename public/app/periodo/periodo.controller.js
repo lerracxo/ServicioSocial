@@ -1,11 +1,11 @@
-﻿(function () {
+(function () {
   'use strict'
 
   angular
     .module('app')
-    .controller('PeriodoController', ['profUtils','httpInterface', Controller])
+    .controller('PeriodoController', ['profUtils', 'httpInterface', Controller])
 
-  function Controller (profUtils,httpInterface) {
+  function Controller (profUtils, httpInterface) {
     const vm = this
 
     httpInterface.get('periodo/').then((msg) => {
@@ -13,9 +13,7 @@
     })
 
     vm.getMateriasByPeriodo = function (periodo) {
-      profUtils.changeView('/periodo/materia/'+periodo.id_tempo)
+      profUtils.changeView('/periodo/materia/' + periodo.id_tempo)
     }
-
   }
-
 })()

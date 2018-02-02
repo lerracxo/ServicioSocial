@@ -1,4 +1,4 @@
-﻿(function () {
+(function () {
   'use strict'
 
   angular
@@ -6,13 +6,12 @@
     .controller('ProfessorController', ['httpInterface', 'profUtils', Controller])
 
   function Controller (httpInterface, profUtils) {
-
     let vm = this
 
     vm.searchResult = {}
     vm.generateCSV = profUtils.generateCSV
     vm.activePeriod = undefined
-    vm.promedioLabel = () => (vm.activePeriod ? 'Promedio del periodo '+ vm.activePeriod.periodo + ':': 'Promedio:')
+    vm.promedioLabel = () => (vm.activePeriod ? 'Promedio del periodo ' + vm.activePeriod.periodo + ':' : 'Promedio:')
 
     httpInterface.get('materia/').then((msg) => vm.materias = msg.data.data)
     httpInterface.get('periodo/').then((msg) => vm.periodos = msg.data.data)
@@ -35,8 +34,6 @@
     vm.getProfessorDetails = function (profesor) {
       profUtils.changeView('/professor/detail/' + profesor.id_persona)
     }
-
   }
-
 })
 ()

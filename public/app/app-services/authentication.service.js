@@ -1,4 +1,4 @@
-﻿(function () {
+(function () {
   'use strict'
 
   angular
@@ -20,8 +20,7 @@
     }
 
     function isAdmin () {
-      if (!isUserLogged())
-        return false
+      if (!isUserLogged()) { return false }
       return $localStorage.currentUser.rol === 'admin'
     }
 
@@ -46,7 +45,6 @@
           // execute callback with false to indicate failed login
           callback(false)
         }
-
       })
     }
 

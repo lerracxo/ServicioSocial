@@ -1,18 +1,17 @@
-﻿(function () {
-    'use strict';
+(function () {
+  'use strict'
 
-    angular
+  angular
         .module('app')
-        .controller('HomeController', Controller);
+        .controller('HomeController', Controller)
 
-    function Controller() {
-        var vm = this;
-        vm.title = ' home '
+  function Controller () {
+    var vm = this
+    vm.title = ' home '
 
-        initController();
+    initController()
 
-        function initController() {
-        }
+    function initController () {
     }
-
-})();
+  }
+})()

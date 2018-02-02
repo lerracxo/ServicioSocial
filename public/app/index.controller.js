@@ -1,4 +1,4 @@
-﻿(function () {
+(function () {
   'use strict'
 
   angular
@@ -13,7 +13,6 @@
     if (!vm.getCurrentUser()) {
       profUtils.changeView('/logout')
     }
-    //console.log('$localStorage',$localStorage)
+    // console.log('$localStorage',$localStorage)
   }
-
 })()

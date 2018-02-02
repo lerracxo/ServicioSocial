@@ -1,4 +1,4 @@
-﻿(function () {
+(function () {
   'use strict'
 
   angular
@@ -8,7 +8,6 @@
     )
 
   function Controller (httpInterface, AuthenticationService, profUtils, $stateParams, Upload) {
-
     const vm = this
     vm.filesLoc = profUtils.filesLoc
     vm.personId = $stateParams.personId
@@ -29,7 +28,7 @@
     }
 
     vm.isAdminWrapper = (event) => {
-      console.log('isAdminWrapper',event)
+      console.log('isAdminWrapper', event)
       return true
     }
 
@@ -64,9 +63,9 @@
     vm.uploadFile = function ($files) {
       Upload.upload({
         url: httpInterface.serviceLoc + 'professor/exop/' + vm.profDet.id_persona,
-        file: $files,
+        file: $files
       })
-        .progress(function (e) { console.log(e)})
+        .progress(function (e) { console.log(e) })
         .then(function (data, status, headers, config) {
           console.log('File uploaded correctly')
           getDetalle()
@@ -76,7 +75,7 @@
     vm.uploadConstancia = function (curso, $files) {
       Upload.upload({
         url: httpInterface.serviceLoc + 'curso/constancia/' + curso.id,
-        file: $files,
+        file: $files
       })
         .progress(function (e) { })
         .then(function (data, status, headers, config) {
@@ -96,7 +95,7 @@
     vm.uploadComprobante = function (calificacion, $files) {
       Upload.upload({
         url: httpInterface.serviceLoc + 'calificaciones/comprobante/' + calificacion.id,
-        file: $files,
+        file: $files
       })
         .progress(function (e) { })
         .then(function (data, status, headers, config) {
@@ -126,8 +125,6 @@
         vm.profCal = data.data.data
       })
     }
-
   }
-
 })
 ()
