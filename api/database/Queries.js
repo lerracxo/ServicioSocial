@@ -113,21 +113,21 @@ exports.dataImportCalifsanitizeFields = 'UPDATE importCalif SET \n' +
   'actitud\t\t\t\t= TRIM(actitud);'
 
 exports.dataImportCalifInsertProfessors = 'INSERT INTO persona (a_paterno,a_materno,nombres)\n' +
-  '  SELECT \n' +
+  '  SELECT DISTINCT\n' +
   '  split_part(nombre, \' \', 1) AS a_paterno,   split_part(nombre, \' \', 2)  AS a_materno, split_part(nombre, \' \', 3 ) || split_part(nombre, \' \', 4 ) || split_part(nombre, \' \', 5 ) as nombres \n' +
   '    FROM importCalif ic LEFT JOIN persona p\n' +
   '    ON UPPER(REPLACE(ic.nombre,\' \',\'\')) = UPPER(REPLACE(TRIM(concat(p.a_paterno,p.a_materno,p.nombres)),\' \',\'\'))\n' +
   '    WHERE p.id_persona IS NULL'
 
 exports.dataImportCalifInsertGrupos = 'INSERT INTO grupo (grupo) \n' +
-  '  SELECT ic.grupo\n' +
+  '  SELECT DISTINCT ic.grupo\n' +
   '  FROM importCalif ic LEFT JOIN \n' +
   '  grupo g \n' +
   '  ON UPPER(REPLACE(ic.grupo,\' \',\'\')) = UPPER(REPLACE(g.grupo,\' \',\'\'))\n' +
   '  WHERE g.grupo IS NULL'
 
 exports.dataImportCalifInsertMaterias = 'INSERT INTO materia (materia) \n' +
-  '  SELECT ic.materia\n' +
+  '  SELECT DISTINCT ic.materia\n' +
   '  FROM importCalif ic LEFT JOIN \n' +
   '  materia m \n' +
   '  ON UPPER(REPLACE(ic.materia,\' \',\'\')) = UPPER(REPLACE(m.materia,\' \',\'\'))\n' +
@@ -172,7 +172,7 @@ exports.dataImportCalifFinalizeImport = 'DELETE FROM importCalif'
 
 // Curso import
 exports.dataImportCursoInsertProfessors = 'INSERT INTO persona (a_paterno,a_materno,nombres)\n' +
-  '  SELECT \n' +
+  '  SELECT DISTINCT \n' +
   '  split_part(nombre, \' \', 1) AS a_paterno,   split_part(nombre, \' \', 2)  AS a_materno, split_part(nombre, \' \', 3 ) || split_part(nombre, \' \', 4 ) || split_part(nombre, \' \', 5 ) as nombres \n' +
   '    FROM importCurso ic LEFT JOIN persona p\n' +
   '    ON UPPER(REPLACE(ic.nombre,\' \',\'\')) = UPPER(REPLACE(TRIM(concat(p.a_paterno,p.a_materno,p.nombres)),\' \',\'\'))\n' +

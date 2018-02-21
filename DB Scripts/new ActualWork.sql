@@ -621,3 +621,29 @@ WITH califTable AS (
     AND ct.id_grupo	=c.id_grupo
     AND ct.id_materia	=c.id_materia
   WHERE c.id_persona IS NUlL;
+
+
+SELECT * FROM usuario;
+
+BEGIN;
+
+INSERT INTO usuario (username, pass, rol) VALUES ('JOSE', 'pass', 'admin');
+SELECT * FROM usuario;
+ROLLBACK;
+
+DELETE FROM calificacion;
+DELETE FROM profesor;
+DELETE FROM persona;
+DELETE FROM periodo;
+DELETE FROM materia;
+DELETE FROM curso;
+
+SELECT Count(*) FROM calificacion;
+SELECT Count(*) FROM profesor;
+SELECT Count(*) FROM persona;
+SELECT Count(*) FROM periodo;
+SELECT Count(*) FROM materia;
+SELECT Count(*) FROM curso;
+
+SELECT * FROM cat_usuario;
+DROP TABLE cat_usuario;

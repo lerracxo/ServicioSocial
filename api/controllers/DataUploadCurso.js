@@ -34,7 +34,7 @@ function curso (req, res) {
 
 function loadCSVtoPG (file) {
   console.log('Step loadCSVtoPG')
-  finalName = project.uploadDir + file
+    finalName = project.uploadDir + file
   return dataImport.doImport(finalName, tableName)
 }
 
