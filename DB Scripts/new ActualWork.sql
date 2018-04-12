@@ -626,6 +626,7 @@ WITH califTable AS (
 SELECT * FROM usuario;
 
 BEGIN;
+COMMIT;
 
 INSERT INTO usuario (username, pass, rol) VALUES ('JOSE', 'pass', 'admin');
 SELECT * FROM usuario;
@@ -636,14 +637,58 @@ DELETE FROM profesor;
 DELETE FROM persona;
 DELETE FROM periodo;
 DELETE FROM materia;
+DELETE FROM grupo;
 DELETE FROM curso;
+DELETE FROM importcalif;
 
-SELECT Count(*) FROM calificacion;
-SELECT Count(*) FROM profesor;
-SELECT Count(*) FROM persona;
-SELECT Count(*) FROM periodo;
-SELECT Count(*) FROM materia;
-SELECT Count(*) FROM curso;
+SELECT 'calificacion', Count(*) FROM calificacion UNION
+SELECT 'profesor', Count(*) FROM profesor UNION
+SELECT 'grupo', COUNT(*) FROM grupo UNION
+SELECT 'persona', Count(*) FROM persona UNION
+SELECT 'periodo', Count(*) FROM periodo UNION 
+SELECT 'materia', Count(*) FROM materia UNION
+SELECT 'curso', Count(*) FROM curso;
+
+SELECT *, count(*) FROM calificacion group by id_persona, id_periodo, id_grupo, id_materia, puntualidad, contenido,
+didactica, planeacion, actitud, promedio, id, comprobante
+HAVING count(*) > 1;
+
+SELECT * FROM persona WHERE a_paterno = 'LUNA'; -- 8737
+
+SELECT * FROM calificacion WHERE id_persona = 9195;
+SELECT * FROM grupo WHERE id IN (980, 751);
+
+SELECT ' 2 ',TRIM(' 2 ');
 
 SELECT * FROM cat_usuario;
 DROP TABLE cat_usuario;
+
+DELETE FROM importcalif;
+
+
+SELECT * FROM persona WHERE nombres = 'OSCAR';
+
+SELECT * FROM importcalif;
+
+--'INSERT INTO persona (a_paterno,a_materno,nombres)\n' +
+  SELECT DISTINCT
+  split_part(nombre, ' ', 1) AS a_paterno,   split_part(nombre, ' ', 2)  AS a_materno, 
+  split_part(nombre, ' ', 3 ) || split_part(nombre, ' ', 4 ) || split_part(nombre, ' ', 5 ) as nombres
+      FROM importCalif ic LEFT JOIN persona p
+      ON UPPER(REPLACE(ic.nombre,' ','')) = UPPER(REPLACE(TRIM(concat(p.a_paterno,p.a_materno,p.nombres)),' ',''))
+      WHERE p.id_persona IS NULL;
+      
+
+ SELECT DISTINCT TRIM(ic.grupo) grupo
+  FROM importCalif ic 
+  WHERE grupo LIKE '%2RM9%' ORDER BY grupo;
+  --LEFT JOIN 
+  grupo g 
+  ON UPPER(REPLACE(ic.grupo,' ','')) = UPPER(REPLACE(g.grupo,' ',''))
+  WHERE g.grupo IS NULL;
+  
+SELECT * FROM grupo 
+WHERE grupo LIKE '%2RM9%';
+
+SELECT * FROM importCalif;
+

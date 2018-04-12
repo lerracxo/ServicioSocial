@@ -15,7 +15,7 @@ exports.listAllProfessorAVG = 'SELECT c.id_persona, p.nombres, p.a_paterno, p.a_
 exports.detailProfessor = 'SELECT p.id_persona, p.nombres, p.a_paterno, p.a_materno, pr.ex_oposicion, c.f_telefono, c.m_telefono, c.t_telefono,\n' +
   '  c.ext, c.mail, c.cedula, c.rfc, c.f_ingreso, c.grado\n' +
   '  FROM persona p \n' +
-  '    JOIN profesor pr ON p.id_persona = pr.id_profesor\n' +
+  '    LEFT JOIN profesor pr ON p.id_persona = pr.id_profesor\n' +
   '    LEFT JOIN contacto c ON p.id_persona = c.id_persona\n' +
   'WHERE p.id_persona = $1::INT'
 
@@ -114,13 +114,13 @@ exports.dataImportCalifsanitizeFields = 'UPDATE importCalif SET \n' +
 
 exports.dataImportCalifInsertProfessors = 'INSERT INTO persona (a_paterno,a_materno,nombres)\n' +
   '  SELECT DISTINCT\n' +
-  '  split_part(nombre, \' \', 1) AS a_paterno,   split_part(nombre, \' \', 2)  AS a_materno, split_part(nombre, \' \', 3 ) || split_part(nombre, \' \', 4 ) || split_part(nombre, \' \', 5 ) as nombres \n' +
+  '  split_part(nombre, \' \', 1) AS a_paterno,   split_part(nombre, \' \', 2)  AS a_materno, split_part(nombre, \' \', 3 ) || \' \' || split_part(nombre, \' \', 4 ) || \' \' || split_part(nombre, \' \', 5 ) as nombres \n' +
   '    FROM importCalif ic LEFT JOIN persona p\n' +
   '    ON UPPER(REPLACE(ic.nombre,\' \',\'\')) = UPPER(REPLACE(TRIM(concat(p.a_paterno,p.a_materno,p.nombres)),\' \',\'\'))\n' +
   '    WHERE p.id_persona IS NULL'
 
 exports.dataImportCalifInsertGrupos = 'INSERT INTO grupo (grupo) \n' +
-  '  SELECT DISTINCT ic.grupo\n' +
+  '  SELECT DISTINCT TRIM(ic.grupo)\n' +
   '  FROM importCalif ic LEFT JOIN \n' +
   '  grupo g \n' +
   '  ON UPPER(REPLACE(ic.grupo,\' \',\'\')) = UPPER(REPLACE(g.grupo,\' \',\'\'))\n' +

@@ -110,6 +110,7 @@
 
     function getDetalle () {
       httpInterface.get('professor/detail/' + vm.personId).then((data) => {
+        console.log('at get detail', data)
         vm.profDet = data.data.data[0]
       })
     }
