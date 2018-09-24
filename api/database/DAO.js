@@ -3,10 +3,10 @@ const {Pool} = require('pg')
 const message = require('../database/Message')
 
 const config = {
-  user: process.env.DB_USER,
-  password: process.env.DB_PASSWORD,
+  user: process.env.SQL_USER,
+  password: process.env.SQL_PASSWORD,
   // host: process.env.DB_HOST,
-  database: process.env.DB_DATABASE,
+  database: process.env.SQL_DATABASE,
   // port: 5432,
   // max: '10',
   // idleTimeoutMillis: 30000
