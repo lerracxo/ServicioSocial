@@ -1,4 +1,6 @@
 const express = require('express')
+const config = require('dotenv-expand')(require('dotenv').config())
+
 const path = require('path')
 const app = express()
 const bodyParser = require('body-parser')
@@ -13,9 +15,7 @@ global.project = {
 }
 
 app.set('superSecret', 'secretVar') // secret variable
-
-console.log('directory to public', project.projectDir)
-console.log('directory to public', project.publicDir)
+process.env = {...process.env, ...config.parsed}
 
 app.use(express.static(project.publicDir))
 app.use('/files', express.static(project.uploadDir))

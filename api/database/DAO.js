@@ -3,16 +3,16 @@ const {Pool} = require('pg')
 const message = require('../database/Message')
 
 const config = {
-  user: 'oscar',
-  password: 'serviciosocial',
-  host: 'localhost',
-  database: 'testing',
+  user: process.env.DB_USER,
+  password: process.env.DB_PASSWORD,
+  host: process.env.DB_HOST,
+  database: process.env.DB_DATABASE,
   port: 5432,
   max: '10',
   idleTimeoutMillis: 30000
 }
 
-const pool = new Pool(processConnectionURL(process.env['DATABASE_URL']) || config)
+const pool = new Pool(config)
 
 module.exports.pool = pool
 

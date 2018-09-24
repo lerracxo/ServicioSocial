@@ -34,3 +34,6 @@ node_modules/
 
 #FileUpload
 files/dataUpload/calif/
+
+# Env vars file
+.env
