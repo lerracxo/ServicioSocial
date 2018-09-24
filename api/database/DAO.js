@@ -12,7 +12,24 @@ const config = {
   // idleTimeoutMillis: 30000
 }
 
+// console.log('Trying to connect with values', config)
 const pool = new Pool(config)
+
+// console.log('pool', pool)
+
+testingConnection()
+
+function testingConnection(){
+  connect((err, client, done) => {
+
+    if(err) {
+      console.error('The database couldnt get connected', err)
+    }
+    // console.log('err', err)
+    // console.log('client', client)
+    // console.log('done', done)
+  })
+}
 
 module.exports.pool = pool
 
@@ -45,9 +62,11 @@ module.exports.query = function (text, values) {
   })
 }
 
-module.exports.connect = function (callback) {
+function connect (callback) {
   return pool.connect(callback)
 }
+
+module.exports.connect = connect
 
 function processConnectionURL (url) {
   if (!url) { return null }
