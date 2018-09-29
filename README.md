@@ -6,9 +6,9 @@ Instructions
 - `$ npm install`
 - Add your own `.env` file according to the `.env.example` file
 
-El sistema está modulizado por jerarquias y debido a su naturaleza web esta dividido en cliente y servidor.
+## El sistema está modulizado por jerarquias y debido a su naturaleza web esta dividido en cliente y servidor.
 
-Cliente:
+- Cliente:
 	- Pagina principal
 	- Sesión
 	- Curso
@@ -16,7 +16,7 @@ Cliente:
 	- Busqueda por profesor
 	- Carga de documentos
 
-Servidor (Servicios):
+- Servidor (Servicios):
 	- Autenticacion
 	- Calificaciones
 	- Cursos
