@@ -20,7 +20,7 @@ module.exports = {
     {endpoint: '/professor/detail/:id', method: saveDetail},
   ],
   DELETE: [
-    {endpoint: '/professor/exop/:id', method: deleteExop}
+    {endpoint: '/professor/exop/delete/:id', method: deleteExop}
   ]
 }
 
