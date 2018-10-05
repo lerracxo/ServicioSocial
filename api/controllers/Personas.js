@@ -33,10 +33,10 @@ function uploadExop (req, res) {
   let fileName = exopDir + id_profesor
   console.log('FileName', fileName)
   filesUtil.uploadFile(req, fileName)
-  .catch((error) => console.error(error))
-    .then((finalName) => addExop(id_profesor, finalName))
+  // .catch((error) => console.error(error))
+    // .then((finalName) => addExop(id_profesor, finalName))
     .then(res.send({success: true}))
-    .catch((error) => res.status(500).send({success: false, error}))
+    // .catch((error) => res.status(500).send({success: false, error}))
 }
 
 function personsByCurso (req, res) {
