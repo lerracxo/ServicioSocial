@@ -59,7 +59,7 @@
       document.body.appendChild(a)
       a.click()
     }
-
+    // This uploads exOpo
     vm.uploadFile = function ($files) {
       Upload.upload({
         url: httpInterface.serviceLoc + 'professor/exop/' + vm.profDet.id_persona,
@@ -68,8 +68,11 @@
         .progress(function (e) { console.log(e) })
         .then(function (data, status, headers, config) {
           console.log('File uploaded correctly')
-          getDetalle()
-        })
+          // getDetalle()
+        }, (error) => {throw error})
+        .catch(error => {
+          console.log('Something bad happened', error)
+        }) 
     }
 
     vm.uploadConstancia = function (curso, $files) {
