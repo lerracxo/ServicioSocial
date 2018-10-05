@@ -56,8 +56,9 @@
     }
     // This uploads exOpo
     vm.uploadFile = function ($files) {
+      console.log('Files:', $files)
       Upload.upload({
-        url: httpInterface.serviceLoc + 'professor/exop/' + vm.profDet.id_persona,
+        url: httpInterface.serviceLoc + 'dataUpload/calif/', // 'professor/exop/' + vm.profDet.id_persona,
         file: $files
       })
         .progress(function (e) { console.log(e) })
