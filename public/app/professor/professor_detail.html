@@ -77,7 +77,8 @@
                     <!--SHOWS LOAD FILE-->
                     <button ng-if="vm.profDet.ex_oposicion === null && vm.isAdmin()"
                             class="btn btn-default -align-center"
-                            type="file" type="file"
+                            type="file"
+                            id="exOp"
                             ngf-select="vm.uploadFile($files)">Subir archivo
                     </button>
                 </td>
