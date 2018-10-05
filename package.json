@@ -10,7 +10,8 @@
     "start": "node --trace-warnings server.js"
   },
   "engines": {
-    "node": "10.1.0"
+    "node": "10.1.0",
+    "npm": "6.4.1"
   },
   "keywords": [
     "serviciosocial",
