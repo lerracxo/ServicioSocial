@@ -9,9 +9,10 @@ const subDir = '/dataUpload/calif/'
 const tableName = 'importCalif'
 
 module.exports = {
-  GET: [],
+  GET: [
+    {endpoint: '/dataUpload/calif', method: calif}
+  ],
   POST: [
-    // {endpoint: '/dataUpload/calif', method: calif}
   ],
   DELETE: []
 }
