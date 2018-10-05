@@ -9,6 +9,9 @@
     "generalTests": "nodemon --trace-warnings generalTests.js",
     "start": "node --trace-warnings server.js"
   },
+  "engines": {
+    "node": "10.1.0"
+  },
   "keywords": [
     "serviciosocial",
     "ss"
