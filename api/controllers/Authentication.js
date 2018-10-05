@@ -6,7 +6,7 @@ const publicEndPoints = ['/authenticate', '/utils/testDownload', '/', '/app/app-
 
 module.exports = { 
   GET: [
-    // {endpoint: '/authenticate/verify', method: isTokenValid},
+    {endpoint: '/authenticate/verify', method: isTokenValid},
   ],
   POST: [
     {endpoint: '/authenticate', method: authToken},
