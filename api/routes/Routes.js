@@ -1,8 +1,8 @@
 'use strict'
+const controllers = require('../controllers/index.js')
+const contAuth = require('../controllers/Authentication')
 
 module.exports = function (app) {
-  const controllers = require('../controllers/index')
-  const contAuth = require('../controllers/Authentication')
 
   // Middleware
   app.use(function (req, res, next) {
