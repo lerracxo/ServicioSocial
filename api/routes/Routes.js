@@ -11,9 +11,38 @@ const utils = require('../controllers/Utils')
 
 
 const controllers = {
-    GET: [...personas.GET, ...auth.GET, ...cursos.GET, ...calif.GET, ...materias.GET, ...periodos.GET, ...upCalif.GET, ...upCurso.GET, ...utils.GET],
-    POST: [...personas.POST, ...auth.POST, ...cursos.POST, ...calif.POST, ...materias.POST, ...periodos.POST, ...upCalif.POST, ...upCurso.POST, ...utils.POST],
-    DELETE: [...personas.DELETE, ...auth.DELETE, ...cursos.DELETE, ...calif.DELETE, ...materias.DELETE, ...periodos.DELETE, ...upCalif.DELETE, ...upCurso.DELETE, ...utils.DELETE]
+    GET: [
+      ...personas.GET, 
+      ...auth.GET, 
+      ...cursos.GET, 
+      ...calif.GET, 
+      ...materias.GET, 
+      ...periodos.GET, 
+      ...upCalif.GET, 
+      ...upCurso.GET, 
+      ...utils.GET
+    ],
+    POST: [
+      ...personas.POST, 
+      ...auth.POST, 
+      ...cursos.POST, 
+      ...calif.POST, 
+      ...materias.POST, 
+      ...periodos.POST, 
+      ...upCalif.POST, 
+      ...upCurso.POST, 
+      ...utils.POST],
+    DELETE: [
+      ...personas.DELETE, 
+      ...auth.DELETE, 
+      ...cursos.DELETE, 
+      ...calif.DELETE, 
+      ...materias.DELETE, 
+      ...periodos.DELETE, 
+      ...upCalif.DELETE, 
+      ...upCurso.DELETE, 
+      ...utils.DELETE
+    ]
 }
 
 

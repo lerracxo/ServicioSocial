@@ -27,7 +27,10 @@ module.exports = {
 function uploadExop (req, res) {
   let id_profesor = req.params.id
 
+  console.log('The id Professor IS: ', id_profesor)
+
   let fileName = exopDir + id_profesor
+  console.log('FileName', fileName)
   filesUtil.uploadFile(req, fileName)
     .then((finalName) => addExop(id_profesor, finalName))
     .then(res.send({success: true}))
