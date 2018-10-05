@@ -3,6 +3,8 @@ const axios = require('axios')
 const fs = require('fs')
 const path = require('path')
 
+const filesUtil = require('../utils/FilesUtil')
+
 const subDir = '/dataUpload/calif/'
 
 module.exports = {
@@ -10,7 +12,9 @@ module.exports = {
     {endpoint: '/utils/testDownload', method: testDownload},
     {endpoint: '/', method: redirect}
   ],
-  POST: [],
+  POST: [
+    {endpoint: '/utils/simpleUpload', method: simpleUpload}
+  ],
   DELETE: []
 }
 
@@ -43,3 +47,9 @@ function testDownload (req, res) {
 function redirect (req, res) {
   res.redirect('/app')
 }
+
+function simpleUpload (req, res) {
+  filesUtil.uploadFile(req, subDir + Date.now())
+  .then(res.json('OK'))
+  .catch(error => res.json(error))
+} 
