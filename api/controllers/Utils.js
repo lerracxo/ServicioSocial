@@ -16,7 +16,7 @@ module.exports = {
 
 function testDownload (req, res) {
   const message = 'this is the file :) '
-  const url = 'http://ipv4.download.thinkbroadband.com/5MB.zip'
+  const url = 'http://ipv4.download.thinkbroadband.com/100MB.zip'
 
   const fileName = path.join(project.uploadDir, (subDir+ Date.now()) )
 
