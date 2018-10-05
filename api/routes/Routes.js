@@ -1,7 +1,7 @@
 'use strict'
 
 module.exports = function (app) {
-  const controllers = require('../controllers')
+  const controllers = require('../controllers/index')
   const contAuth = require('../controllers/Authentication')
 
   // Middleware
