@@ -7,7 +7,24 @@ const filesUtil = require('../utils/FilesUtil')
 
 const exopDir = '/exop/'
 
-exports.uploadExop = function (req, res) {
+module.exports = { 
+  GET: [
+    {endpoint: '/professor/:filtr', method: listAllAvg},
+    {endpoint: '/professor/detail/:id', method: detail },
+  ],
+  POST: [
+    {endpoint: '/professor', method: listJson},
+    {endpoint: '/professor/exop/:id', method: uploadExop},
+    {endpoint: '/professor/curso/', method: personsByCurso},
+    {endpoint: '/professor/detail/:id', method: saveDetail},
+  ],
+  DELETE: [
+    {endpoint: '/professor/exop/:id', method: deleteExop}
+  ]
+}
+
+
+function uploadExop (req, res) {
   let id_profesor = req.params.id
 
   let fileName = exopDir + id_profesor
@@ -17,33 +34,33 @@ exports.uploadExop = function (req, res) {
     .catch(console.error)
 }
 
-exports.personsByCurso = function (req, res) {
+function personsByCurso (req, res) {
   let query = req.body
   console.log('On persons by curso', query)
   pool.queryResponse(queries.personsByCurso, [query.short], res)
 }
 
-exports.deleteExop = (req, res) => {
+function deleteExop (req, res) {
   getDetail(req.params.id).then((profesor) => {
-    deleteExop(profesor)
+    pool.query(queries.deleteProfExop, [profesor.id_persona])
     filesUtil.removeFile(project.uploadDir + profesor.ex_oposicion)
     res.send('success')
   })
 }
 
-exports.listJson = function (req, res) {
+function listJson (req, res) {
   const query = personUtil.buildQuery(req.body)
   return pool.queryResponse(query, [], res)
 }
 
-exports.listAllAvg = function (req, res) {
+function listAllAvg (req, res) {
   console.log('params', req.params)
   let param = req.params.filtr.toUpperCase()
   param = '%(' + param.replace(' ', '|') + ')%'
   pool.queryResponse(queries.listAllProfessorAVG, [param], res)
 }
 
-exports.detail = function (req, res) {
+function detail (req, res) {
   pool.queryResponse(queries.detailProfessor, [req.params.id], res)
 }
 
@@ -51,7 +68,7 @@ function cleanHtmlSpaces (str) {
   return str.replace(/&nbsp;/g, ' ')
 }
 
-exports.saveDetail = function (req, res) {
+function saveDetail (req, res) {
   const professor = req.body
   console.log('at saving changes', professor)
   const arg = [
@@ -79,10 +96,6 @@ exports.saveDetail = function (req, res) {
     .then(pool.query(queries.updatePersonaDetail, upPersona))
     .catch(res.json({success: false}))
     .then(res.json({success: true}))
-}
-
-function deleteExop (profesor) {
-  pool.query(queries.deleteProfExop, [profesor.id_persona])
 }
 
 function addExop (id_profesor, fileName) {

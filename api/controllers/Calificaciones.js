@@ -2,17 +2,29 @@
 
 const pool = require('../database/DAO')
 const queries = require('../database/Queries')
-const personUtil = require('../utils/PersonasUtil')
 const filesUtil = require('../utils/FilesUtil')
 
 let subDir = '/calificaciones/'
 
-exports.detailCalif = function (req, res) {
+module.exports = {
+  GET: [
+    {endpoint: '/calificaciones/profesor/:id', method: detailCalif},
+    {endpoint: '/calificaciones/:id_materia/:id_periodo', method: califByMateriaPeriod}
+  ],
+  POST: [
+    {endpoint: '/calificaciones/comprobante/:id', method: uploadComprobante}
+  ],
+  DELETE: [
+    {endpoint: '/calificaciones/comprobante/:id', method: deleteCompobante}
+  ]
+}
+
+function detailCalif (req, res) {
   let param = req.params.id
   return pool.queryResponse(queries.detailProfesorCalif, [param], res)
 }
 
-exports.uploadComprobante = function (req, res) {
+function uploadComprobante (req, res) {
   let id = req.params.id
 
   let fileName = subDir + id
@@ -22,7 +34,7 @@ exports.uploadComprobante = function (req, res) {
     .catch(console.error)
 }
 
-exports.deleteCompobante = function (req, res) {
+function deleteCompobante (req, res) {
   getDetail(req.params.id).then((calificacion) => {
     calificacion = calificacion[0]
     console.log('calificacion obj: ', calificacion)
@@ -33,12 +45,7 @@ exports.deleteCompobante = function (req, res) {
   }).then(res.send('success')).catch(console.log)
 }
 
-// This data is already validated
-exports.importCalificacion = function (data) {
-
-}
-
-exports.califByMateriaPeriod = (req, res) => {
+function califByMateriaPeriod (req, res) {
   pool.queryResponse(queries.califByMateriaPeriod, [req.params.id_materia, req.params.id_periodo], res)
 }
 

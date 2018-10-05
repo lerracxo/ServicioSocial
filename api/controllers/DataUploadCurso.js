@@ -13,8 +13,14 @@ const tableName = 'importCurso'
 * [NOMBRE (paterno materno nombres), periodo, grupo, materia, puntualidad, contenido, didactica, planeacion, evaluacion,
  * actitud]
 */
+module.exports = {
+  GET: [],
+  POST: [
+    {endpoint: '/dataUpload/curso', method: curso},
+  ],
+  DELETE: []
+}
 
-exports.curso = curso
 let finalName
 
 function curso (req, res) {

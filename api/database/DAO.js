@@ -2,27 +2,19 @@ const errors = require('../Errors')
 const {Pool} = require('pg')
 const message = require('../database/Message')
 
-const config = {
-  user: process.env.SQL_USER,
-  password: process.env.SQL_PASSWORD,
-  // host: process.env.DB_HOST,
-  // database: process.env.SQL_DATABASE,
-  // port: 5432,
-  // max: '10',
-  // idleTimeoutMillis: 30000
-}
-
-console.log('Trying to connect with values', config)
-const pool = new Pool(processConnectionURL(process.env['DATABASE_URL']) || config)
-
-console.log('pool', pool)
+const config = processConnectionURL(process.env.DATABASE_URL)
+const pool = new Pool(config)
 
 testingConnection()
 
 function testingConnection(){
   connect((err, client, done) => {
-    console.log('err', err)
-  })
+    if(err) {
+      console.log('There was an error on the connection')
+    } else {
+      console.log('Connection to Database Succesful')
+    }
+  }) 
 }
 
 module.exports.pool = pool
@@ -71,6 +63,5 @@ function processConnectionURL (url) {
   config.host = util.split(':')[1].split('@')[1]
   config.port = util.split(':')[2].split('/')[0]
   config.database = util.split(':')[2].split('/')[1]
-  console.log('using processConnectionURL ', config)
   return config
 }

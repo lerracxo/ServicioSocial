@@ -8,13 +8,20 @@ const dataImport = require('../database/DataImport')
 const subDir = '/dataUpload/calif/'
 const tableName = 'importCalif'
 
+module.exports = {
+  GET: [],
+  POST: [
+    {endpoint: '/dataUpload/calif', method: calif}
+  ],
+  DELETE: []
+}
+
 /*
 * Expected Layout
 * [NOMBRE (paterno materno nombres), periodo, grupo, materia, puntualidad, contenido, didactica, planeacion, evaluacion,
  * actitud]
 */
 
-exports.calif = calif
 let finalName
 
 function calif (req, res) {

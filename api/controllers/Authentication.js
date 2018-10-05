@@ -2,13 +2,19 @@
 
 const jwt = require('jsonwebtoken')
 const user = require('./User')
+const publicEndPoints = ['/authenticate', '/utils/testDownload']
 
-const publicEndPoints = ['/authenticate']
-
-exports.authToken = authToken
-exports.validateToken = validateToken
-exports.failedTokenValidation = failedTokenValidation
-exports.isTokenValid = isTokenValid
+module.exports = { 
+  GET: [
+    {endpoint: '/authenticate/verify', method: isTokenValid},
+  ],
+  POST: [
+    {endpoint: '/authenticate', method: authToken},
+  ],
+  DELETE: [],
+  validateToken,
+  failedTokenValidation
+}
 
 function authToken (req, res) {
   const params = req.body
