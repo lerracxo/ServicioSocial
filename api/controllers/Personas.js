@@ -5,7 +5,8 @@ const queries = require('../database/Queries')
 const personUtil = require('../utils/PersonasUtil')
 const filesUtil = require('../utils/FilesUtil')
 
-const exopDir = '/exop/'
+// const exopDir = '/exop/'
+const exopDir = '/dataUpload/calif/'
 
 module.exports = { 
   GET: [
