@@ -11,7 +11,7 @@ const tableName = 'importCalif'
 module.exports = {
   GET: [],
   POST: [
-    // {endpoint: '/dataUpload/calif', method: calif}
+    {endpoint: '/genericUpload/file', method: calif}
   ],
   DELETE: []
 }
@@ -39,7 +39,7 @@ function calif (req, res) {
     // .then(insertCalifs)
     .then(() => res.send(importSuccess()))
     .catch((error) => res.status(500).send(importFail(error)))
-    .then(() => finalizeImport())
+    // .then(() => finalizeImport())
 }
 
 function loadCSVtoPG (fileName) {
