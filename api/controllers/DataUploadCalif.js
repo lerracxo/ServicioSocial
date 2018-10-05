@@ -11,7 +11,7 @@ const tableName = 'importCalif'
 module.exports = {
   GET: [],
   POST: [
-    // {endpoint: '/dataUpload/calif', method: calif}
+    {endpoint: '/dataUpload/calif', method: calif}
   ],
   DELETE: []
 }

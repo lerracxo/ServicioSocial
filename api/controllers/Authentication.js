@@ -61,6 +61,7 @@ function successTokenValidation (res, token, rol) {
 }
 
 function failedTokenValidation (res, error) {
+  console.log('failed auth token')
   res.json({success: false, message: 'Failed to authenticate token.'})
 }
 
