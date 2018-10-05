@@ -49,14 +49,14 @@ const controllers = {
 module.exports = function (app) {
 
   // Middleware
-  app.use(function (req, res, next) {
-    auth.validateToken(req, res)
-      .then(response => {
-        console.log('response', response)
-        next()
-      })
-      .catch((error) => auth.failedTokenValidation(res, error))
-  })
+  // app.use(function (req, res, next) {
+  //   auth.validateToken(req, res)
+  //     .then(response => {
+  //       console.log('response', response)
+  //       next()
+  //     })
+  //     .catch((error) => auth.failedTokenValidation(res, error))
+  // })
 
   controllers.GET.forEach(route => app.route(route.endpoint).get(route.method))
 
