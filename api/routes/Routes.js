@@ -8,6 +8,7 @@ const periodos = require('../controllers/Periodos')
 const upCalif = require('../controllers/DataUploadCalif')
 const upCurso = require('../controllers/DataUploadCurso')
 const utils = require('../controllers/Utils')
+const genericUplod = require('../controllers/GenericUpload')
 
 
 const controllers = {
@@ -20,7 +21,8 @@ const controllers = {
       ...periodos.GET, 
       ...upCalif.GET, 
       ...upCurso.GET, 
-      ...utils.GET
+      ...utils.GET,
+      ...genericUplod.GET
     ],
     POST: [
       ...personas.POST, 
@@ -31,7 +33,9 @@ const controllers = {
       ...periodos.POST, 
       ...upCalif.POST, 
       ...upCurso.POST, 
-      ...utils.POST],
+      ...utils.POST,
+      ...genericUplod.POST
+    ],
     DELETE: [
       ...personas.DELETE, 
       ...auth.DELETE, 
@@ -41,7 +45,8 @@ const controllers = {
       ...periodos.DELETE, 
       ...upCalif.DELETE, 
       ...upCurso.DELETE, 
-      ...utils.DELETE
+      ...utils.DELETE,
+      ...genericUplod.DELETE
     ]
 }
 

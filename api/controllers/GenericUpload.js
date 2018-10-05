@@ -32,7 +32,6 @@ function calif (req, res) {
   filesUtil.uploadFile(req, fileName)
     .then(() => res.send(importSuccess()))
     .catch((error) => res.status(500).send(importFail(error)))
-
 }
 
 
