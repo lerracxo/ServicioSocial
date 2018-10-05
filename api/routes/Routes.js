@@ -51,7 +51,10 @@ module.exports = function (app) {
   // Middleware
   app.use(function (req, res, next) {
     auth.validateToken(req, res)
-      .then(next)
+      .then(response => {
+        console.log('response', response)
+        next()
+      })
       .catch((error) => auth.failedTokenValidation(res, error))
   })
 

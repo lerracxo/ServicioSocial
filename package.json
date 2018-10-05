@@ -7,7 +7,7 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "nodemon --trace-warnings server.js",
     "generalTests": "nodemon --trace-warnings generalTests.js",
-    "start": "node --trace-warnings server.js"
+    "start": "node --trace-warnings --inspect server.js"
   },
   "engines": {
     "node": "10.1.0",

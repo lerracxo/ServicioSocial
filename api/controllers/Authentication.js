@@ -2,11 +2,11 @@
 
 const jwt = require('jsonwebtoken')
 const user = require('./User')
-const publicEndPoints = ['/authenticate', '/utils/testDownload', '/']
+const publicEndPoints = ['/authenticate', '/utils/testDownload', '/', '/app/app-content/']
 
 module.exports = { 
   GET: [
-    {endpoint: '/authenticate/verify', method: isTokenValid},
+    // {endpoint: '/authenticate/verify', method: isTokenValid},
   ],
   POST: [
     {endpoint: '/authenticate', method: authToken},
@@ -44,16 +44,17 @@ function isTokenValid (req, res) {
 
 function validateToken (req) {
   console.log('validating token', req.headers['token'], ' params ', req.body, 'trying to reach ', req.path)
-  return new Promise(function (resolve, reject) {
-    if (publicEndPoints.includes(req.path)) { return resolve() }
+
+    if (publicEndPoints.includes(req.path)) { return Promise.resolve() }
     // check header or url parameters or post parameters for token
     let token = getToken(req)
     // decode token
     if (!token || !jwt.verify(token, project.secret)) {
-      return reject('no token is present')
+      return Promise.reject('no token is present')
+    } else {
+     return Promise.resolve()
     }
-    return resolve()
-  })
+
 }
 
 function successTokenValidation (res, token, rol) {
