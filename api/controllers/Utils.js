@@ -6,7 +6,10 @@ const path = require('path')
 const subDir = '/dataUpload/calif/'
 
 module.exports = {
-  GET: [{endpoint: '/utils/testDownload', method: testDownload}],
+  GET: [
+    {endpoint: '/utils/testDownload', method: testDownload},
+    {endpoint: '/', method: redirect}
+  ],
   POST: [],
   DELETE: []
 }
@@ -35,4 +38,8 @@ function testDownload (req, res) {
   console.log(message)
 
   // res.json(message)
+}
+
+function redirect (req, res) {
+  res.redirect('/app')
 }

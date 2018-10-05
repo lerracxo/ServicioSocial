@@ -2,7 +2,7 @@
 
 const jwt = require('jsonwebtoken')
 const user = require('./User')
-const publicEndPoints = ['/authenticate', '/utils/testDownload']
+const publicEndPoints = ['/authenticate', '/utils/testDownload', '/']
 
 module.exports = { 
   GET: [
