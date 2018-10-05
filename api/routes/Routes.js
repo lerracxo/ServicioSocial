@@ -58,9 +58,9 @@ module.exports = function (app) {
   //     .catch((error) => auth.failedTokenValidation(res, error))
   // })
 
-  controllers.GET.forEach(route => app.route(route.endpoint).get(route.method))
+  controllers.GET.forEach(route => app.get(route.endpoint, route.method))
 
-  controllers.POST.forEach(route => app.route(route.endpoint).post(route.method))
+  controllers.POST.forEach(route => app.post(route.endpoint, route.method))
 
-  controllers.DELETE.forEach(route => app.route(route.endpoint).delete(route.method))
+  controllers.DELETE.forEach(route => app.delete(route.endpoint, route.method))
 }
