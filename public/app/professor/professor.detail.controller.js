@@ -64,7 +64,7 @@
         .progress(function (e) { console.log(e) })
         .then(function (data) {
           console.log('File uploaded correctly')
-          // getDetalle()
+          getDetalle()
         }, (error) => {throw error})
         .catch(error => {
           console.log('Something bad happened', error)
