@@ -29,11 +29,6 @@
 
     vm.isAdmin = AuthenticationService.isAdmin
 
-    vm.dropboxTest = (param) => {
-      httpInterface.headers['Authorization: Basic'] = btoa('iyxkxpbt6gixyov:8c122h8cwio9i2p')
-      https://api.dropboxapi.com/2/files/list_folder
-    }
-
     vm.saveChanges = (profDetail) => {
       console.log('to update', profDetail)
       httpInterface.post('professor/detail/' + profDetail.id_persona, profDetail).then(getDetalle)
