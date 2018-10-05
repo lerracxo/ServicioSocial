@@ -67,7 +67,7 @@
                 <td>
                     <!--SHOWS DOWNLOAD AND DELETE-->
                     <div ng-if="vm.profDet.ex_oposicion !== null">
-                        <a href="{{vm.filesLoc+vm.profDet.ex_oposicion}}" download="img.png">Descargar Archivo</a>
+                        <a href="{{vm.filesLoc+vm.profDet.ex_oposicion}}">Descargar Archivo</a>
                         <button ng-if="vm.isAdmin()" type="button" class="btn btn-default"
                                 ng-click="vm.removeExop(vm.profDet)"
                                 ng-confirm-click="Eliminar archivo?">

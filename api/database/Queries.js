@@ -12,10 +12,9 @@ exports.listAllProfessorAVG = 'SELECT c.id_persona, p.nombres, p.a_paterno, p.a_
   ' WHERE  UPPER(REPLACE(concat(p.a_paterno,p.a_materno,p.nombres),\' \',\'\'))  SIMILAR TO $1::TEXT ' +
   ' GROUP BY c.id_persona, p.nombres, p.a_paterno, p.a_materno '
 
-exports.detailProfessor = 'SELECT p.id_persona, p.nombres, p.a_paterno, p.a_materno, pr.ex_oposicion, c.f_telefono, c.m_telefono, c.t_telefono,\n' +
+exports.detailProfessor = 'SELECT p.id_persona, p.nombres, p.a_paterno, p.a_materno, c.exop as ex_oposicion, c.f_telefono, c.m_telefono, c.t_telefono,\n' +
   '  c.ext, c.mail, c.cedula, c.rfc, c.f_ingreso, c.grado\n' +
   '  FROM persona p \n' +
-  '    LEFT JOIN profesor pr ON p.id_persona = pr.id_profesor\n' +
   '    LEFT JOIN contacto c ON p.id_persona = c.id_persona\n' +
   'WHERE p.id_persona = $1::INT'
 
@@ -39,9 +38,11 @@ exports.personsByCurso = 'SELECT * FROM persona p ' +
   'JOIN curso c ON p.id_persona = c.id_persona ' +
   'WHERE UPPER(REPLACE(TRIM(concat(curso)),\' \',\'\')) = $1::TEXT '
 
-exports.deleteProfExop = 'UPDATE profesor SET ex_oposicion = NULL WHERE id_profesor = $1::INT'
+exports.deleteProfExop = 'INSERT INTO contacto (id_persona, exop) VALUES ($1::INT, NULL) \n'+
+  'ON CONFLICT (id_persona) DO UPDATE SET exop = NULL'
 
-exports.updateProfExop = 'UPDATE profesor SET ex_oposicion = $1::TEXT WHERE id_profesor = $2::INT'
+exports.updateProfExop = 'INSERT INTO contacto (id_persona, exop) VALUES ($2::INT, $1::TEXT) \n' +
+  'ON CONFLICT (id_persona) DO UPDATE SET exop = $1::TEXT'
 
 // Period
 exports.listAllPeriod = 'WITH temp_periodo as (' +
