@@ -27,11 +27,6 @@
       console.log('mv', vm)
     }
 
-    vm.isAdminWrapper = (event) => {
-      console.log('isAdminWrapper', event)
-      return true
-    }
-
     vm.isAdmin = AuthenticationService.isAdmin
 
     vm.saveChanges = (profDetail) => {
@@ -62,11 +57,11 @@
     // This uploads exOpo
     vm.uploadFile = function ($files) {
       Upload.upload({
-        url: httpInterface.serviceLoc + '/dataUpload/calif', // + vm.profDet.id_persona,
+        url: httpInterface.serviceLoc + 'dataUpload/calif', // + vm.profDet.id_persona,
         file: $files
       })
         .progress(function (e) { console.log(e) })
-        .then(function (data, status, headers, config) {
+        .then(function (data) {
           console.log('File uploaded correctly')
           // getDetalle()
         }, (error) => {throw error})
