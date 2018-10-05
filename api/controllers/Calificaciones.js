@@ -31,7 +31,7 @@ function uploadComprobante (req, res) {
   filesUtil.uploadFile(req, fileName)
     .then((finalName) => addComprobante(id, finalName))
     .then(res.send('success'))
-    .catch(console.error)
+    .catch( error => console.error(error))
 }
 
 function deleteCompobante (req, res) {
