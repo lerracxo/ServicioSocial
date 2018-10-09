@@ -20,7 +20,7 @@ module.exports = {
     {endpoint: '/professor/detail/:id', method: saveDetail},
   ],
   DELETE: [
-    {endpoint: '/professor/exop/delete/:id', method: deleteExop}
+    {endpoint: '/professor/exop/:id', method: deleteExop}
   ]
 }
 
@@ -33,10 +33,10 @@ function uploadExop (req, res) {
   let fileName = exopDir + id_profesor
   console.log('FileName', fileName)
   filesUtil.uploadFile(req, fileName)
-  // .catch((error) => console.error(error))
-    // .then((finalName) => addExop(id_profesor, finalName))
+  .catch((error) => console.error(error))
+    .then((finalName) => addExop(id_profesor, finalName))
     .then(res.send({success: true}))
-    // .catch((error) => res.status(500).send({success: false, error}))
+    .catch((error) => res.status(500).send({success: false, error}))
 }
 
 function personsByCurso (req, res) {
@@ -46,7 +46,9 @@ function personsByCurso (req, res) {
 }
 
 function deleteExop (req, res) {
-  getDetail(req.params.id).then((profesor) => {
+  getDetail(req.params.id).then((data) => {
+    const [profesor] = data
+    console.log('Removing the exop of professor', req.params.id, profesor)
     pool.query(queries.deleteProfExop, [profesor.id_persona])
     filesUtil.removeFile(project.uploadDir + profesor.ex_oposicion)
     res.send('success')
