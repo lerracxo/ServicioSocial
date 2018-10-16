@@ -29,11 +29,6 @@
 
     vm.isAdmin = AuthenticationService.isAdmin
 
-    vm.dropboxTest = (param) => {
-      httpInterface.headers['Authorization: Basic'] = btoa('iyxkxpbt6gixyov:8c122h8cwio9i2p')
-      https://api.dropboxapi.com/2/files/list_folder
-    }
-
     vm.saveChanges = (profDetail) => {
       console.log('to update', profDetail)
       httpInterface.post('professor/detail/' + profDetail.id_persona, profDetail).then(getDetalle)
@@ -63,13 +58,13 @@
     vm.uploadFile = function ($files) {
       console.log('Files:', $files)
       Upload.upload({
-        url: httpInterface.serviceLoc + 'dataUpload/calif/', // 'professor/exop/' + vm.profDet.id_persona,
+        url: httpInterface.serviceLoc + 'professor/exop/' + vm.profDet.id_persona,
         file: $files
       })
         .progress(function (e) { console.log(e) })
         .then(function (data) {
           console.log('File uploaded correctly')
-          // getDetalle()
+          getDetalle()
         }, (error) => {throw error})
         .catch(error => {
           console.log('Something bad happened', error)

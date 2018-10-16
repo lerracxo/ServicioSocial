@@ -17,14 +17,26 @@
                 <tr>
                     <th>Profesor</th>
                     <th>Grupo</th>
+                    <th>Puntualidad</th>
+                    <th>Contenido</th>
+                    <th>Didáctica</th>
+                    <th>Planeación</th>
+                    <th>Evaluación</th>
+                    <th>Actitud</th>
                     <th>Promedio</th>
                 </tr>
                 </thead>
                 <tbody>
-                <tr ng-repeat="calif in vm.calificaciones">
-                    <td>{{calif.nombre}}</td>
-                    <td>{{calif.grupo}}</td>
-                    <td>{{calif.promedio}}</td>
+                <tr ng-repeat="cal in vm.calificaciones">
+                    <td>{{cal.nombre}}</td>
+                    <td>{{cal.grupo}}</td>
+                    <td>{{cal.puntualidad}}</td>
+                    <td>{{cal.contenido}}</td>
+                    <td>{{cal.didactica}}</td>
+                    <td>{{cal.evaluacion}}</td>
+                    <td>{{cal.planeacion}}</td>
+                    <td>{{cal.actitud}}</td>
+                    <td>{{cal.promedio}}</td>
                 </tr>
                 </tbody>
             </table>

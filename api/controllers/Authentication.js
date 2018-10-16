@@ -6,7 +6,7 @@ const publicEndPoints = ['/authenticate', '/utils/testDownload', '/', '/app/app-
 
 module.exports = { 
   GET: [
-    // {endpoint: '/authenticate/verify', method: isTokenValid},
+    {endpoint: '/authenticate/verify', method: isTokenValid},
   ],
   POST: [
     {endpoint: '/authenticate', method: authToken},
@@ -45,6 +45,7 @@ function isTokenValid (req, res) {
 function validateToken (req) {
   console.log('validating token', req.headers['token'], ' params ', req.body, 'trying to reach ', req.path)
 
+  try{
     if (publicEndPoints.includes(req.path)) { return Promise.resolve() }
     // check header or url parameters or post parameters for token
     let token = getToken(req)
@@ -54,7 +55,11 @@ function validateToken (req) {
     } else {
      return Promise.resolve()
     }
-
+  }
+  catch( error ) {
+    console.log('the token has expired')
+    return Promise.reject('no token is present')
+  }
 }
 
 function successTokenValidation (res, token, rol) {

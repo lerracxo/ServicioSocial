@@ -9,10 +9,9 @@ const subDir = '/dataUpload/calif/'
 const tableName = 'importCalif'
 
 module.exports = {
-  GET: [
-    {endpoint: '/dataUpload/calif', method: calif}
-  ],
+  GET: [],
   POST: [
+    {endpoint: '/dataUpload/calif', method: calif}
   ],
   DELETE: []
 }
@@ -31,13 +30,13 @@ function calif (req, res) {
   console.log(fileName)
 
   filesUtil.uploadFile(req, fileName)
-    // .then(loadCSVtoPG)
-    // .then(sanitizeFields)
-    // .then(insertProfessors)
-    // .then(insertGrupos)
-    // .then(insertMaterias)
-    // .then(insertPeriodos)
-    // .then(insertCalifs)
+    .then(loadCSVtoPG)
+    .then(sanitizeFields)
+    .then(insertProfessors)
+    .then(insertGrupos)
+    .then(insertMaterias)
+    .then(insertPeriodos)
+    .then(insertCalifs)
     .then(() => res.send(importSuccess()))
     .catch((error) => res.status(500).send(importFail(error)))
     .then(() => finalizeImport())

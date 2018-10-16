@@ -20,8 +20,6 @@
 
     service.delete = (url) => $http.delete(service.serviceLoc + url)
 
-    service.http = () => $http
-
     service.toQueryString = function (obj) {
       return Object.keys(obj).map((x) => {
         console.log(x, obj[x])
