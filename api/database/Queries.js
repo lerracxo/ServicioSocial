@@ -174,20 +174,26 @@ exports.dataImportCalifFinalizeImport = 'DELETE FROM importCalif'
 // Curso import
 exports.dataImportCursoInsertProfessors = 'INSERT INTO persona (a_paterno,a_materno,nombres)\n' +
   '  SELECT DISTINCT \n' +
-  '  split_part(nombre, \' \', 1) AS a_paterno,   split_part(nombre, \' \', 2)  AS a_materno, split_part(nombre, \' \', 3 ) || split_part(nombre, \' \', 4 ) || split_part(nombre, \' \', 5 ) as nombres \n' +
+  '  split_part(nombre, \' \', 1) AS a_paterno,   split_part(nombre, \' \', 2)  AS a_materno, split_part(nombre, \' \', 3 ) || \' \' || split_part(nombre, \' \', 4 ) || \' \' || split_part(nombre, \' \', 5 ) as nombres \n' +
   '    FROM importCurso ic LEFT JOIN persona p\n' +
   '    ON UPPER(REPLACE(ic.nombre,\' \',\'\')) = UPPER(REPLACE(TRIM(concat(p.a_paterno,p.a_materno,p.nombres)),\' \',\'\'))\n' +
   '    WHERE p.id_persona IS NULL'
 
 exports.dataImportCursoSanitizeFields = 'UPDATE importCurso SET \n' +
-  'nombre\t\t\t\t= TRIM(nombre),\n' +
-  'curso\t\t\t\t= TRIM(curso),\n' +
-  'fechai\t\t\t\t= TRIM(fechai),\n' +
-  'fechaf\t\t\t\t= TRIM(fechaf),\n' +
-  'horas\t\t\t= TRIM(horas);'
+  'nombre = TRIM(nombre),\n' +
+  'curso = TRIM(curso),\n' +
+  'fechai = TRIM(fechai),\n' +
+  'fechaf = TRIM(fechaf),\n' +
+  'tipo = TRIM(tipo);'
 
-exports.dataImportCursoInsertCursos = 'INSERT INTO curso (id_persona, curso,inicio,termino,horas,constancia)\n' +
-  'SELECT per.id_persona, ic.curso, ic.fechai, ic.fechaf, ic.horas, null::TEXT  FROM importCurso ic\n' +
-  'JOIN persona per ON UPPER(REPLACE(ic.nombre,\' \',\'\')) = UPPER(REPLACE(concat(per.a_paterno,per.a_materno,per.nombres),\' \',\'\'))'
+exports.dataImportCursoInsertCursos = 'INSERT INTO curso (id_persona, curso, inicio, termino,tipo, constancia) \n'+
+' WITH temp_cursos AS ( \n'+
+' SELECT per.id_persona, ic.curso, ic.fechai, ic.fechaf, ic.tipo, null::TEXT as constancia \n'+
+' FROM importCurso ic \n'+
+' JOIN persona per ON UPPER(REPLACE(ic.nombre,\' \',\'\')) = UPPER(REPLACE(concat(per.a_paterno,per.a_materno,per.nombres),\' \',\'\')) \n'+
+' ) SELECT tc.* FROM temp_cursos tc \n'+
+' LEFT JOIN curso c  ON tc.id_persona =  c.id_persona AND tc.curso = c.curso AND tc.fechai = c.inicio \n'+
+'                         AND tc.fechaf = c.termino and tc.tipo = c.tipo \n'+
+' WHERE c.id_persona IS NULL'
 
 exports.dataImportCursoFinalizeImport = 'DELETE FROM importCurso'

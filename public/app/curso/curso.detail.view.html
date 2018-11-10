@@ -19,7 +19,7 @@
                     <th>Curso</th>
                     <th>Fecha inicio</th>
                     <th>Fecha fin</th>
-                    <th>Horas</th>
+                    <th>tipo</th>
                     <th>Archivo</th>
                 </tr>
                 </thead>
@@ -29,7 +29,7 @@
                     <td>{{curso.curso}}</td>
                     <td>{{curso.inicio}}</td>
                     <td>{{curso.termino}}</td>
-                    <td>{{curso.horas}}</td>
+                    <td>{{curso.tipo}}</td>
                     <td>
                         <div ng-if="curso.constancia !== null">
                             <a href="{{vm.filesLoc+curso.constancia}}" download="{{vm.fileName(curso.constancia)}}">Descargar Archivo</a>
@@ -42,7 +42,7 @@
                         <div>
                         <button ng-if="curso.constancia === null && vm.isAdmin()"
                                 type="file" id="exOp" type="file"
-                                ngf-select="uploadConstancia(curso,$files)">Subir archivo
+                                ngf-select="vm.uploadConstancia(curso,$files)">Subir archivo
                         </button>
                             <label ng-if="curso.constancia === null && !vm.isAdmin()">No archivo</label>
                         </div>

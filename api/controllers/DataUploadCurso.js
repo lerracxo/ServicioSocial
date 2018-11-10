@@ -28,14 +28,14 @@ function curso (req, res) {
 
   console.log(fileName)
 
-  filesUtil.uploadFile(req, fileName)
+  return filesUtil.uploadFile(req, fileName)
         .then(loadCSVtoPG)
         .then(sanitizeFields)
         .then(insertProfessors)
         .then(insertCursos)
-        .then(() => res.send(importSuccess))
-        .catch((error) => res.status(500).send(importFail(error)))
         .then(finalizeImport)
+        .then(res.send(importSuccess))
+        .catch((error) => res.status(500).send(importFail(error)))
 }
 
 function loadCSVtoPG (file) {
@@ -61,7 +61,7 @@ function insertCursos () {
 
 function finalizeImport () {
   console.log('Step finalizeImport')
-  return Promise.all([ filesUtil.removeFile(project.uploadDir + finalName), pool.query(queries.dataImportCursoFinalizeImport)])
+  return Promise.all([ filesUtil.removeFile(finalName), pool.query(queries.dataImportCursoFinalizeImport)])
 }
 
 function importSuccess () {
