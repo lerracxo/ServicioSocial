@@ -20,13 +20,13 @@ exports.buildQuery = function (body) {
   }
 
   let query = 'WITH temp_table AS  ( ' +
-    '  SELECT  c.id_persona, p.nombres, p.a_paterno, p.a_materno, AVG(c.promedio::decimal) as promedio ' +
-    '       FROM calificacion c ' +
-    '       JOIN persona p ON c.id_persona = p.id_persona ' +
+    '  SELECT  p.id_persona, p.nombres, p.a_paterno, p.a_materno, AVG(c.promedio::decimal) as promedio ' +
+    '       FROM persona p ' +
+    '       LEFT JOIN calificacion c ON c.id_persona = p.id_persona ' +
     matQuery +
     nameQuery +
     perQuery +
-    '       GROUP BY c.id_persona, p.nombres, p.a_paterno, p.a_materno ) ' +
+    '       GROUP BY p.id_persona, p.nombres, p.a_paterno, p.a_materno ) ' +
     'SELECT id_persona, nombres, a_paterno, a_materno, to_char(promedio,\'9.99\') as promedio FROM temp_table ' + promQuery
 
   console.log('Query as result: ', query)

@@ -46,6 +46,7 @@
       document.body.appendChild(a)
       a.click()
     }
+
     return service
   }
 })()

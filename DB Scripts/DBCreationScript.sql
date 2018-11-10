@@ -143,7 +143,7 @@ CREATE TABLE importcurso (
     curso text,
     fechai text,
     fechaf text,
-    horas text
+    tipo text
 );
 
 

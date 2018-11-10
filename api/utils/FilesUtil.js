@@ -49,8 +49,12 @@ exports.uploadFile = function (req, fileNameWOext) {
 
 
 exports.removeFile = function (file) {
-  console.log('Archivo a eliminar', file)
-  fs.unlinkSync(file)// .catch(console.error)
+  console.log('File to delete', file)
+  try{
+    fs.unlinkSync(file)// .catch(console.error) 
+  } catch (error) {
+    console.log('Error deleting file', error)
+  }
 }
 
 function getExtension (fileName) {

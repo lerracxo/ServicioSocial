@@ -35,7 +35,10 @@
     }
 
     vm.removeExop = function (profesor) {
-      httpInterface.delete('professor/exop/' + profesor.id_persona).then(getDetalle)
+     let response = confirm('¿Quieres eliminar este archivo?\n(No se puede deshacer)')
+      if (response) {
+        httpInterface.delete('professor/exop/' + profesor.id_persona).then(getDetalle)
+      }
     }
 
     vm.generateCSV = function (body, name) {
@@ -88,7 +91,10 @@
     }
 
     vm.removeConstancia = function (curso) {
-      httpInterface.delete('curso/constancia/' + curso.id).then(getCursos)
+      let response = confirm('¿Quieres eliminar este archivo?\n(No se puede deshacer)')
+      if (response) {
+        httpInterface.delete('curso/constancia/' + curso.id).then(getCursos)
+      }
     }
 
     vm.uploadComprobante = function (calificacion, $files) {
@@ -104,7 +110,10 @@
     }
 
     vm.removeComprobante = function (calificacion) {
-      httpInterface.delete('calificaciones/comprobante/' + calificacion.id).then(getCalificaciones)
+     let response = confirm('¿Quieres eliminar este archivo?\n(No se puede deshacer)')
+      if (response) {
+        httpInterface.delete('calificaciones/comprobante/' + calificacion.id).then(getCalificaciones)
+      }
     }
 
     function getDetalle () {
