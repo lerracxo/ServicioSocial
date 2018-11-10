@@ -174,7 +174,7 @@ exports.dataImportCalifFinalizeImport = 'DELETE FROM importCalif'
 // Curso import
 exports.dataImportCursoInsertProfessors = 'INSERT INTO persona (a_paterno,a_materno,nombres)\n' +
   '  SELECT DISTINCT \n' +
-  '  split_part(nombre, \' \', 1) AS a_paterno,   split_part(nombre, \' \', 2)  AS a_materno, split_part(nombre, \' \', 3 ) || \' \' || split_part(nombre, \' \', 4 ) || \' \' || split_part(nombre, \' \', 5 ) as nombres \n' +
+  '  UPPER(split_part(nombre, \' \', 1)) AS a_paterno,   UPPER(split_part(nombre, \' \', 2))  AS a_materno, UPPER(split_part(nombre, \' \', 3 ) || \' \' || split_part(nombre, \' \', 4 ) || \' \' || split_part(nombre, \' \', 5 )) as nombres \n' +
   '    FROM importCurso ic LEFT JOIN persona p\n' +
   '    ON UPPER(REPLACE(ic.nombre,\' \',\'\')) = UPPER(REPLACE(TRIM(concat(p.a_paterno,p.a_materno,p.nombres)),\' \',\'\'))\n' +
   '    WHERE p.id_persona IS NULL'
