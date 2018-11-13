@@ -35,7 +35,8 @@ function uploadExop (req, res) {
   filesUtil.uploadFile(req, fileName)
   .catch((error) => console.error(error))
     .then((finalName) => addExop(id_profesor, finalName))
-    .then(res.send({success: true}))
+    .then((response) => filesUtil.waitASecond(response))
+    .then(() => res.send({success: true}))
     .catch((error) => res.status(500).send({success: false, error}))
 }
 
@@ -51,6 +52,7 @@ function deleteExop (req, res) {
     console.log('Removing the exop of professor', req.params.id, profesor)
     pool.query(queries.deleteProfExop, [profesor.id_persona])
     filesUtil.removeFile(project.uploadDir + profesor.ex_oposicion)
+    filesUtil.waitASecond()
     res.send('success')
   })
 }

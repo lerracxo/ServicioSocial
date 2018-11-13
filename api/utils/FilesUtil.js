@@ -45,7 +45,13 @@ exports.uploadFile = function (req, fileNameWOext) {
   })
 }
 
-
+exports.waitASecond = function (x) { 
+  return new Promise(resolve => {
+    setTimeout(() => {
+      resolve(x);
+    }, 1000);
+  });
+}
 
 
 exports.removeFile = function (file) {

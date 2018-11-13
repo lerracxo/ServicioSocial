@@ -35,7 +35,8 @@ function uploadConstancia (req, res) {
   let fileName = subDir + id_profesor
   filesUtil.uploadFile(req, fileName)
     .then((finalName) => addConstancia(id_profesor, finalName))
-    .then(res.send('success'))
+    .then((x) => filesUtil.waitASecond(x))
+    .then(() => res.send('success'))
     .catch(console.error)
 }
 
@@ -49,7 +50,10 @@ function deleteConstancia (req, res) {
     console.log('deleting', curso)
     deleteConstanciaInternal(curso)
     filesUtil.removeFile(project.uploadDir + curso.constancia)
-  }).then(res.send('success')).catch(console.log)
+  })
+  .then((x) => filesUtil.waitASecond(x))
+  .then(() => res.send('success'))
+  .catch(console.error)
 }
 
 function deleteConstanciaInternal (curso) {

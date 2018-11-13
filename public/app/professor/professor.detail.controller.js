@@ -125,7 +125,9 @@
 
     function getCursos () {
       httpInterface.get('curso/' + vm.personId).then((data) => {
+        console.log('Getting cursos: ', vm.profCursos)
         vm.profCursos = data.data.data
+        console.log('Getting cursos 2: ', vm.profCursos)
       })
     }
 

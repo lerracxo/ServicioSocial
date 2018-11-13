@@ -30,7 +30,8 @@ function uploadComprobante (req, res) {
   let fileName = subDir + id
   filesUtil.uploadFile(req, fileName)
     .then((finalName) => addComprobante(id, finalName))
-    .then(res.send('success'))
+    .then((x) => filesUtil.waitASecond(x))
+    .then(() => res.send('success'))
     .catch( error => console.error(error))
 }
 
@@ -42,7 +43,10 @@ function deleteCompobante (req, res) {
     console.log('calificacion comprobante: ', calificacion.comprobante)
     deleteConstancia(calificacion)
     filesUtil.removeFile(project.uploadDir + calificacion.comprobante)
-  }).then(res.send('success')).catch(console.log)
+  })
+  .then((x) => filesUtil.waitASecond(x))
+  .then(() => res.send('success'))
+  .catch(console.log)
 }
 
 function califByMateriaPeriod (req, res) {
