@@ -1,5 +1,5 @@
-# ServicioSocial
-Servicio social ESCA Santo Tomas
+# Sistema Administrador de Calificaciones de Profesores
+Sistema realizado como Servicio Social por parte de ESCOM para ESCA Santo Tomas.
 
 Instalación:
 - `$ npm install`
